@@ -12,6 +12,8 @@
   "dependencies": {
     "@sendgrid/mail": "^8.1.0",
     "busboy": "^1.6.0",
-    "html-pdf-node": "^1.0.8"
+    "html-pdf-node": "^1.0.8",
+    "@sparticuz/chromium": "^119.0.2",  // <<<<< NOUVELLE DÉPENDANCE
+    "puppeteer-core": "^21.6.1"         // <<<<< NOUVELLE DÉPENDANCE
   }
 }
