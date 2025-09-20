@@ -34,7 +34,10 @@ function createStyledEmail(content) {
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #FFFFFF; border: 1px solid #E6E2DB; border-radius: 16px; box-shadow: 0 8px 32px rgba(45, 42, 37, 0.06);">
             <tr>
                 <td align="center" style="padding: 20px 0;">
-                    <img src="https://www.wizmanheritage.com/Logo_WizmanHeritage.svg" alt="WizmanHeritage Logo" width="180" style="display: block;">
+                    <!-- ======================================================= -->
+                    <!--   CORRECTION DU LOGO : On utilise le .png pour l'email  -->
+                    <!-- ======================================================= -->
+                    <img src="https://www.wizmanheritage.com/Logo_WizmanHeritage.png" alt="WizmanHeritage Logo" width="180" style="display: block;">
                 </td>
             </tr>
             <tr>
@@ -117,23 +120,14 @@ export default async (req, res) => {
                 bb.on('file', (name, file, info) => {
                     const { filename, mimeType } = info;
 
-                    // ==========================================================
-                    //  CORRECTION APPLIQUÉE ICI
-                    //  On vérifie si un nom de fichier existe. S'il n'y en a pas,
-                    //  cela signifie que l'utilisateur n'a rien envoyé.
-                    // ==========================================================
                     if (!filename) {
-                        // On doit "consommer" le flux de fichier vide pour que le
-                        // processus continue, sinon il peut se bloquer.
                         file.resume();
                         return;
                     }
-                    // ==========================================================
 
                     const chunks = [];
                     file.on('data', (chunk) => chunks.push(chunk));
                     file.on('end', () => {
-                        // On n'ajoute le fichier que s'il a un nom.
                         files.push({ content: Buffer.concat(chunks), filename, type: mimeType, disposition: 'attachment' });
                     });
                 });
@@ -168,9 +162,6 @@ export default async (req, res) => {
         const submissionDate = new Date().toLocaleString(lang === 'he' ? 'he-IL' : `${lang}-FR`, { timeZone: 'Europe/Paris' });
         const ipAddress = req.headers['x-forwarded-for'] || 'Non disponible';
 
-        // ==================================================================
-        // FICHE D'ENGAGEMENT INCLUSE DIRECTEMENT DANS L'EMAIL
-        // ==================================================================
         const engagementSheetHtml = `
             <hr style="border: none; border-top: 1px solid #E6E2DB; margin: 30px 0;">
             <div style="padding: 20px; border: 1px solid #4B5320; border-radius: 8px; background-color: #FAFAF8;">
@@ -186,13 +177,11 @@ export default async (req, res) => {
             </div>
         `;
         
-        // Préparation des pièces jointes du client pour SendGrid (elles doivent être en base64).
         const formattedClientFiles = clientFiles.map(f => ({
             ...f,
             content: f.content.toString('base64')
         }));
 
-        // --- Configuration de l'EMAIL DE NOTIFICATION (POUR VOUS) ---
         const notificationBody = `
             <h1 style="color: #4B5320; font-size: 22px;">Nouvelle demande de ${name}</h1>
             <p>Vous avez reçu une nouvelle demande de contact.</p>
@@ -201,7 +190,7 @@ export default async (req, res) => {
                 <p><strong>Téléphone :</strong> ${phone || 'Non fourni'}</p>
                 <p><strong>Message :</strong><br>${message.replace(/\n/g, '<br>')}</p>
             </div>
-            ${engagementSheetHtml} <!-- Inclut la fiche d'engagement ici -->
+            ${engagementSheetHtml}
         `;
         const notificationMsg = {
             to: 'contact@wizmanheritage.com',
@@ -216,7 +205,6 @@ export default async (req, res) => {
             attachments: formattedClientFiles
         };
 
-        // --- Configuration de l'EMAIL DE CONFIRMATION (POUR LE CLIENT) ---
         const clientContent = confirmationContent[lang] || confirmationContent.fr;
         const confirmationBody = `
             <h1 style="color: #4B5320; font-size: 22px;">${clientContent.greeting.replace('{name}', name)}</h1>
