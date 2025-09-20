@@ -1,0 +1,17 @@
+{
+  "name": "wizmanheritage-site",
+  "version": "1.0.0",
+  "description": "Site web pour WizmanHeritage",
+  "main": "api/contact.js",
+  "scripts": {
+    "start": "echo 'This is a static site with a serverless function.'"
+  },
+  "keywords": ["wizmanheritage", "genealogie", "succession"],
+  "author": "Ruben Wizman",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.0",
+    "busboy": "^1.6.0",
+    "html-pdf-node": "^1.0.8"
+  }
+}
