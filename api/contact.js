@@ -1,36 +1,23 @@
-// mvp ruben/api/contact.js
-const sgMail = require('@sendgrid/mail');
-const busboy = require('busboy');
-const html_to_pdf = require('html-pdf-node');
+// api/contact.js
 
-// La clé API sera lue depuis les variables d'environnement de Vercel
+// Importations des librairies nécessaires.
+// Vercel gère ces importations via le 'package.json'.
+import sgMail from '@sendgrid/mail';
+import busboy from 'busboy';
+import html_to_pdf from 'html-pdf-node';
+
+// Configuration de SendGrid avec la clé API stockée dans les variables d'environnement de Vercel.
+// La clé doit commencer par "SG.".
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// FONCTION POUR PARSER LE FORMULAIRE AVEC PIÈCES JOINTES
-function parseMultipartForm(event) {
-    return new Promise((resolve) => {
-        const fields = {};
-        const files = [];
-        const bb = busboy({ headers: event.headers });
-        bb.on('file', (name, file, info) => {
-            const { filename, mimeType } = info;
-            const chunks = [];
-            file.on('data', (chunk) => chunks.push(chunk));
-            file.on('end', () => {
-                // Stocker le contenu binaire et les métadonnées
-                files.push({ content: Buffer.concat(chunks), filename, type: mimeType, disposition: 'attachment' });
-            });
-        });
-        bb.on('field', (name, val) => { fields[name] = val; });
-        bb.on('close', () => { resolve({ fields, files }); });
-        // Le corps de la requête HTTP est encodé en base64 par Vercel, il faut le décoder
-        bb.end(Buffer.from(event.body, 'base64'));
-    });
-}
-
-// FONCTION POUR CRÉER LE TEMPLATE D'EMAIL STYLISÉ
+// ==================================================================
+// FONCTION UTILITAIRE POUR CRÉER LE TEMPLATE D'EMAIL STYLISÉ
+// Ceci encapsule le contenu spécifique (titre, corps) dans un design cohérent.
+// ==================================================================
 function createStyledEmail(content) {
     const { title, preheader, body_content, footer_text } = content;
+
+    // Réutilisation des couleurs de votre CSS pour la cohérence visuelle.
     const primarySage = '#4B5320';
     const sandBeige = '#F3F0E7';
     const textPrimary = '#2D2A25';
@@ -44,23 +31,29 @@ function createStyledEmail(content) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${title}</title>
         <style>
-            body { font-family: 'Inter', sans-serif; }
+            /* Utilisation d'une police web pour la cohérence avec le site */
+            body { font-family: 'Inter', Arial, sans-serif; }
         </style>
     </head>
     <body style="margin: 0; padding: 0; background-color: ${sandBeige}; font-family: Inter, Arial, sans-serif;">
+        <!-- Le preheader est un court aperçu du message dans la boîte de réception -->
         <div style="display: none; max-height: 0; overflow: hidden;">${preheader}</div>
         
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #FFFFFF; border: 1px solid #E6E2DB; border-radius: 16px; box-shadow: 0 8px 32px rgba(45, 42, 37, 0.06);">
+            <!-- En-tête avec le logo du site -->
             <tr>
                 <td align="center" style="padding: 20px 0;">
+                    <!-- Assurez-vous que cette URL est l'URL finale de votre logo sur votre site -->
                     <img src="https://www.wizmanheritage.com/Logo_WizmanHeritage.svg" alt="WizmanHeritage Logo" width="180" style="display: block;">
                 </td>
             </tr>
+            <!-- Corps principal de l'email -->
             <tr>
                 <td style="padding: 30px; color: ${textPrimary};">
                     ${body_content}
                 </td>
             </tr>
+            <!-- Pied de page de l'email -->
             <tr>
                 <td align="center" style="padding: 20px 30px; background-color: #FEFCF8; border-top: 1px solid #E6E2DB; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
                     <p style="margin: 0; color: ${textSecondary}; font-size: 12px;">
@@ -74,7 +67,9 @@ function createStyledEmail(content) {
     `;
 }
 
-// TEMPLATES POUR L'EMAIL DE CONFIRMATION CLIENT (MULTILINGUE)
+// ==================================================================
+// TEMPLATES MULTILINGUES POUR L'EMAIL DE CONFIRMATION CLIENT
+// ==================================================================
 const confirmationContent = {
     fr: {
         title: "Confirmation de votre demande | WizmanHeritage",
@@ -105,7 +100,10 @@ const confirmationContent = {
     }
 };
 
-// FONCTION DE GÉNÉRATION DU PDF DE CONSENTEMENT (STYLISÉ)
+// ==================================================================
+// FONCTION DE GÉNÉRATION DU PDF DE CONSENTEMENT STYLISÉ
+// Ce PDF est attaché à l'email de notification que vous recevez.
+// ==================================================================
 async function generateConsentPdf(data) {
     const { name, email, submissionDate, ipAddress, files } = data;
     const htmlContent = `
@@ -116,47 +114,84 @@ async function generateConsentPdf(data) {
     return pdfBuffer;
 }
 
-// GESTIONNAIRE PRINCIPAL DE LA REQUÊTE (la fonction qui est appelée par votre formulaire)
-exports.handler = async (event) => {
-    // S'assurer que la méthode est bien POST
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+// ==================================================================
+// GESTIONNAIRE PRINCIPAL DE LA REQUÊTE VERCEL (Exportation par défaut)
+// ==================================================================
+export default async (req, res) => {
+    // S'assurer que la méthode HTTP est bien POST.
+    if (req.method !== 'POST') {
+        return res.status(405).send('Method Not Allowed');
     }
 
     try {
-        const { fields, files: clientFiles } = await parseMultipartForm(event);
-        const { name, email, phone, message, lang = 'fr' } = fields; // lang = 'fr' par défaut si non spécifié
+        // Fonction pour "parser" les données du formulaire, incluant les fichiers.
+        // Cette fonction est interne au gestionnaire car elle utilise 'req' de Vercel.
+        const parseMultipartForm = (request) => {
+            return new Promise((resolve, reject) => {
+                const fields = {};
+                const files = [];
+                const bb = busboy({ headers: request.headers });
 
-        // Validation des champs côté serveur (une sécurité supplémentaire)
+                bb.on('file', (name, file, info) => {
+                    const { filename, mimeType } = info;
+                    const chunks = [];
+                    file.on('data', (chunk) => chunks.push(chunk));
+                    file.on('end', () => {
+                        files.push({ content: Buffer.concat(chunks), filename, type: mimeType, disposition: 'attachment' });
+                    });
+                });
+
+                bb.on('field', (name, val) => {
+                    fields[name] = val;
+                });
+
+                bb.on('close', () => {
+                    resolve({ fields, files });
+                });
+
+                bb.on('error', (err) => {
+                    reject(err);
+                });
+
+                // Le corps de la requête est en base64 sur Vercel, il faut le décoder.
+                bb.end(Buffer.from(request.body, 'base64'));
+            });
+        };
+
+        const { fields, files: clientFiles } = await parseMultipartForm(req);
+        const { name, email, phone, message, lang = 'fr' } = fields; // 'lang' par défaut à 'fr'
+
+        // Validation des champs côté serveur pour une sécurité accrue.
         if (!name || !email || !message || fields.consent !== 'on') {
-            return { statusCode: 400, body: 'Missing required fields or consent' };
+            return res.status(400).json({ message: 'Missing required fields or consent' });
         }
-        if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) { // Regex simple pour l'email
-             return { statusCode: 400, body: 'Invalid email format' };
+        // Vérification du format de l'email avec une regex simple.
+        if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            return res.status(400).json({ message: 'Invalid email format' });
         }
 
         const submissionDate = new Date().toLocaleString(lang === 'he' ? 'he-IL' : `${lang}-FR`, { timeZone: 'Europe/Paris' });
-        const ipAddress = event.headers['x-forwarded-for'] || 'Non disponible'; // Récupère l'IP du client
+        const ipAddress = req.headers['x-forwarded-for'] || 'Non disponible'; // Récupère l'adresse IP du client.
 
-        // Générer le PDF de consentement
+        // Génération du PDF de consentement.
         const consentPdfBuffer = await generateConsentPdf({ name, email, submissionDate, ipAddress, files: clientFiles });
         const consentAttachment = {
-            content: consentPdfBuffer.toString('base64'), // Le contenu du PDF doit être en base64 pour SendGrid
+            content: consentPdfBuffer.toString('base64'), // Le contenu du PDF doit être en base64 pour SendGrid.
             filename: `Consentement_${name.replace(/ /g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`,
             type: 'application/pdf',
             disposition: 'attachment'
         };
 
-        // Préparer les pièces jointes du client pour SendGrid (elles doivent aussi être en base64)
+        // Préparation des pièces jointes du client pour SendGrid (doivent être en base64).
         const formattedClientFiles = clientFiles.map(f => ({
             ...f,
-            content: f.content.toString('base64') // Convertir le buffer en base64
+            content: f.content.toString('base64') // Convertit le Buffer binaire en string Base64.
         }));
 
-        // Toutes les pièces jointes (celles du client et le PDF de consentement)
+        // Compilation de toutes les pièces jointes (celles du client et le PDF de consentement).
         const allAttachments = [...formattedClientFiles, consentAttachment];
 
-        // --- EMAIL DE NOTIFICATION (POUR VOUS : contact@wizmanheritage.com) ---
+        // --- Configuration de l'EMAIL DE NOTIFICATION (POUR VOUS : contact@wizmanheritage.com) ---
         const notificationBody = `
             <h1 style="color: #4B5320; font-size: 22px;">Nouvelle demande de ${name}</h1>
             <p>Vous avez reçu une nouvelle demande de contact. La fiche de consentement signée est jointe à cet email en format PDF.</p>
@@ -167,8 +202,8 @@ exports.handler = async (event) => {
             </div>
         `;
         const notificationMsg = {
-            to: 'contact@wizmanheritage.com', // VOTRE ADRESSE EMAIL DE DESTINATION
-            from: 'noreply@wizmanheritage.com', // VOTRE ADRESSE EMAIL VÉRIFIÉE PAR SENDGRID
+            to: 'contact@wizmanheritage.com', // <<<<< VOTRE ADRESSE EMAIL DE DESTINATION (Où vous recevez les notifications)
+            from: 'noreply@wizmanheritage.com', // <<<<< VOTRE ADRESSE EMAIL VÉRIFIÉE PAR SENDGRID (Peut être contact@wizmanheritage.com aussi si vous la vérifiez)
             subject: `WizmanHeritage | Demande de ${name} | Consentement joint`,
             html: createStyledEmail({
                 title: `Nouvelle demande de ${name}`,
@@ -179,8 +214,8 @@ exports.handler = async (event) => {
             attachments: allAttachments
         };
 
-        // --- EMAIL DE CONFIRMATION (POUR LE CLIENT) ---
-        const clientContent = confirmationContent[lang] || confirmationContent.fr;
+        // --- Configuration de l'EMAIL DE CONFIRMATION (POUR LE CLIENT) ---
+        const clientContent = confirmationContent[lang] || confirmationContent.fr; // Choisit le template en fonction de la langue.
         const confirmationBody = `
             <h1 style="color: #4B5320; font-size: 22px;">${clientContent.greeting.replace('{name}', name)}</h1>
             <p style="font-size: 16px; line-height: 1.6;">${clientContent.main_text}</p>
@@ -191,8 +226,8 @@ exports.handler = async (event) => {
             </p>
         `;
         const autoresponderMsg = {
-            to: email, // L'email du client
-            from: 'contact@wizmanheritage.com', // UNE ADRESSE EMAIL VÉRIFIÉE ET PROFESSIONNELLE
+            to: email, // L'email du client (celui qu'il a renseigné dans le formulaire).
+            from: 'contact@wizmanheritage.com', // <<<<< UNE ADRESSE EMAIL VÉRIFIÉE ET PROFESSIONNELLE (Ex: votre contact@wizmanheritage.com)
             subject: clientContent.title,
             html: createStyledEmail({
                 title: clientContent.title,
@@ -202,16 +237,18 @@ exports.handler = async (event) => {
             })
         };
 
-        // Envoi des deux emails
+        // Envoi simultané des deux emails.
         await Promise.all([
             sgMail.send(notificationMsg),
             sgMail.send(autoresponderMsg)
         ]);
 
-        return { statusCode: 200, body: JSON.stringify({ message: 'Success' }) };
+        // Réponse au frontend que tout s'est bien passé.
+        return res.status(200).json({ message: 'Success' });
 
     } catch (error) {
         console.error('Error in form handler:', error.response?.body || error);
-        return { statusCode: 500, body: JSON.stringify({ message: 'Error processing request' }) };
+        // Retourner une erreur générique au frontend si quelque chose se passe mal.
+        return res.status(500).json({ message: 'Error processing your request' });
     }
 };
