@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.wizmanheritage.com" }],
+      "destination": "https://wizmanheritage.com/:path*",
+      "permanent": true
+    }
+  ]
+}
