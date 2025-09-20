@@ -4,8 +4,9 @@
 import sgMail from '@sendgrid/mail';
 import busboy from 'busboy';
 import html_to_pdf from 'html-pdf-node';
+import chromium from '@sparticuz/chromium'; // <<<<< NOUVELLE IMPORTATION
+import puppeteer from 'puppeteer-core'; // <<<<< NOUVELLE IMPORTATION
 
-// Configuration de SendGrid avec la clé API stockée dans les variables d'environnement de Vercel.
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // ==================================================================
@@ -95,11 +96,27 @@ const confirmationContent = {
 // ==================================================================
 async function generateConsentPdf(data) {
     const { name, email, submissionDate, ipAddress, files } = data;
+
+    // Configuration de Puppeteer pour Chromium Serverless
+    const browser = await puppeteer.launch({
+        args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+    });
+
+    const page = await browser.newPage();
+
     const htmlContent = `
     <!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"><style>body{font-family:'Inter',Arial,sans-serif;color:#2D2A25;font-size:11pt}.container{width:90%;margin:auto}.logo{width:220px;margin-bottom:40px;display:block}h1{color:#4B5320;font-size:24pt;font-weight:700;border-bottom:2px solid #E6E2DB;padding-bottom:15px;margin-bottom:20px}h2{color:#4B5320;font-size:16pt;margin-top:30px;margin-bottom:10px}p{line-height:1.7;margin:0 0 10px 0}.info-box{background-color:#F8F6F3;border:1px solid #E6E2DB;padding:20px;border-radius:12px;margin-top:20px}.info-box p{margin-bottom:8px}strong{font-weight:700}.consent-status{color:#4B5320;font-weight:bold}.file-list{font-style:italic;color:#5D574F}.footer{margin-top:50px;font-size:9pt;color:#8B857C;text-align:center}</style></head><body><div class="container"><img src="https://www.wizmanheritage.com/Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo"><h1>Fiche de Consentement</h1><p>Ce document atteste du consentement libre et éclairé donné par l'utilisateur pour le traitement de ses données personnelles et des documents fournis, conformément à la politique de confidentialité.</p><div class="info-box"><p><strong>Date et Heure :</strong> ${submissionDate}</p><p><strong>Nom du Client :</strong> ${name}</p><p><strong>Adresse Email :</strong> ${email}</p><p><strong>Adresse IP de Soumission :</strong> ${ipAddress}</p></div><h2>Consentement & Documents</h2><p><span class="consent-status">✔ CONSENTEMENT EXPLICITE DONNÉ</span></p><p>L'utilisateur a coché la case de consentement, acceptant la politique de confidentialité du site wizmanheritage.com.</p><h2>Documents Partagés</h2><p class="file-list">${files.length > 0 ? files.map(f => f.filename).join('<br>') : 'Aucun document partagé.'}</p><div class="footer">WizmanHeritage | Preuve de consentement générée automatiquement</div></div></body></html>`;
-    const options = { format: 'A4' };
-    const file = { content: htmlContent };
-    const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+
+    await page.setContent(htmlContent, { waitUntil: 'networkidle0' }); // Attendre que la page soit stable
+
+    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true }); // Générer le PDF
+
+    await browser.close(); // Fermer le navigateur
+
     return pdfBuffer;
 }
 
@@ -177,8 +194,8 @@ export default async (req, res) => {
         const submissionDate = new Date().toLocaleString(lang === 'he' ? 'he-IL' : `${lang}-FR`, { timeZone: 'Europe/Paris' });
         const ipAddress = req.headers['x-forwarded-for'] || 'Non disponible';
 
-        // Génération du PDF de consentement.
-        const consentPdfBuffer = await generateConsentPdf({ name, email, submissionDate, ipAddress, files: clientFiles });
+        // Génération du PDF de consentement (avec le data object correctement formaté)
+        const consentPdfBuffer = await generateConsentPdf({ name: name, email: email, submissionDate: submissionDate, ipAddress: ipAddress, files: clientFiles });
         const consentAttachment = {
             content: consentPdfBuffer.toString('base64'), // Le contenu du PDF doit être en base64 pour SendGrid.
             filename: `Consentement_${name.replace(/ /g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`,
@@ -192,10 +209,9 @@ export default async (req, res) => {
             content: f.content.toString('base64') // Convertit le Buffer binaire en string Base64.
         }));
 
-        // Compilation de toutes les pièces jointes (celles du client et le PDF de consentement).
         const allAttachments = [...formattedClientFiles, consentAttachment];
 
-        // --- Configuration de l'EMAIL DE NOTIFICATION (POUR VOUS : contact@wizmanheritage.com) ---
+        // --- Configuration de l'EMAIL DE NOTIFICATION (POUR VOUS) ---
         const notificationBody = `
             <h1 style="color: #4B5320; font-size: 22px;">Nouvelle demande de ${name}</h1>
             <p>Vous avez reçu une nouvelle demande de contact. La fiche de consentement signée est jointe à cet email en format PDF.</p>
