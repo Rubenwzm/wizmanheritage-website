@@ -1,10 +1,7 @@
-// api/contact.js (VERSION FINALE DÉFINITIVE AVEC LOGO INTÉGRÉ)
+// api/contact.js (VERSION FINALE DÉFINITIVE AVEC TOUTES LES CORRECTIONS)
 
 import sgMail from '@sendgrid/mail';
 import busboy from 'busboy';
-// =======================================================
-// ON AJOUTE LES OUTILS POUR LIRE LE FICHIER DU LOGO
-// =======================================================
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -16,39 +13,59 @@ function createStyledEmail(content) {
     const textPrimary = '#2D2A25';
     const textSecondary = '#6B6358';
     return `
-    <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title><style>body { font-family: 'Inter', Arial, sans-serif; }</style></head><body style="margin: 0; padding: 0; background-color: ${sandBeige}; font-family: Inter, Arial, sans-serif;"><div style="display: none; max-height: 0; overflow: hidden;">${preheader}</div><table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #FFFFFF; border: 1px solid #E6E2DB; border-radius: 16px; box-shadow: 0 8px 32px rgba(45, 42, 37, 0.06);"><tr><td align="center" style="padding: 20px 0;">
-    
-    <!-- =================================================================== -->
-    <!-- CORRECTION DU LOGO : On utilise un ID "cid:logo" au lieu d'une URL -->
-    <!-- =================================================================== -->
-    <img src="cid:logo" alt="WizmanHeritage Logo" width="180" style="display: block;">
-    
-    </td></tr><tr><td style="padding: 30px; color: ${textPrimary};">${body_content}</td></tr><tr><td align="center" style="padding: 20px 30px; background-color: #FEFCF8; border-top: 1px solid #E6E2DB; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;"><p style="margin: 0; color: ${textSecondary}; font-size: 12px;">${footer_text}</p></td></tr></table></body></html>`;
+    <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title><style>body { font-family: 'Inter', Arial, sans-serif; }</style></head><body style="margin: 0; padding: 0; background-color: ${sandBeige}; font-family: Inter, Arial, sans-serif;"><div style="display: none; max-height: 0; overflow: hidden;">${preheader}</div><table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #FFFFFF; border: 1px solid #E6E2DB; border-radius: 16px; box-shadow: 0 8px 32px rgba(45, 42, 37, 0.06);"><tr><td align="center" style="padding: 20px 0;"><img src="cid:logo" alt="WizmanHeritage Logo" width="180" style="display: block;"></td></tr><tr><td style="padding: 30px; color: ${textPrimary};">${body_content}</td></tr><tr><td align="center" style="padding: 20px 30px; background-color: #FEFCF8; border-top: 1px solid #E6E2DB; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;"><p style="margin: 0; color: ${textSecondary}; font-size: 12px;">${footer_text}</p></td></tr></table></body></html>`;
 }
 
-const confirmationContent = { /* ... (Vos traductions ici, pas de changement) ... */ };
+// ==================================================================
+// BLOC DE TRADUCTIONS RESTAURÉ
+// ==================================================================
+const confirmationContent = {
+    fr: {
+        title: "Confirmation de votre demande | WizmanHeritage",
+        preheader: "Nous avons bien reçu votre demande et revenons vers vous rapidement.",
+        greeting: "Bonjour {name},",
+        main_text: "Nous avons bien reçu votre demande et nous vous remercions de votre confiance.<br><br>Un membre de notre cabinet l'examinera avec la plus grande attention. <strong>WizmanHeritage s'engage à vous répondre dans un délai de 48 heures ouvrées.</strong><br><br>Votre demande est traitée avec la plus stricte confidentialité.",
+        closing: "Cordialement,",
+        team_name: "L'équipe WizmanHeritage",
+        footer_text: "&copy; 2024 WizmanHeritage. Tous droits réservés. Cet email est une confirmation de réception."
+    },
+    en: {
+        title: "Request Confirmation | WizmanHeritage",
+        preheader: "We have received your request and will get back to you shortly.",
+        greeting: "Dear {name},",
+        main_text: "We have successfully received your request and thank you for your trust.<br><br>A member of our firm will review it with the utmost care. <strong>WizmanHeritage commits to responding within 48 business hours.</strong><br><br>Your request is being handled with the strictest confidentiality.",
+        closing: "Sincerely,",
+        team_name: "The WizmanHeritage Team",
+        footer_text: "&copy; 2024 WizmanHeritage. All rights reserved. This email is a receipt confirmation."
+    },
+    he: {
+        title: "אישור קבלת פנייתך | WizmanHeritage",
+        preheader: "קיבלנו את פנייתך ונחזור אליך בהקדם.",
+        greeting: "שלום {name},",
+        main_text: "פנייתך התקבלה בהצלחה, ואנו מודים לך על אמונך.<br><br>נציג ממשרדנו יבחן את פנייתך בקפידה. <strong>WizmanHeritage מתחייבת להשיב לפנייתך תוך 48 שעות עסקים.</strong><br><br>פנייתך מטופלת בסודיות מוחלטת.",
+        closing: "בכבוד רב,",
+        team_name: "צוות WizmanHeritage",
+        footer_text: "&copy; 2024 WizmanHeritage. כל הזכויות שמורות. אימייל זה מהווה אישור קבלה."
+    }
+};
 
 export default async (req, res) => {
     if (req.method !== 'POST') {
         return res.status(405).send('Method Not Allowed');
     }
     try {
-        // --- Lecture du logo ---
-        // On cherche le fichier Logo_WizmanHeritage.png qui est à la racine de votre projet
         const logoPath = path.join(process.cwd(), 'Logo_WizmanHeritage.png');
         const logoBuffer = await fs.readFile(logoPath);
         const logoBase64 = logoBuffer.toString('base64');
 
-        // On prépare le logo comme une pièce jointe spéciale "inline"
         const logoAttachment = {
             content: logoBase64,
             filename: 'Logo_WizmanHeritage.png',
             type: 'image/png',
             disposition: 'inline',
-            contentId: 'logo', // Cet ID doit correspondre au "cid:logo" dans l'image HTML
+            contentId: 'logo',
         };
 
-        // --- Le reste du code ne change pas ---
         const requestBodyBuffer = await new Promise((resolve, reject) => {
             const chunks = [];
             req.on('data', (chunk) => chunks.push(chunk));
@@ -60,11 +77,11 @@ export default async (req, res) => {
                 const fields = {}, files = [];
                 const bb = busboy({ headers });
                 bb.on('file', (name, file, info) => {
-                    const { filename, mimeType } = info;
+                    const { filename } = info;
                     if (!filename) { file.resume(); return; }
                     const chunks = [];
                     file.on('data', (chunk) => chunks.push(chunk));
-                    file.on('end', () => files.push({ content: Buffer.concat(chunks), filename, type: mimeType, disposition: 'attachment' }));
+                    file.on('end', () => files.push({ content: Buffer.concat(chunks), filename, type: info.mimeType, disposition: 'attachment' }));
                 });
                 bb.on('field', (name, val) => { fields[name] = val; });
                 bb.on('close', () => resolve({ fields, files }));
@@ -97,7 +114,6 @@ export default async (req, res) => {
             from: 'noreply@wizmanheritage.com',
             subject: `WizmanHeritage | Nouvelle demande de ${name} | Consentement inclus`,
             html: createStyledEmail({ title: `Nouvelle demande de ${name}`, preheader: message.substring(0, 50), body_content: notificationBody, footer_text: "Email envoyé depuis wizmanheritage.com" }),
-            // On ajoute les fichiers du client ET le logo
             attachments: [...formattedClientFiles, logoAttachment]
         };
         const clientContent = confirmationContent[lang] || confirmationContent.fr;
@@ -107,7 +123,6 @@ export default async (req, res) => {
             from: 'contact@wizmanheritage.com',
             subject: clientContent.title,
             html: createStyledEmail({ title: clientContent.title, preheader: clientContent.preheader, body_content: confirmationBody, footer_text: clientContent.footer_text }),
-            // On ajoute le logo ici aussi pour l'e-mail du client
             attachments: [logoAttachment]
         };
         await Promise.all([ sgMail.send(notificationMsg), sgMail.send(autoresponderMsg) ]);
