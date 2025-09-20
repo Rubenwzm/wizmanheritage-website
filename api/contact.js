@@ -3,7 +3,6 @@
 // Importations des librairies nécessaires.
 import sgMail from '@sendgrid/mail';
 import busboy from 'busboy';
-// NOTE: html-pdf-node, chromium, puppeteer-core ne sont PLUS importés car la génération de PDF est retirée.
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -89,11 +88,6 @@ const confirmationContent = {
     }
 };
 
-// ==================================================================
-// NOTE : La fonction generateConsentPdf et ses dépendances sont retirées.
-// La fiche de consentement sera incluse directement dans l'email.
-// ==================================================================
-
 // GESTIONNAIRE PRINCIPAL DE LA REQUÊTE VERCEL (Exportation par défaut)
 export default async (req, res) => {
     if (req.method !== 'POST') {
@@ -122,9 +116,24 @@ export default async (req, res) => {
 
                 bb.on('file', (name, file, info) => {
                     const { filename, mimeType } = info;
+
+                    // ==========================================================
+                    //  CORRECTION APPLIQUÉE ICI
+                    //  On vérifie si un nom de fichier existe. S'il n'y en a pas,
+                    //  cela signifie que l'utilisateur n'a rien envoyé.
+                    // ==========================================================
+                    if (!filename) {
+                        // On doit "consommer" le flux de fichier vide pour que le
+                        // processus continue, sinon il peut se bloquer.
+                        file.resume();
+                        return;
+                    }
+                    // ==========================================================
+
                     const chunks = [];
                     file.on('data', (chunk) => chunks.push(chunk));
                     file.on('end', () => {
+                        // On n'ajoute le fichier que s'il a un nom.
                         files.push({ content: Buffer.concat(chunks), filename, type: mimeType, disposition: 'attachment' });
                     });
                 });
@@ -160,7 +169,7 @@ export default async (req, res) => {
         const ipAddress = req.headers['x-forwarded-for'] || 'Non disponible';
 
         // ==================================================================
-        // NOUVEAU : FICHE D'ENGAGEMENT INCLUSE DIRECTEMENT DANS L'EMAIL
+        // FICHE D'ENGAGEMENT INCLUSE DIRECTEMENT DANS L'EMAIL
         // ==================================================================
         const engagementSheetHtml = `
             <hr style="border: none; border-top: 1px solid #E6E2DB; margin: 30px 0;">
@@ -176,8 +185,7 @@ export default async (req, res) => {
                 <p style="font-weight: bold;">${clientFiles.length > 0 ? clientFiles.map(f => f.filename).join(', ') : 'Aucun document partagé.'}</p>
             </div>
         `;
-        // ==================================================================
-
+        
         // Préparation des pièces jointes du client pour SendGrid (elles doivent être en base64).
         const formattedClientFiles = clientFiles.map(f => ({
             ...f,
@@ -205,7 +213,7 @@ export default async (req, res) => {
                 body_content: notificationBody,
                 footer_text: "Email envoyé depuis wizmanheritage.com"
             }),
-            attachments: formattedClientFiles // Seulement les fichiers du client, pas de PDF généré.
+            attachments: formattedClientFiles
         };
 
         // --- Configuration de l'EMAIL DE CONFIRMATION (POUR LE CLIENT) ---
