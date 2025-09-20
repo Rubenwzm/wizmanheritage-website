@@ -1,4 +1,4 @@
-// api/contact.js (VERSION FINALE DÉFINITIVE AVEC TOUTES LES CORRECTIONS)
+// api/contact.js (VERSION FINALE AVEC CORRECTION contentId)
 
 import sgMail from '@sendgrid/mail';
 import busboy from 'busboy';
@@ -16,9 +16,6 @@ function createStyledEmail(content) {
     <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title><style>body { font-family: 'Inter', Arial, sans-serif; }</style></head><body style="margin: 0; padding: 0; background-color: ${sandBeige}; font-family: Inter, Arial, sans-serif;"><div style="display: none; max-height: 0; overflow: hidden;">${preheader}</div><table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #FFFFFF; border: 1px solid #E6E2DB; border-radius: 16px; box-shadow: 0 8px 32px rgba(45, 42, 37, 0.06);"><tr><td align="center" style="padding: 20px 0;"><img src="cid:logo" alt="WizmanHeritage Logo" width="180" style="display: block;"></td></tr><tr><td style="padding: 30px; color: ${textPrimary};">${body_content}</td></tr><tr><td align="center" style="padding: 20px 30px; background-color: #FEFCF8; border-top: 1px solid #E6E2DB; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;"><p style="margin: 0; color: ${textSecondary}; font-size: 12px;">${footer_text}</p></td></tr></table></body></html>`;
 }
 
-// ==================================================================
-// BLOC DE TRADUCTIONS RESTAURÉ
-// ==================================================================
 const confirmationContent = {
     fr: {
         title: "Confirmation de votre demande | WizmanHeritage",
@@ -63,7 +60,7 @@ export default async (req, res) => {
             filename: 'Logo_WizmanHeritage.png',
             type: 'image/png',
             disposition: 'inline',
-            contentId: 'logo',
+            contentId: 'logo' // <-- LA CORRECTION EST ICI
         };
 
         const requestBodyBuffer = await new Promise((resolve, reject) => {
