@@ -6,11 +6,11 @@ class WizmanHeritage {
     this.toastCounter = 0;
     this.cookieConsent = null;
 
-    // Messages de notification multilingues
+    // Messages de notification multilingues (avec apostrophes corrigées)
     this.notificationMessages = {
       fr: {
         'form-success': 'Votre demande a été transmise avec succès',
-        'form-error': 'Erreur lors de l\'envoi de votre demande',
+        'form-error': 'Erreur lors de l’envoi de votre demande', // Apostrophe corrigée
         'form-sending': 'Transmission en cours...',
         'language-changed': 'Français',
         'email-missing': 'Veuillez saisir votre adresse email',
@@ -61,7 +61,7 @@ class WizmanHeritage {
       }
     };
 
-    // Traductions complètes multilingues MODIFIÉES
+    // Traductions complètes multilingues (avec apostrophes corrigées)
     this.translations = {
       fr: {
         home: 'Accueil',
@@ -76,27 +76,27 @@ class WizmanHeritage {
         'cta-button': 'Consultation confidentielle',
         'services-title': 'Services Spécialisés',
         'service1-title': 'Recherche Successorale',
-        'service1-desc': 'Identification discrète et complète des héritiers et ayants droit à travers le monde avec méthodes d\'investigation avancées.',
+        'service1-desc': 'Identification discrète et complète des héritiers et ayants droit à travers le monde avec méthodes d’investigation avancées.',
         'service2-title': 'Documentation Généalogique',
         'service2-desc': 'Constitution de dossiers juridiques complets avec preuves documentaires authentifiées et certifiées.',
         'service3-title': 'Conseil Juridique Spécialisé',
         'service3-desc': 'Accompagnement par des experts en droit successoral international et collaboration avec notaires partenaires.',
-        'stat1-label': 'Années d\'expérience',
-        'stat2-label': 'Dossiers traités', // AJOUTÉ
-        'stat3-label': 'Disponible 24/7', // MODIFIÉ
+        'stat1-label': 'Années d’expérience',
+        'stat2-label': 'Dossiers traités',
+        'stat3-label': 'Disponible 24/7',
         'international-title': 'Présence Internationale',
         'france-title': 'France',
         'israel-title': 'Israël',
         'usa-title': 'États-Unis',
         'faq-title': 'Questions Fréquentes',
-        'faq1-question': 'Comment identifiez-vous les héritiers à l\'étranger ?',
-        'faq1-answer': 'Nous utilisons des méthodes d\'investigation documentées avec nos correspondants locaux.',
+        'faq1-question': 'Comment identifiez-vous les héritiers à l’étranger ?',
+        'faq1-answer': 'Nous utilisons des méthodes d’investigation documentées avec nos correspondants locaux.',
         'faq2-question': 'Mes données sont-elles confidentielles ?',
         'faq2-answer': 'Toutes les informations sont traitées selon le RGPD et ne sont jamais partagées sans consentement.',
         'faq3-question': 'Puis-je envoyer des documents en toute sécurité ?',
         'faq3-answer': 'Oui, les fichiers sont sécurisés et limités à 10MB chacun, conformément à notre politique de confidentialité.',
         'about-title': 'Excellence & Discrétion',
-        'about-desc': 'WizmanHeritage est un cabinet international reconnu pour son expertise en recherche successorale. Nous servons une clientèle internationale avec la plus haute confidentialité, utilisant des méthodes d\'investigation rigoureuses et respectant les législations de chaque pays d\'intervention.',
+        'about-desc': 'WizmanHeritage est un cabinet international reconnu pour son expertise en recherche successorale. Nous servons une clientèle internationale avec la plus haute confidentialité, utilisant des méthodes d’investigation rigoureuses et respectant les législations de chaque pays d’intervention.',
         'feature1': 'Confidentialité absolue',
         'feature2': 'Expertise internationale',
         'feature3': 'Résultats garantis',
@@ -108,7 +108,7 @@ class WizmanHeritage {
         'form-document': 'Documents (optionnel)',
         'file-upload-text': 'Cliquer ou déposer vos documents ici',
         'file-upload-hint': 'PDF, Word, Images acceptés (max 10MB chacun)',
-        'consent-text': 'J\'accepte que mes données soient traitées conformément à la politique de confidentialité.',
+        'consent-text': 'J’accepte que mes données soient traitées conformément à la politique de confidentialité.',
         'privacy-text': 'Vos informations sont traitées avec la plus stricte confidentialité et ne sont jamais partagées avec des tiers.',
         'form-submit': 'Envoyer ma demande',
         'footer-desc': 'Cabinet spécialisé en généalogie successorale internationale',
@@ -123,12 +123,11 @@ class WizmanHeritage {
         'cookie-text': 'Nous utilisons des cookies nécessaires au fonctionnement du site.',
         'cookie-accept': 'Accepter',
         'cookie-decline': 'Refuser',
-        // --- AJOUTS UNIQUEMENT ICI ---
         'privacy-page-title': 'Politique de Confidentialité - WizmanHeritage',
         'privacy-main-header': 'Politique de Confidentialité',
         'privacy-last-updated-label': 'Dernière mise à jour :',
         'privacy-date': '18 septembre 2025',
-        'privacy-intro': 'WizmanHeritage s\'engage à protéger vos données personnelles. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, et protégeons les informations que vous nous fournissez via notre site web, conformément au Règlement Général sur la Protection des Données (RGPD).',
+        'privacy-intro': 'WizmanHeritage s’engage à protéger vos données personnelles. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, et protégeons les informations que vous nous fournissez via notre site web, conformément au Règlement Général sur la Protection des Données (RGPD).',
         'privacy-h2-collection': '1. Collecte des Données Personnelles',
         'privacy-p-collection-1': 'Nous collectons des informations lorsque vous utilisez notre formulaire de contact ou interagissez avec notre site. Les données collectées peuvent inclure :',
         'privacy-li-collection-name': 'Nom complet : Pour vous identifier.',
@@ -142,23 +141,23 @@ class WizmanHeritage {
         'privacy-li-usage-reply': 'Répondre à vos demandes de consultation et fournir nos services de généalogie successorale.',
         'privacy-li-usage-manage': 'Gérer et sécuriser notre site web.',
         'privacy-li-usage-legal': 'Respecter nos obligations légales et réglementaires.',
-        'privacy-p-usage-2': 'Nous ne partageons jamais vos données avec des tiers à des fins marketing. Vos informations ne sont transmises qu\'avec votre consentement explicite ou si la loi l\'exige.',
+        'privacy-p-usage-2': 'Nous ne partageons jamais vos données avec des tiers à des fins marketing. Vos informations ne sont transmises qu’avec votre consentement explicite ou si la loi l’exige.',
         'privacy-h2-security': '3. Sécurité des Données',
-        'privacy-p-security-1': 'Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données contre tout accès, modification, divulgation ou destruction non autorisés. Les transferts de fichiers sont sécurisés et l\'accès à vos informations est strictement limité.',
+        'privacy-p-security-1': 'Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données contre tout accès, modification, divulgation ou destruction non autorisés. Les transferts de fichiers sont sécurisés et l’accès à vos informations est strictement limité.',
         'privacy-h2-retention': '4. Conservation des Données',
         'privacy-p-retention-1': 'Nous conservons vos données personnelles uniquement le temps nécessaire à la réalisation des finalités pour lesquelles elles ont été collectées, ou pour nous conformer à nos obligations légales.',
         'privacy-h2-rights': '5. Vos Droits',
         'privacy-p-rights-1': 'Conformément au RGPD, vous disposez des droits suivants concernant vos données personnelles :',
-        'privacy-li-rights-access': 'Droit d\'accès : Vous pouvez demander une copie des données que nous détenons sur vous.',
+        'privacy-li-rights-access': 'Droit d’accès : Vous pouvez demander une copie des données que nous détenons sur vous.',
         'privacy-li-rights-rectify': 'Droit de rectification : Vous pouvez demander la correction de données inexactes.',
-        'privacy-li-rights-erase': 'Droit à l\'effacement : Vous pouvez demander la suppression de vos données.',
-        'privacy-li-rights-limit': 'Droit à la limitation du traitement : Vous pouvez demander à ce que nous limitions l\'utilisation de vos données.',
+        'privacy-li-rights-erase': 'Droit à l’effacement : Vous pouvez demander la suppression de vos données.',
+        'privacy-li-rights-limit': 'Droit à la limitation du traitement : Vous pouvez demander à ce que nous limitions l’utilisation de vos données.',
         'privacy-p-rights-2': 'Pour exercer ces droits, veuillez nous contacter en utilisant le formulaire de contact de notre site.',
         'privacy-h2-cookies': '6. Cookies',
-        'privacy-p-cookies-1': 'Notre site utilise des cookies essentiels à son fonctionnement. Un bandeau de consentement vous permet d\'accepter ou de refuser leur utilisation lors de votre première visite.',
+        'privacy-p-cookies-1': 'Notre site utilise des cookies essentiels à son fonctionnement. Un bandeau de consentement vous permet d’accepter ou de refuser leur utilisation lors de votre première visite.',
         'privacy-h2-contact': '7. Contact',
         'privacy-p-contact-1': 'Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.',
-        'privacy-back-to-home': 'Retour à l\'accueil'
+        'privacy-back-to-home': 'Retour à l’accueil'
       },
       en: {
         home: 'Home',
@@ -220,7 +219,6 @@ class WizmanHeritage {
         'cookie-text': 'We use cookies necessary for the website to function.',
         'cookie-accept': 'Accept',
         'cookie-decline': 'Decline',
-        // --- AJOUTS UNIQUEMENT ICI ---
         'privacy-page-title': 'Privacy Policy - WizmanHeritage',
         'privacy-main-header': 'Privacy Policy',
         'privacy-last-updated-label': 'Last updated:',
@@ -317,7 +315,6 @@ class WizmanHeritage {
         'cookie-text': 'אנו משתמשים בעוגיות הנדרשות להפעלת האתר.',
         'cookie-accept': 'קבל',
         'cookie-decline': 'סרב',
-        // --- AJOUTS UNIQUEMENT ICI ---
         'privacy-page-title': 'מדיניות פרטיות - WizmanHeritage',
         'privacy-main-header': 'מדיניות פרטיות',
         'privacy-last-updated-label': 'עדכון אחרון:',
@@ -870,11 +867,12 @@ class WizmanHeritage {
     });
   }
 
-  // ===== SOUMISSION FORMULAIRE =====
-async handleFormSubmit(e) {
+  // ===== SOUMISSION FORMULAIRE (VERSION CORRIGÉE) =====
+  async handleFormSubmit(e) {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const form = e.target;
+    const formData = new FormData(form);
     const name = this.sanitizeInput(formData.get('name')?.toString().trim() || '');
     const email = this.sanitizeInput(formData.get('email')?.toString().trim() || '');
     const phone = this.sanitizeInput(formData.get('phone')?.toString().trim() || '');
@@ -906,16 +904,31 @@ async handleFormSubmit(e) {
     this.showToast(this.notificationMessages[this.currentLanguage]['form-sending'], 'info');
 
     try {
-        // Le payload est la FormData complète du formulaire
-        const payload = new FormData(e.target);
+        // On crée un nouvel objet FormData pour avoir un contrôle total
+        const payload = new FormData();
         
-        // On ajoute la langue actuelle au payload
+        // On ajoute les champs texte un par un
+        payload.append('name', name);
+        payload.append('email', email);
+        payload.append('phone', phone);
+        payload.append('message', message);
+        payload.append('consent', consent);
         payload.append('lang', this.currentLanguage);
+
+        // ===============================================================
+        //  CORRECTION PRINCIPALE : AJOUT DES FICHIERS MANUELLEMENT
+        //  On parcourt les fichiers stockés dans this.selectedFiles et on
+        //  les ajoute au payload qui sera envoyé au serveur.
+        // ===============================================================
+        this.selectedFiles.forEach(file => {
+            // Le nom 'document' doit correspondre au <input name="document"> du HTML
+            payload.append('document', file, file.name);
+        });
 
         // L'appel à la fonction Serverless Vercel
         const response = await fetch('/api/contact', {
             method: 'POST',
-            body: payload,
+            body: payload, // Ce payload contient maintenant les champs ET les fichiers
         });
 
         if (!response.ok) {
@@ -926,7 +939,7 @@ async handleFormSubmit(e) {
 
         // Si tout s'est bien passé
         this.showToast(this.notificationMessages[this.currentLanguage]['form-success'], 'success');
-        e.target.reset(); // Réinitialise le formulaire
+        form.reset(); // Réinitialise le formulaire
         this.selectedFiles = []; // Efface les fichiers sélectionnés
         this.renderFileNames(); // Met à jour l'affichage des fichiers
 
@@ -934,7 +947,8 @@ async handleFormSubmit(e) {
         console.error('Form submission error:', error);
         this.showToast(this.notificationMessages[this.currentLanguage]['form-error'], 'error');
     }
-}
+  }
+
 
   // ===== NOTIFICATIONS TOAST =====
   showToast(message, type = 'info') {
