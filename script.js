@@ -158,7 +158,9 @@ class WizmanHeritage {
         'privacy-p-contact-1': 'Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.',
         'privacy-back-to-home': 'Retour à l’accueil'
       },
-      en: { /* ... (Vos traductions en anglais ici) ... */ },
+      en: {
+        home: 'Home', services: 'Services', international: 'International', faq: 'FAQ', about: 'About', contact: 'Contact', 'hero-badge': 'International Firm • Confidential Service', 'hero-title': 'Heir Tracing & Probate Genealogy', 'hero-description': 'We discreetly handle complex cross-border estates, identifying rightful heirs and securing their rights with rigor and confidentiality.', 'cta-button': 'Confidential consultation', 'services-title': 'Specialized Services', 'service1-title': 'Heir Research', 'service1-desc': 'Discrete and comprehensive identification of heirs and beneficiaries worldwide using advanced investigation methods.', 'service2-title': 'Genealogical Documentation', 'service2-desc': 'Compilation of complete legal files with authenticated and certified documentary evidence.', 'service3-title': 'Specialized Legal Counsel', 'service3-desc': 'Support by experts in international inheritance law and collaboration with partner notaries.', 'stat1-label': 'Years of experience', 'stat2-label': 'Cases handled', 'stat3-label': 'Available 24/7', 'international-title': 'International Presence', 'france-title': 'France', 'israel-title': 'Israel', 'usa-title': 'United States', 'faq-title': 'Frequently Asked Questions', 'faq1-question': 'How do you identify heirs abroad?', 'faq1-answer': 'We use documented investigation methods with local correspondents.', 'faq2-question': 'Are my data confidential?', 'faq2-answer': 'All information is processed under GDPR and never shared without consent.', 'faq3-question': 'Can I upload files securely?', 'faq3-answer': 'Yes, files are secured and limited to 10MB each, according to our privacy policy.', 'about-title': 'Excellence & Discretion', 'about-desc': 'WizmanHeritage is an international firm renowned for heir research. We serve an international clientele with the utmost confidentiality, using rigorous methods and complying with the laws of each country of operation.', 'feature1': 'Absolute confidentiality', 'feature2': 'International expertise', 'feature3': 'Guaranteed results', 'contact-title': 'Confidential Contact', 'form-name': 'Full name', 'form-email': 'Email', 'form-phone': 'Phone (optional)', 'form-message': 'Your request', 'form-document': 'Documents (optional)', 'file-upload-text': 'Click or drop your documents here', 'file-upload-hint': 'PDF, Word, Images accepted (max 10MB each)', 'consent-text': 'I consent to my data being processed according to the privacy policy.', 'privacy-text': 'Your information is handled with strict confidentiality and never shared with third parties.', 'form-submit': 'Send my request', 'footer-desc': 'Firm specialized in international probate genealogy', 'footer-certified': 'Certified • Confidential • International', 'footer-contact-title': 'Professional Contact', 'footer-availability': 'Available 24/7 for emergencies', 'footer-legal-title': 'Legal Notice', 'footer-design': 'Designed by Ruben Wizman', 'footer-compliance': 'GDPR compliant • Protected data', 'footer-rights': 'All rights reserved.', 'privacy-policy': 'Privacy policy', 'cookie-text': 'We use cookies necessary for the website to function.', 'cookie-accept': 'Accept', 'cookie-decline': 'Decline', 'privacy-page-title': 'Privacy Policy - WizmanHeritage', 'privacy-main-header': 'Privacy Policy', 'privacy-last-updated-label': 'Last updated:', 'privacy-date': 'September 18, 2025', 'privacy-intro': 'WizmanHeritage is committed to protecting your personal data. This Privacy Policy describes how we collect, use, and protect the information you provide via our website, in accordance with the General Data Protection Regulation (GDPR).', 'privacy-h2-collection': '1. Personal Data Collection', 'privacy-p-collection-1': 'We collect information when you use our contact form or interact with our site. The data collected may include:', 'privacy-li-collection-name': 'Full name: To identify you.', 'privacy-li-collection-email': 'Email address: To communicate with you.', 'privacy-li-collection-phone': 'Phone number (optional): For direct contact if necessary.', 'privacy-li-collection-message': 'Message: Any information you provide regarding your request.', 'privacy-li-collection-docs': 'Documents: Files you voluntarily upload to support your request.', 'privacy-li-collection-nav': 'Browsing data: Such as cookies necessary for the site to function properly.', 'privacy-h2-usage': '2. Use of Your Data', 'privacy-p-usage-1': 'Your data is used exclusively to:', 'privacy-li-usage-reply': 'Respond to your consultation requests and provide our probate genealogy services.', 'privacy-li-usage-manage': 'Manage and secure our website.', 'privacy-li-usage-legal': 'Comply with our legal and regulatory obligations.', 'privacy-p-usage-2': 'We never share your data with third parties for marketing purposes. Your information is only shared with your explicit consent or if required by law.', 'privacy-h2-security': '3. Data Security', 'privacy-p-security-1': 'We implement technical and organizational security measures to protect your data from unauthorized access, modification, disclosure, or destruction. File transfers are secured, and access to your information is strictly limited.', 'privacy-h2-retention': '4. Data Retention', 'privacy-p-retention-1': 'We retain your personal data only for the time necessary to fulfill the purposes for which it was collected, or to comply with our legal obligations.', 'privacy-h2-rights': '5. Your Rights', 'privacy-p-rights-1': 'In accordance with the GDPR, you have the following rights regarding your personal data:', 'privacy-li-rights-access': 'Right of access: You can request a copy of the data we hold about you.', 'privacy-li-rights-rectify': 'Right to rectification: You can request the correction of inaccurate data.', 'privacy-li-rights-erase': 'Right to erasure: You can request the deletion of your data.', 'privacy-li-rights-limit': 'Right to restriction of processing: You can ask us to limit the use of your data.', 'privacy-p-rights-2': 'To exercise these rights, please contact us using our website\'s contact form.', 'privacy-h2-cookies': '6. Cookies', 'privacy-p-cookies-1': 'Our site uses cookies that are essential for its operation. A consent banner allows you to accept or decline their use during your first visit.', 'privacy-h2-contact': '7. Contact', 'privacy-p-contact-1': 'If you have any questions about this privacy policy, please contact us via the contact form on our main site.', 'privacy-back-to-home': 'Back to Home'
+      },
       he: { /* ... (Vos traductions en hébreu ici) ... */ }
     };
 
@@ -254,6 +256,7 @@ class WizmanHeritage {
     };
     updateButtons();
     setTimeout(updateButtons, 50);
+    setTimeout(updateButtons, 200);
   }
 
   updateSEOTags() {
@@ -295,7 +298,9 @@ class WizmanHeritage {
     });
     document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', () => this.closeMenu()));
     document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => this.setLanguage(btn.dataset.lang));
+      btn.addEventListener('click', () => {
+        this.setLanguage(btn.dataset.lang);
+      });
     });
     document.getElementById('hero-cta')?.addEventListener('click', () => {
       document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -365,18 +370,15 @@ class WizmanHeritage {
           const el = entry.target;
           observer.unobserve(el);
           const target = parseInt(el.getAttribute('data-count') || '0', 10);
-          let current = 0;
-          const increment = target / (1200 / 16); // ~60fps
-          const updateCounter = () => {
-            if (current < target) {
-              current += increment;
-              el.textContent = Math.ceil(current).toString();
-              requestAnimationFrame(updateCounter);
-            } else {
-              el.textContent = target.toString();
-            }
+          const duration = 1200;
+          const start = performance.now();
+          const step = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const value = Math.floor(progress * target);
+            el.textContent = String(value);
+            if (progress < 1) requestAnimationFrame(step);
           };
-          updateCounter();
+          requestAnimationFrame(step);
         }
       });
     }, { threshold: 0.3 });
@@ -385,7 +387,7 @@ class WizmanHeritage {
 
   addFiles(files) {
     const maxFiles = 5;
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 10 * 1024 * 1024;
     const allowedTypes = [ 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg' ];
     const newFiles = [];
     for (const file of files) {
