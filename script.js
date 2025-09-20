@@ -1,7 +1,3 @@
-// =====================================================================
-//   FICHIER SCRIPT.JS - VERSION FINALE ET CORRIGÉE
-// =====================================================================
-
 class WizmanHeritage {
   constructor() {
     this.currentLanguage = 'fr';
@@ -29,11 +25,42 @@ class WizmanHeritage {
         'cookies-accepted': 'Cookies acceptés',
         'cookies-declined': 'Cookies refusés'
       },
-      en: { /* ... autres langues ... */ },
-      he: { /* ... autres langues ... */ }
+      en: {
+        'form-success': 'Your request has been submitted successfully',
+        'form-error': 'Error sending your request',
+        'form-sending': 'Submitting...',
+        'language-changed': 'English',
+        'email-missing': 'Please enter your email address',
+        'name-missing': 'Please enter your full name',
+        'message-missing': 'Please specify your request',
+        'consent-missing': 'Please accept the privacy policy',
+        'file-selected': 'Document(s) selected',
+        'file-removed': 'Document removed',
+        'file-limit': 'Maximum 5 documents allowed',
+        'file-size': 'File too large (max 10MB)',
+        'file-type': 'File type not allowed',
+        'cookies-accepted': 'Cookies accepted',
+        'cookies-declined': 'Cookies declined'
+      },
+      he: {
+        'form-success': 'הבקשה שלך נשלחה בהצלחה',
+        'form-error': 'שגיאה בשליחת הבקשה',
+        'form-sending': 'שולח...',
+        'language-changed': 'עברית',
+        'email-missing': 'אנא הזן את כתובת האימייל שלך',
+        'name-missing': 'אנא הזן את שמך המלא',
+        'message-missing': 'אנא פרט את בקשתך',
+        'consent-missing': 'אנא אשר את מדיניות הפרטיות',
+        'file-selected': 'מסמך/ים נבחר/ו',
+        'file-removed': 'מסמך הוסר',
+        'file-limit': 'מקסימום 5 מסמכים מותרים',
+        'file-size': 'קובץ גדול מדי (מקס 10MB)',
+        'file-type': 'סוג קובץ לא מורשה',
+        'cookies-accepted': 'עוגיות התקבלו',
+        'cookies-declined': 'עוגיות נדחו'
+      }
     };
 
-    // Traductions complètes multilingues (avec apostrophes corrigées)
     this.translations = {
       fr: {
         home: 'Accueil',
@@ -131,124 +158,379 @@ class WizmanHeritage {
         'privacy-p-contact-1': 'Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.',
         'privacy-back-to-home': 'Retour à l’accueil'
       },
-      en: { /* ... traductions anglaises ... */ },
-      he: { /* ... traductions hébreu ... */ }
+      en: { /* ... (Vos traductions en anglais ici) ... */ },
+      he: { /* ... (Vos traductions en hébreu ici) ... */ }
     };
 
     this.init();
   }
 
-  init() { /* ... le reste de la fonction init ... */ }
+  init() {
+    this.loadSavedLanguage();
+    this.loadCookieConsent();
+    this.updateLanguage(this.currentLanguage);
+    this.setupEventListeners();
+    
+    const isMainPage = document.getElementById('contact-form');
+    if (isMainPage) {
+        this.setupIntersectionObservers();
+        this.setupFileUpload();
+        this.setupFAQ();
+        this.animateCounters();
+    }
+    
+    this.updateSEOTags();
+    this.showCookieBanner();
 
-  sanitizeInput(input) { /* ... */ }
-  isValidEmail(email) { /* ... */ }
-  loadCookieConsent() { /* ... */ }
-  saveCookieConsent(accepted) { /* ... */ }
-  showCookieBanner() { /* ... */ }
-  hideCookieBanner() { /* ... */ }
-  loadSavedLanguage() { /* ... */ }
-  saveLanguage(lang) { /* ... */ }
-  updateLanguageDOM() { /* ... */ }
-  updateSEOTags() { /* ... */ }
-  setLanguage(lang) { /* ... */ }
-  setupEventListeners() { /* ... */ }
-  toggleMenu() { /* ... */ }
-  closeMenu() { /* ... */ }
-  setupFAQ() { /* ... */ }
-  setupIntersectionObservers() { /* ... */ }
-  animateCounters() { /* ... */ }
-  addFiles(files) { /* ... */ }
-  removeFile(index) { /* ... */ }
-  renderFileNames() { /* ... */ }
-  setupFileUpload() { /* ... */ }
+    setTimeout(() => {
+      this.updateLanguageDOM();
+    }, 100);
+  }
 
+  sanitizeInput(input) {
+    if (typeof input !== 'string') return '';
+    return input.replace(/[<>&"']/g, (match) => {
+      const escapeMap = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;' };
+      return escapeMap[match];
+    });
+  }
 
-  // ===== SOUMISSION FORMULAIRE (VERSION 100% CORRIGÉE) =====
+  isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) && email.length <= 254;
+  }
+
+  loadCookieConsent() {
+    try {
+      const saved = localStorage.getItem('wizman_cookies');
+      if (saved) { this.cookieConsent = JSON.parse(saved); }
+    } catch (e) { console.warn('Unable to access localStorage:', e); }
+  }
+
+  saveCookieConsent(accepted) {
+    try {
+      this.cookieConsent = { accepted: accepted, timestamp: new Date().toISOString() };
+      localStorage.setItem('wizman_cookies', JSON.stringify(this.cookieConsent));
+    } catch (e) { console.warn('Unable to save to localStorage:', e); }
+  }
+
+  showCookieBanner() {
+    if (this.cookieConsent) return;
+    const banner = document.getElementById('cookie-banner');
+    if (banner) { setTimeout(() => { banner.classList.add('show'); }, 1000); }
+  }
+
+  hideCookieBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) { banner.classList.remove('show'); }
+  }
+
+  loadSavedLanguage() {
+    try {
+      const saved = localStorage.getItem('wizman_lang');
+      if (saved && this.translations[saved]) {
+        this.currentLanguage = saved;
+      } else {
+        const htmlLang = document.documentElement.lang || 'fr';
+        if (this.translations[htmlLang]) { this.currentLanguage = htmlLang; }
+      }
+    } catch (e) { console.warn('Unable to access localStorage:', e); this.currentLanguage = 'fr'; }
+    this.updateLanguageDOM();
+  }
+
+  saveLanguage(lang) {
+    try { localStorage.setItem('wizman_lang', lang); }
+    catch (e) { console.warn('Unable to save to localStorage:', e); }
+  }
+
+  updateLanguageDOM() {
+    const isRtl = this.currentLanguage === 'he';
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = this.currentLanguage;
+    const updateButtons = () => {
+      document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === this.currentLanguage);
+      });
+    };
+    updateButtons();
+    setTimeout(updateButtons, 50);
+  }
+
+  updateSEOTags() {
+    const dict = this.translations[this.currentLanguage] || {};
+    const path = window.location.pathname;
+    if (path.includes('privacy.html')) {
+        document.title = dict['privacy-page-title'] || 'Politique de Confidentialité - WizmanHeritage';
+    } else {
+        document.title = `WizmanHeritage - ${dict['hero-title'] || 'Expertise en Généalogie Successorale'}`;
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc && dict['hero-description']) { metaDesc.setAttribute('content', dict['hero-description']); }
+    }
+  }
+
+  setLanguage(lang) {
+    if (!this.translations[lang]) return;
+    this.currentLanguage = lang;
+    this.saveLanguage(lang);
+    this.updateLanguage(lang);
+    this.updateLanguageDOM();
+    this.updateSEOTags();
+    this.showToast(this.notificationMessages[lang]['language-changed'], 'info');
+  }
+
+  setupEventListeners() {
+    document.getElementById('cookie-accept')?.addEventListener('click', () => {
+      this.saveCookieConsent(true);
+      this.hideCookieBanner();
+      this.showToast(this.notificationMessages[this.currentLanguage]['cookies-accepted'], 'success');
+    });
+    document.getElementById('cookie-decline')?.addEventListener('click', () => {
+      this.saveCookieConsent(false);
+      this.hideCookieBanner();
+      this.showToast(this.notificationMessages[this.currentLanguage]['cookies-declined'], 'info');
+    });
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => this.toggleMenu());
+    document.getElementById('mobile-menu-overlay')?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) this.closeMenu();
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', () => this.closeMenu()));
+    document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => this.setLanguage(btn.dataset.lang));
+    });
+    document.getElementById('hero-cta')?.addEventListener('click', () => {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    });
+    document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e));
+    const nav = document.getElementById('floating-nav');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.style.boxShadow = window.scrollY > 8 ? '0 8px 24px rgba(15,23,40,0.12)' : 'var(--glass-shadow)';
+      }, { passive: true });
+    }
+  }
+  
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    document.getElementById('mobile-menu-btn')?.classList.toggle('active', this.isMenuOpen);
+    document.getElementById('mobile-menu-overlay')?.classList.toggle('active', this.isMenuOpen);
+    document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+  }
+
+  closeMenu() {
+    if (!this.isMenuOpen) return;
+    this.isMenuOpen = false;
+    document.getElementById('mobile-menu-btn')?.classList.remove('active');
+    document.getElementById('mobile-menu-overlay')?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  setupFAQ() {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question?.addEventListener('click', () => {
+        const isOpen = question.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.faq-item .faq-question').forEach(q => q.setAttribute('aria-expanded', 'false'));
+        document.querySelectorAll('.faq-item .faq-answer').forEach(a => a.classList.remove('open'));
+        if (!isOpen) {
+          question.setAttribute('aria-expanded', 'true');
+          item.querySelector('.faq-answer')?.classList.add('open');
+        }
+      });
+    });
+  }
+
+  setupIntersectionObservers() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.service-card, .stat-card, .feature-item, .flag-item, .faq-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  }
+
+  animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    if (!counters.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          observer.unobserve(el);
+          const target = parseInt(el.getAttribute('data-count') || '0', 10);
+          let current = 0;
+          const increment = target / (1200 / 16); // ~60fps
+          const updateCounter = () => {
+            if (current < target) {
+              current += increment;
+              el.textContent = Math.ceil(current).toString();
+              requestAnimationFrame(updateCounter);
+            } else {
+              el.textContent = target.toString();
+            }
+          };
+          updateCounter();
+        }
+      });
+    }, { threshold: 0.3 });
+    counters.forEach(c => observer.observe(c));
+  }
+
+  addFiles(files) {
+    const maxFiles = 5;
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    const allowedTypes = [ 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg' ];
+    const newFiles = [];
+    for (const file of files) {
+      if (this.selectedFiles.length + newFiles.length >= maxFiles) { this.showToast(this.notificationMessages[this.currentLanguage]['file-limit'], 'warning'); break; }
+      if (!allowedTypes.includes(file.type)) { this.showToast(this.notificationMessages[this.currentLanguage]['file-type'], 'error'); continue; }
+      if (file.size > maxSize) { this.showToast(this.notificationMessages[this.currentLanguage]['file-size'], 'error'); continue; }
+      if (file.name.length > 255 || /[<>:"/\\|?*]/.test(file.name)) { this.showToast('Nom de fichier invalide', 'error'); continue; }
+      newFiles.push(file);
+    }
+    if (newFiles.length > 0) {
+      this.selectedFiles = [...this.selectedFiles, ...newFiles];
+      this.renderFileNames();
+      this.showToast(this.notificationMessages[this.currentLanguage]['file-selected'], 'success');
+    }
+  }
+
+  removeFile(index) {
+    this.selectedFiles = this.selectedFiles.filter((_, i) => i !== index);
+    this.renderFileNames();
+    this.showToast(this.notificationMessages[this.currentLanguage]['file-removed'], 'info');
+  }
+
+  renderFileNames() {
+    const fileNamesEl = document.getElementById('file-upload-names');
+    const fileWrapper = document.querySelector('.file-upload-wrapper');
+    if (!fileNamesEl || !fileWrapper) return;
+    fileNamesEl.innerHTML = '';
+    fileWrapper.classList.toggle('has-file', this.selectedFiles.length > 0);
+    this.selectedFiles.forEach((file, index) => {
+      const container = document.createElement('div');
+      container.className = 'file-name-container';
+      const fileName = document.createElement('span');
+      fileName.className = 'file-name';
+      fileName.textContent = file.name;
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'file-remove-btn';
+      removeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+      removeBtn.addEventListener('click', (e) => { e.stopPropagation(); this.removeFile(index); });
+      container.append(fileName, removeBtn);
+      fileNamesEl.appendChild(container);
+    });
+  }
+
+  setupFileUpload() {
+    const fileInput = document.getElementById('document');
+    const fileDisplay = document.getElementById('file-upload-display');
+    if (!fileInput || !fileDisplay) return;
+    const openPicker = () => fileInput.click();
+    fileDisplay.addEventListener('click', openPicker);
+    fileDisplay.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); } });
+    ['dragenter', 'dragover'].forEach(evt => fileDisplay.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); fileDisplay.classList.add('dragover'); }));
+    ['dragleave', 'drop'].forEach(evt => fileDisplay.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); fileDisplay.classList.remove('dragover'); }));
+    fileDisplay.addEventListener('drop', e => {
+        const files = Array.from(e.dataTransfer?.files || []);
+        this.addFiles(files);
+    });
+    fileInput.addEventListener('change', e => {
+        const files = Array.from(e.target?.files || []);
+        this.addFiles(files);
+        fileInput.value = '';
+    });
+  }
+
   async handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    
-    // Récupération et validation des champs texte (inchangé)
     const formData = new FormData(form);
     const name = this.sanitizeInput(formData.get('name')?.toString().trim() || '');
     const email = this.sanitizeInput(formData.get('email')?.toString().trim() || '');
     const phone = this.sanitizeInput(formData.get('phone')?.toString().trim() || '');
     const message = this.sanitizeInput(formData.get('message')?.toString().trim() || '');
     const consent = formData.get('consent');
-
-    if (!name || name.length < 2 || name.length > 100) {
-      this.showToast(this.notificationMessages[this.currentLanguage]['name-missing'], 'error');
-      return;
-    }
-    if (!email || !this.isValidEmail(email)) {
-      this.showToast(this.notificationMessages[this.currentLanguage]['email-missing'], 'error');
-      return;
-    }
-    if (!message || message.length < 10 || message.length > 2000) {
-      this.showToast(this.notificationMessages[this.currentLanguage]['message-missing'], 'error');
-      return;
-    }
-    if (!consent) {
-      this.showToast(this.notificationMessages[this.currentLanguage]['consent-missing'], 'error');
-      return;
-    }
-    if (phone && (phone.length > 20 || !/^[\d\s\-\+\(\)]+$/.test(phone))) {
-      this.showToast('Numéro de téléphone invalide', 'error');
-      return;
-    }
-
+    if (!name || name.length < 2 || name.length > 100) { this.showToast(this.notificationMessages[this.currentLanguage]['name-missing'], 'error'); return; }
+    if (!email || !this.isValidEmail(email)) { this.showToast(this.notificationMessages[this.currentLanguage]['email-missing'], 'error'); return; }
+    if (!message || message.length < 10 || message.length > 2000) { this.showToast(this.notificationMessages[this.currentLanguage]['message-missing'], 'error'); return; }
+    if (!consent) { this.showToast(this.notificationMessages[this.currentLanguage]['consent-missing'], 'error'); return; }
+    if (phone && (phone.length > 20 || !/^[\d\s\-+()]+$/.test(phone))) { this.showToast('Numéro de téléphone invalide', 'error'); return; }
     this.showToast(this.notificationMessages[this.currentLanguage]['form-sending'], 'info');
-
     try {
-        // On crée un NOUVEL objet FormData pour construire notre envoi.
-        // C'est plus sûr que de réutiliser celui du formulaire.
-        const payload = new FormData();
-        
-        // On ajoute tous les champs texte
-        payload.append('name', name);
-        payload.append('email', email);
-        payload.append('phone', phone);
-        payload.append('message', message);
-        payload.append('consent', consent);
-        payload.append('lang', this.currentLanguage);
-
-        // =====================================================================
-        //                    LA CORRECTION EST ICI
-        // On parcourt la liste des fichiers que vous avez sélectionnés 
-        // (this.selectedFiles) et on les ajoute un par un au "colis" (payload).
-        // =====================================================================
-        this.selectedFiles.forEach(file => {
-            payload.append('document', file, file.name);
-        });
-
-        // Envoi du colis complet (textes + fichiers) au serveur
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            body: payload,
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Server error: ${response.status} - ${errorData.message || response.statusText}`);
-        }
-
-        // Si tout a réussi
-        this.showToast(this.notificationMessages[this.currentLanguage]['form-success'], 'success');
-        form.reset();
-        this.selectedFiles = [];
-        this.renderFileNames();
-
+      const payload = new FormData();
+      payload.append('name', name);
+      payload.append('email', email);
+      payload.append('phone', phone);
+      payload.append('message', message);
+      payload.append('consent', consent);
+      payload.append('lang', this.currentLanguage);
+      this.selectedFiles.forEach(file => {
+        payload.append('document', file, file.name);
+      });
+      const response = await fetch('/api/contact', { method: 'POST', body: payload });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Server error: ${response.status} - ${errorData.message || response.statusText}`);
+      }
+      this.showToast(this.notificationMessages[this.currentLanguage]['form-success'], 'success');
+      form.reset();
+      this.selectedFiles = [];
+      this.renderFileNames();
     } catch (error) {
-        console.error('Form submission error:', error);
-        this.showToast(this.notificationMessages[this.currentLanguage]['form-error'], 'error');
+      console.error('Form submission error:', error);
+      this.showToast(this.notificationMessages[this.currentLanguage]['form-error'], 'error');
     }
   }
 
-  showToast(message, type = 'info') { /* ... */ }
-  updateLanguage(lang = this.currentLanguage) { /* ... */ }
+  showToast(message, type = 'info') {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) return;
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    const icon = document.createElement('div');
+    icon.className = 'toast-icon';
+    const icons = {
+      success: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>',
+      error: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>',
+      warning: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>',
+      info: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>'
+    };
+    icon.innerHTML = icons[type] || icons.info;
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = this.sanitizeInput(message);
+    const content = document.createElement('div');
+    content.className = 'toast-content';
+    content.append(icon, messageSpan);
+    toast.appendChild(content);
+    toastContainer.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
+    const remove = () => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 320);
+    };
+    setTimeout(remove, 4000);
+    toast.addEventListener('click', remove);
+  }
+
+  updateLanguage(lang = this.currentLanguage) {
+    const dict = this.translations[lang] || {};
+    document.querySelectorAll('[data-translate]').forEach(node => {
+      const key = node.getAttribute('data-translate');
+      const val = dict[key];
+      if (typeof val === 'string') { node.textContent = val; }
+    });
+  }
 }
 
-// Initialisation au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
   window.wizmanHeritage = new WizmanHeritage();
 });
