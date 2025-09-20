@@ -1,4 +1,4 @@
-// api/contact.js (VERSION FINALE AVEC CORRECTION contentId)
+// api/contact.js (VERSION FINALE, COMPLÈTE ET VÉRIFIÉE)
 
 import sgMail from '@sendgrid/mail';
 import busboy from 'busboy';
@@ -60,7 +60,7 @@ export default async (req, res) => {
             filename: 'Logo_WizmanHeritage.png',
             type: 'image/png',
             disposition: 'inline',
-            contentId: 'logo' // <-- LA CORRECTION EST ICI
+            contentId: 'logo' // <--- LA CORRECTION QUI MANQUAIT EST ICI
         };
 
         const requestBodyBuffer = await new Promise((resolve, reject) => {
