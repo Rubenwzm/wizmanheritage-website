@@ -37,12 +37,137 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/styles.css">
+    
+    <!-- Styles Spécifiques à la Page de Confidentialité (RESTAURÉS) -->
+    <style>
+        .privacy-page-body {
+            padding-top: 120px; /* Espace pour le menu flottant */
+        }
+        
+        .privacy-content-section {
+            padding-top: var(--spacing-xl);
+            padding-bottom: var(--spacing-3xl);
+        }
+
+        .privacy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--glass-bg-strong);
+            backdrop-filter: var(--glass-backdrop-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--glass-shadow-strong);
+        }
+        
+        [dir="rtl"] .privacy-container {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .privacy-container ul {
+            padding-left: 0;
+            padding-right: 1.5rem;
+        }
+
+        .privacy-container h1, .privacy-container h2 {
+            font-size: 1.8rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .privacy-container h1 { text-align: left; }
+        [dir="rtl"] .privacy-container h1 { text-align: right; }
+        .privacy-container h2:first-of-type { margin-top: 0; }
+
+        .privacy-container p,
+        .privacy-container li {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        
+        .privacy-container ul {
+            list-style-position: outside;
+            padding-left: 1.5rem;
+        }
+
+        .privacy-container a {
+            color: var(--primary-sage);
+            text-decoration: underline;
+        }
+        
+        .button-container {
+            margin-top: 3rem;
+            text-align: right;
+        }
+        
+        [dir="rtl"] .button-container {
+            text-align: left;
+        }
+
+        .privacy-container a.back-to-home {
+            display: inline-block;
+            width: auto;
+            background: var(--primary-sage);
+            color: var(--text-light);
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: var(--radius-full);
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-weight: var(--font-weight-semibold);
+            box-shadow: 0 8px 24px rgba(75, 83, 32, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .privacy-container a.back-to-home::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.15);
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .privacy-container a.back-to-home:hover::before { opacity: 1; }
+
+        .privacy-container a.back-to-home:hover {
+            background: var(--primary-sage-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(75, 83, 32, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            color: var(--text-light);
+        }
+
+        .privacy-container a.back-to-home:active { transform: translateY(-1px); }
+
+        @media (max-width: 768px) {
+            .privacy-content-section {
+                padding-top: var(--spacing-xl);
+                padding-bottom: var(--spacing-xl);
+            }
+            .privacy-container { padding: var(--spacing-lg); }
+
+            .privacy-container a.back-to-home {
+                padding: 1rem 1.8rem;
+                font-size: 0.95rem;
+                width: 100%;
+            }
+            
+            [dir="rtl"] .privacy-container a.back-to-home { font-size: 1rem; }
+        }
+    </style>
 </head>
 
-<!-- On ajoute une classe au body pour appliquer le padding-top -->
 <body class="privacy-page-body">
 
-    <!-- On ajoute le même menu flottant que sur l'accueil -->
     <nav class="floating-nav" id="floating-nav">
         <div class="nav-container">
             <div class="nav-brand">
@@ -58,16 +183,15 @@
                     </a>
                 </h1>
             </div>
-            <!-- Pas de menu de navigation de section ici -->
             <div class="desktop-nav">
-                <!-- Vide, ou un lien vers l'accueil si souhaité -->
+                <!-- Vide, car pas de liens de section ici -->
             </div>
-            <div class="language-switcher">
+             <div class="language-switcher">
                 <button class="lang-btn" data-lang="fr" type="button" aria-label="Français">FR</button>
                 <button class="lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
                 <button class="lang-btn" data-lang="he" type="button" aria-label="עברית">HE</button>
             </div>
-            <!-- Le menu burger n'est pas nécessaire ici car il n'y a pas de liens à afficher -->
+            <!-- Pas besoin de menu burger ici car il n'y a pas de liens de navigation mobile -->
         </div>
     </nav>
 
