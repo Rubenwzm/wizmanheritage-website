@@ -80,7 +80,7 @@
 
 html {
   scroll-behavior: smooth;
-  /* CORRECTION N°2 : Applique la couleur de fond ici pour éviter le blanc */
+  /* MODIFICATION 1 : Fond de page global */
   background-color: var(--bg-primary);
 }
 
@@ -912,6 +912,10 @@ section {
   transition: all var(--transition);
 }
 
+[dir="rtl"] .faq-question {
+    text-align: right;
+}
+
 .faq-question:hover {
   color: var(--primary-sage);
 }
@@ -940,16 +944,14 @@ section {
   padding: 0 var(--spacing-lg) var(--spacing-xl);
 }
 
+/* MODIFICATION 2 : Centrage des réponses FAQ sur TOUS les écrans */
 .faq-answer p {
-  margin: 0;
+  margin: 0 auto;
   color: var(--text-secondary);
   line-height: 1.6;
-  text-align: left; /* Aligné à gauche par défaut */
+  text-align: center;
   padding-top: var(--spacing-lg);
-}
-
-[dir="rtl"] .faq-answer p {
-    text-align: right;
+  max-width: 95%;
 }
 
 /* ===== ABOUT SECTION ===== */
@@ -1754,11 +1756,6 @@ section {
     padding: var(--spacing-2xl) var(--spacing-md);
   }
   
-  /* CORRECTION N°1 : Centrer les réponses FAQ sur mobile */
-  .faq-answer p {
-    text-align: center;
-  }
-
   .linkedin-link {
     justify-content: center;
     width: 100%;
@@ -1923,7 +1920,7 @@ a:focus {
   }
 }
 
-/* CORRECTION N°3 : Styles pour le header flottant de la page de confidentialité */
+/* MODIFICATION 3 : Styles pour le header flottant de la page de confidentialité */
 .privacy-page-body {
     padding-top: 120px; /* Ajoute de l'espace en haut pour ne pas être caché par le nav flottant */
 }
