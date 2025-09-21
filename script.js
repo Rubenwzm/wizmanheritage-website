@@ -40,7 +40,6 @@ class WizmanHeritage {
     this.updateLanguage(this.currentLanguage);
     this.setupEventListeners();
     
-    // Condition pour n'exécuter certaines fonctions que sur la page d'accueil
     if (document.getElementById('contact-form')) {
         this.setupIntersectionObservers();
         this.setupFileUpload();
@@ -123,8 +122,8 @@ class WizmanHeritage {
 
   updateLanguageDOM() {
     const isRtl = this.currentLanguage === 'he';
-    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     document.documentElement.lang = this.currentLanguage;
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     const updateButtons = () => {
       document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === this.currentLanguage);
@@ -161,36 +160,18 @@ class WizmanHeritage {
   }
 
   setLanguage(lang) {
-    if (!this.translations[lang]) return;
-    this.currentLanguage = lang;
+    if (!this.translations[lang] || lang === this.currentLanguage) return;
     this.saveLanguage(lang);
     const base = window.location.pathname;
     window.location.href = `${base}?lang=${lang}`;
   }
 
   setupEventListeners() {
-    document.getElementById('cookie-accept')?.addEventListener('click', () => {
-      this.saveCookieConsent(true);
-      this.hideCookieBanner();
-      this.showToast(this.notificationMessages[this.currentLanguage]['cookies-accepted'], 'success');
-    });
-    document.getElementById('cookie-decline')?.addEventListener('click', () => {
-      this.saveCookieConsent(false);
-      this.hideCookieBanner();
-      this.showToast(this.notificationMessages[this.currentLanguage]['cookies-declined'], 'info');
-    });
-    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => this.toggleMenu());
-    document.getElementById('mobile-menu-overlay')?.addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) this.closeMenu();
-    });
-    document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', () => this.closeMenu()));
-    document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
+    // Écouteurs globaux (présents sur toutes les pages)
+    document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => this.setLanguage(btn.dataset.lang));
     });
-    document.getElementById('hero-cta')?.addEventListener('click', () => {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    });
-    document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e));
+
     const nav = document.getElementById('floating-nav');
     if (nav) {
       window.addEventListener('scroll', () => {
@@ -198,16 +179,46 @@ class WizmanHeritage {
       }, { passive: true });
     }
 
-    const updateLinkWithLang = (elementId, basePath) => {
-        const link = document.getElementById(elementId);
-        if (link) {
-            link.href = `${basePath}?lang=${this.currentLanguage}`;
+    // Écouteurs pour la page d'accueil uniquement
+    if (document.getElementById('contact-form')) {
+        document.getElementById('cookie-accept')?.addEventListener('click', () => {
+          this.saveCookieConsent(true); this.hideCookieBanner();
+          this.showToast(this.notificationMessages[this.currentLanguage]['cookies-accepted'], 'success');
+        });
+        document.getElementById('cookie-decline')?.addEventListener('click', () => {
+          this.saveCookieConsent(false); this.hideCookieBanner();
+          this.showToast(this.notificationMessages[this.currentLanguage]['cookies-declined'], 'info');
+        });
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', () => this.toggleMenu());
+        document.getElementById('mobile-menu-overlay')?.addEventListener('click', (e) => {
+          if (e.target === e.currentTarget) this.closeMenu();
+        });
+        document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', () => this.closeMenu()));
+        document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.setLanguage(btn.dataset.lang));
+        });
+        document.getElementById('hero-cta')?.addEventListener('click', () => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        });
+        document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e));
+        
+        const privacyLink = document.getElementById('footer-privacy-link');
+        if (privacyLink) {
+            privacyLink.href = `/privacy_policy.html?lang=${this.currentLanguage}`;
         }
-    };
+    }
 
-    updateLinkWithLang('footer-privacy-link', '/privacy_policy.html');
-    updateLinkWithLang('privacy-logo-link', '/');
-    updateLinkWithLang('privacy-back-link', '/');
+    // Écouteurs pour la page de confidentialité uniquement
+    if (document.querySelector('.privacy-page-body')) {
+        const logoLink = document.getElementById('privacy-logo-link');
+        if (logoLink) {
+            logoLink.href = `/?lang=${this.currentLanguage}`;
+        }
+        const backLink = document.getElementById('privacy-back-link');
+        if (backLink) {
+            backLink.href = `/?lang=${this.currentLanguage}`;
+        }
+    }
   }
   
   toggleMenu() {
