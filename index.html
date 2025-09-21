@@ -1,446 +1,485 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WizmanHeritage - Expertise en Généalogie Successorale</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WizmanHeritage - Expertise en Généalogie Successorale</title>
 
-  <!-- SEO de base -->
-  <meta name="description" content="Cabinet international spécialisé dans la recherche successorale et généalogie. Nous identifions les héritiers et sécurisons les droits d'héritage avec discrétion et professionnalisme." />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://wizmanheritage.com/" />
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Cabinet international spécialisé dans la recherche successorale et généalogie. Nous identifions les héritiers et sécurisons les droits d'héritage avec discrétion et professionnalisme.">
+    <meta name="keywords"
+        content="généalogie, successorale, héritiers, recherche, international, confidentiel, droit, succession">
+    <meta name="author" content="Ruben Wizman">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wizmanheritage.com/">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wizmanheritage.com/" />
-  <meta property="og:title" content="WizmanHeritage - Expertise en Généalogie Successorale" />
-  <meta property="og:description" content="Cabinet international spécialisé dans la recherche successorale et généalogie. Discrétion et professionnalisme garantis." />
-  <meta property="og:site_name" content="WizmanHeritage" />
-  <meta property="og:locale" content="fr_FR" />
-  <meta property="og:image" content="https://wizmanheritage.com/Logo_WizmanHeritage.png" />
-  <meta property="og:image:alt" content="Logo WizmanHeritage" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wizmanheritage.com/">
+    <meta property="og:title" content="WizmanHeritage - Expertise en Généalogie Successorale">
+    <meta property="og:description"
+        content="Cabinet international spécialisé dans la recherche successorale et généalogie. Discrétion et professionnalisme garantis.">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="WizmanHeritage">
 
-  <!-- Données structurées (Organization) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "WizmanHeritage",
-    "url": "https://wizmanheritage.com",
-    "logo": "https://wizmanheritage.com/Logo_WizmanHeritage.png",
-    "contactPoint": [{
-      "@type": "ContactPoint",
-      "email": "contact@wizmanheritage.com",
-      "contactType": "customer support",
-      "availableLanguage": ["fr", "en", "he"]
-    }],
-    "sameAs": [
-      "https://www.linkedin.com/in/ruben-wizman-2b65b9239/"
-    ]
-  }
-  </script>
+    <!-- Multi-language alternates -->
+    <link rel="alternate" hreflang="fr" href="https://wizmanheritage.com/">
+    <link rel="alternate" hreflang="en" href="https://wizmanheritage.com/en/">
+    <link rel="alternate" hreflang="he" href="https://wizmanheritage.com/he/">
+    <link rel="alternate" hreflang="x-default" href="https://wizmanheritage.com/">
 
-  <!-- CSS (chemin RELATIF) -->
-  <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-  <!-- Cookie Banner -->
-  <div class="cookie-banner" id="cookie-banner" role="region" aria-label="Bannière cookies">
-    <div class="cookie-content">
-      <div class="cookie-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor" focusable="false" aria-hidden="true">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-        </svg>
-      </div>
-      <div class="cookie-text">
-        <p data-translate="cookie-text">Nous utilisons des cookies nécessaires au fonctionnement du site.</p>
-      </div>
-      <div class="cookie-actions">
-        <button class="cookie-btn cookie-accept" id="cookie-accept" type="button" data-translate="cookie-accept">Accepter</button>
-        <button class="cookie-btn cookie-decline" id="cookie-decline" type="button" data-translate="cookie-decline">Refuser</button>
-      </div>
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>
+            </div>
+            <div class="cookie-text">
+                <p data-translate="cookie-text">Nous utilisons des cookies nécessaires au fonctionnement du site.</p>
+            </div>
+            <div class="cookie-actions">
+                <button class="cookie-btn cookie-accept" id="cookie-accept"
+                    data-translate="cookie-accept">Accepter</button>
+                <button class="cookie-btn cookie-decline" id="cookie-decline"
+                    data-translate="cookie-decline">Refuser</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Navigation flottante -->
-  <nav class="floating-nav" id="floating-nav" aria-label="Navigation principale">
-    <div class="nav-container">
-      <div class="nav-brand">
-        <h1 class="logo-heading">
-          <a href="/" aria-label="WizmanHeritage - Accueil">
-            <span class="sr-only">WizmanHeritage</span>
+    <!-- Navigation flottante -->
+    <nav class="floating-nav" id="floating-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1 class="logo-heading">
+                    <a href="/" aria-label="WizmanHeritage - Accueil">
+                        <span class="sr-only">Wizman Heritage</span>
 
-            <!-- Logo pour desktop -->
-            <div class="logo-desktop">
-              <img src="Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo-image-desktop" />
+                        <!-- Logo pour desktop -->
+                        <div class="logo-desktop">
+                            <img src="Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo-image-desktop">
+                        </div>
+
+
+                        <!-- Logo pour mobile -->
+                        <div class="logo-mobile">
+                            <img src="Icon_WizmanHeritage.svg" alt="Icône WizmanHeritage" class="logo-image-mobile">
+                        </div>
+
+
+                    </a>
+                </h1>
             </div>
 
-            <!-- Logo pour mobile -->
-            <div class="logo-mobile">
-              <img src="Icon_WizmanHeritage.svg" alt="Icône WizmanHeritage" class="logo-image-mobile" />
-            </div>
-          </a>
-        </h1>
-      </div>
+            <!-- Navigation desktop -->
+            <div class="desktop-nav">
+                <a href="#home" class="nav-link" data-translate="home">Accueil</a>
+                <a href="#services" class="nav-link" data-translate="services">Services</a>
+                <a href="#international" class="nav-link" data-translate="international">International</a>
+                <a href="#faq" class="nav-link" data-translate="faq">FAQ</a>
+                <a href="#about" class="nav-link" data-translate="about">À propos</a>
+                <a href="#contact" class="nav-link" data-translate="contact">Contact</a>
 
-      <!-- Navigation desktop -->
-      <div class="desktop-nav">
-        <a href="#home" class="nav-link" data-translate="home">Accueil</a>
-        <a href="#services" class="nav-link" data-translate="services">Services</a>
-        <a href="#international" class="nav-link" data-translate="international">International</a>
-        <a href="#faq" class="nav-link" data-translate="faq">FAQ</a>
-        <a href="#about" class="nav-link" data-translate="about">À propos</a>
-        <a href="#contact" class="nav-link" data-translate="contact">Contact</a>
-
-        <!-- Sélecteur de langue -->
-        <div class="language-switcher" aria-label="Sélection de la langue">
-          <button class="lang-btn" data-lang="fr" type="button" aria-label="Français">FR</button>
-          <button class="lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
-          <button class="lang-btn" data-lang="he" type="button" aria-label="עברית">HE</button>
-        </div>
-      </div>
-
-      <!-- Bouton menu mobile -->
-      <button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-label="Menu mobile" aria-expanded="false" aria-controls="mobile-menu-overlay">
-        <div class="hamburger" id="hamburger">
-          <span></span><span></span><span></span>
-        </div>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Menu mobile -->
-  <div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true">
-    <div class="mobile-menu-popup" id="mobile-menu-popup" role="dialog" aria-modal="true" aria-label="Menu mobile">
-      <div class="mobile-menu-content">
-        <div class="mobile-nav-links">
-          <a href="#home" class="mobile-nav-link" data-translate="home">Accueil</a>
-          <a href="#services" class="mobile-nav-link" data-translate="services">Services</a>
-          <a href="#international" class="mobile-nav-link" data-translate="international">International</a>
-          <a href="#faq" class="mobile-nav-link" data-translate="faq">FAQ</a>
-          <a href="#about" class="mobile-nav-link" data-translate="about">À propos</a>
-          <a href="#contact" class="mobile-nav-link" data-translate="contact">Contact</a>
-        </div>
-
-        <div class="mobile-language-switcher" aria-label="Sélection de la langue (mobile)">
-          <button class="mobile-lang-btn" data-lang="fr" type="button" aria-label="Français">Français</button>
-          <button class="mobile-lang-btn" data-lang="en" type="button" aria-label="English">English</button>
-          <button class="mobile-lang-btn" data-lang="he" type="button" aria-label="עברית">עברית</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <main id="home">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span data-translate="hero-badge">Cabinet International • Service Confidentiel</span>
-        </div>
-        <h1 class="hero-title" data-translate="hero-title">Expertise en Généalogie Successorale</h1>
-        <p class="hero-description" data-translate="hero-description">
-          Nous accompagnons avec discrétion les successions internationales complexes, identifiant les
-          héritiers légitimes et sécurisant leurs droits avec rigueur et confidentialité.
-        </p>
-        <button class="cta-button" id="hero-cta" type="button">
-          <span data-translate="cta-button">Consultation confidentielle</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-      <div class="container">
-        <h2 class="section-title" data-translate="services-title">Services Spécialisés</h2>
-
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" focusable="false">
-                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.505 4.505 0 0 1 9.5 14z" />
-              </svg>
-            </div>
-            <h3 data-translate="service1-title">Recherche Successorale</h3>
-            <p data-translate="service1-desc">
-              Identification discrète et complète des héritiers et ayants droit à travers le monde avec
-              méthodes d'investigation avancées.
-            </p>
-          </div>
-
-          <div class="service-card">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" focusable="false">
-                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM18 20H6V4H13V9H18V20Z" />
-                <path d="M8 12h8v2H8zm0 3h8v2H8zm0-6h5v2H8z" />
-              </svg>
-            </div>
-            <h3 data-translate="service2-title">Documentation Généalogique</h3>
-            <p data-translate="service2-desc">
-              Constitution de dossiers juridiques complets avec preuves documentaires authentifiées et
-              certifiées.
-            </p>
-          </div>
-
-          <div class="service-card">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" focusable="false">
-                <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" />
-                <path d="M7 18C7 19.1 7.9 20 9 20H15C16.1 20 17 19.1 17 18H7Z" />
-                <path d="M9 20V22H15V20H9Z" />
-                <path d="M5 11C5 10.45 5.45 10 6 10C6.55 10 7 10.45 7 11V13C7 13.55 6.55 14 6 14C5.45 14 5 13.55 5 13V11Z" />
-                <path d="M17 11C17 10.45 17.45 10 18 10C18.55 10 19 10.45 19 11V13C19 13.55 18.55 14 18 14C17.45 14 17 13.55 17 13V11Z" />
-                <path d="M3 13H9V15H3V13Z" />
-                <path d="M15 13H21V15H15V13Z" />
-              </svg>
-            </div>
-            <h3 data-translate="service3-title">Conseil Juridique Spécialisé</h3>
-            <p data-translate="service3-desc">
-              Accompagnement par des experts en droit successoral international et collaboration avec
-              notaires partenaires.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-grid" aria-label="Indicateurs clés">
-          <div class="stat-card">
-            <div class="stat-number" data-count="200">0</div>
-            <div class="stat-suffix">+</div>
-            <p class="stat-label" data-translate="stat2-label">Dossiers traités</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" data-count="4">0</div>
-            <div class="stat-suffix">+</div>
-            <p class="stat-label" data-translate="stat1-label">Années d'expérience</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" data-count="24">0</div>
-            <div class="stat-suffix">/7</div>
-            <p class="stat-label" data-translate="stat3-label">Disponible 24/7</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- International Presence Section -->
-    <section id="international" class="international-section">
-      <div class="container">
-        <h2 class="section-title" data-translate="international-title">Présence Internationale</h2>
-
-        <div class="flags-container" aria-label="Pays couverts">
-          <div class="flag-item">
-            <div class="flag-icon france-flag">
-              <img src="https://flagpedia.net/data/flags/w580/fr.webp" alt="Drapeau France" loading="lazy" />
-            </div>
-            <h3 data-translate="france-title">France</h3>
-          </div>
-
-          <div class="flag-item">
-            <div class="flag-icon israel-flag">
-              <img src="https://flagpedia.net/data/flags/w580/il.webp" alt="Drapeau Israël" loading="lazy" />
-            </div>
-            <h3 data-translate="israel-title">Israël</h3>
-          </div>
-
-          <div class="flag-item">
-            <div class="flag-icon usa-flag">
-              <img src="https://flagpedia.net/data/flags/w580/us.webp" alt="Drapeau États-Unis" loading="lazy" />
-            </div>
-            <h3 data-translate="usa-title">États-Unis</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="faq-section">
-      <div class="container">
-        <h2 class="section-title" data-translate="faq-title">Questions Fréquentes</h2>
-
-        <div class="faq-container">
-          <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false">
-              <span data-translate="faq1-question">Comment identifiez-vous les héritiers à l'étranger ?</span>
-              <div class="faq-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z"/></svg>
-              </div>
-            </button>
-            <div class="faq-answer">
-              <p data-translate="faq1-answer">Nous utilisons des méthodes d'investigation documentées avec nos correspondants locaux.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false">
-              <span data-translate="faq2-question">Mes données sont-elles confidentielles ?</span>
-              <div class="faq-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z"/></svg>
-              </div>
-            </button>
-            <div class="faq-answer">
-              <p data-translate="faq2-answer">Toutes les informations sont traitées selon le RGPD et ne sont jamais partagées sans consentement.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false">
-              <span data-translate="faq3-question">Puis-je envoyer des documents en toute sécurité ?</span>
-              <div class="faq-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z"/></svg>
-              </div>
-            </button>
-            <div class="faq-answer">
-              <p data-translate="faq3-answer">Oui, les fichiers sont sécurisés et limités à 10MB chacun, conformément à notre politique de confidentialité.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section">
-      <div class="container">
-        <h2 class="section-title" data-translate="about-title">Excellence & Discrétion</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <p data-translate="about-desc">
-              WizmanHeritage est un cabinet international reconnu pour son expertise en recherche successorale. Nous servons une clientèle internationale avec la plus haute confidentialité, utilisant des méthodes d'investigation rigoureuses et respectant les législations de chaque pays d'intervention.
-            </p>
-          </div>
-          <div class="about-features">
-            <div class="feature-item"><span data-translate="feature1">Confidentialité absolue</span></div>
-            <div class="feature-item"><span data-translate="feature2">Expertise internationale</span></div>
-            <div class="feature-item"><span data-translate="feature3">Résultats garantis</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-      <div class="container">
-        <h2 class="section-title" data-translate="contact-title">Contact Confidentiel</h2>
-
-        <form class="contact-form" id="contact-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name" data-translate="form-name">Nom complet</label>
-              <input type="text" id="name" name="name" required aria-required="true" autocomplete="name" />
-            </div>
-
-            <div class="form-group">
-              <label for="email" data-translate="form-email">Email</label>
-              <input type="email" id="email" name="email" required aria-required="true" autocomplete="email" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="phone" data-translate="form-phone">Téléphone (optionnel)</label>
-            <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" />
-          </div>
-
-          <div class="form-group">
-            <label for="message" data-translate="form-message">Votre demande</label>
-            <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Décrivez votre situation en quelques mots. Toutes les informations resteront strictement confidentielles." data-translate="message-placeholder"></textarea>
-          </div>
-
-          <!-- Upload documents -->
-          <div class="form-group">
-            <label for="document" data-translate="form-document">Documents (optionnel)</label>
-            <div class="file-upload-wrapper">
-              <input type="file" id="document" name="document" class="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" multiple aria-describedby="file-help" />
-              <div class="file-upload-display" id="file-upload-display" role="button" tabindex="0" aria-controls="document" aria-label="Ajouter des documents">
-                <div class="file-upload-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor" focusable="false">
-                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-                    <path d="M12,11L8,15H10V19H14V15H16L12,11Z" />
-                  </svg>
+                <!-- Sélecteur de langue -->
+                <div class="language-switcher">
+                    <button class="lang-btn" data-lang="fr" type="button" aria-label="Français">FR</button>
+                    <button class="lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="he" type="button" aria-label="עברית">HE</button>
                 </div>
-                <div class="file-upload-content">
-                  <span class="file-upload-text" data-translate="file-upload-text">Cliquer ou déposer vos documents ici</span>
-                  <span class="file-upload-hint" id="file-help" data-translate="file-upload-hint">PDF, Word, Images acceptés (max 10MB chacun)</span>
-                  <div class="file-upload-names" id="file-upload-names"></div>
+            </div>
+
+            <!-- Bouton menu mobile -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-label="Menu mobile"
+                aria-expanded="false">
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
                 </div>
-              </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu mobile -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true">
+        <div class="mobile-menu-popup" id="mobile-menu-popup">
+            <div class="mobile-menu-content">
+                <div class="mobile-nav-links">
+                    <a href="#home" class="mobile-nav-link" data-translate="home">Accueil</a>
+                    <a href="#services" class="mobile-nav-link" data-translate="services">Services</a>
+                    <a href="#international" class="mobile-nav-link" data-translate="international">International</a>
+                    <a href="#faq" class="mobile-nav-link" data-translate="faq">FAQ</a>
+                    <a href="#about" class="mobile-nav-link" data-translate="about">À propos</a>
+                    <a href="#contact" class="mobile-nav-link" data-translate="contact">Contact</a>
+                </div>
+
+                <div class="mobile-language-switcher">
+                    <button class="mobile-lang-btn" data-lang="fr" type="button" aria-label="Français">Français</button>
+                    <button class="mobile-lang-btn" data-lang="en" type="button" aria-label="English">English</button>
+                    <button class="mobile-lang-btn" data-lang="he" type="button" aria-label="עברית">עברית</button>
+                </div>
             </div>
-          </div>
-
-          <!-- Consent -->
-          <div class="form-consent">
-            <label class="consent-checkbox">
-              <input type="checkbox" id="consent" name="consent" required />
-              <span class="checkmark" aria-hidden="true"></span>
-              <span data-translate="consent-text">J'accepte que mes données soient traitées conformément à la politique de confidentialité.</span>
-            </label>
-          </div>
-
-          <div class="form-privacy">
-            <div class="privacy-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" focusable="false">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
-            </div>
-            <p data-translate="privacy-text">Vos informations sont traitées avec la plus stricte confidentialité et ne sont jamais partagées avec des tiers.</p>
-          </div>
-
-          <button type="submit" class="submit-button" id="submit-btn">
-            <span data-translate="form-submit">Envoyer ma demande</span>
-          </button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>WizmanHeritage</h3>
-          <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
         </div>
-
-        <div class="footer-section">
-          <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
-          <div class="footer-contact">
-            <p data-translate="footer-availability">Disponible 24/7 pour urgences</p>
-          </div>
-        </div>
-
-        <div class="footer-section">
-          <h4 data-translate="footer-legal-title">Mentions Légales</h4>
-          <p data-translate="footer-design">Conçu par Ruben Wizman</p>
-          <p data-translate="footer-compliance">Conforme RGPD • Données protégées</p>
-          <a href="privacy_policy.html" data-translate="privacy-policy">Politique de confidentialité</a>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="footer-bottom-content">
-          <div class="footer-certifications">
-            <span data-translate="footer-certified">Certifié • Confidentiel • International</span>
-          </div>
-          <div class="linkedin-container">
-            <a href="https://www.linkedin.com/in/ruben-wizman-2b65b9239/?originalSubdomain=fr"
-               target="_blank" rel="noopener noreferrer" aria-label="LinkedIn professionnel" class="linkedin-link">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.74h4.56V24H.22V8.74zm7.34 0h4.37v2.08h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.53c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.9 1.96-2.9 3.99V24H7.56V8.74z" />
-              </svg>
-              <span>LinkedIn</span>
-            </a>
-          </div>
-        </div>
-        <p>&copy; 2024 WizmanHeritage. <span data-translate="footer-rights">Tous droits réservés.</span></p>
-      </div>
     </div>
-  </footer>
 
-  <!-- Toast container -->
-  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span data-translate="hero-badge">Cabinet International • Service Confidentiel</span>
+                </div>
+                <h1 class="hero-title" data-translate="hero-title">Expertise en Généalogie Successorale</h1>
+                <p class="hero-description" data-translate="hero-description">
+                    Nous accompagnons avec discrétion les successions internationales complexes, identifiant les
+                    héritiers légitimes et sécurisant leurs droits avec rigueur et confidentialité.
+                </p>
+                <button class="cta-button" id="hero-cta" type="button">
+                    <span data-translate="cta-button">Consultation confidentielle</span>
+                </button>
+            </div>
+        </section>
 
-  <!-- JS (chemin RELATIF + defer) -->
-  <script src="script.js" defer></script>
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="services-title">Services Spécialisés</h2>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.505 4.505 0 0 1 9.5 14z" />
+                            </svg>
+                        </div>
+                        <h3 data-translate="service1-title">Recherche Successorale</h3>
+                        <p data-translate="service1-desc">
+                            Identification discrète et complète des héritiers et ayants droit à travers le monde avec
+                            méthodes d'investigation avancées.
+                        </p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM18 20H6V4H13V9H18V20Z" />
+                                <path d="M8 12h8v2H8zm0 3h8v2H8zm0-6h5v2H8z" />
+                            </svg>
+                        </div>
+                        <h3 data-translate="service2-title">Documentation Généalogique</h3>
+                        <p data-translate="service2-desc">
+                            Constitution de dossiers juridiques complets avec preuves documentaires authentifiées et
+                            certifiées.
+                        </p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" />
+                                <path d="M7 18C7 19.1 7.9 20 9 20H15C16.1 20 17 19.1 17 18H7Z" />
+                                <path d="M9 20V22H15V20H9Z" />
+                                <path
+                                    d="M5 11C5 10.45 5.45 10 6 10C6.55 10 7 10.45 7 11V13C7 13.55 6.55 14 6 14C5.45 14 5 13.55 5 13V11Z" />
+                                <path
+                                    d="M17 11C17 10.45 17.45 10 18 10C18.55 10 19 10.45 19 11V13C19 13.55 18.55 14 18 14C17.45 14 17 13.55 17 13V11Z" />
+                                <path d="M3 13H9V15H3V13Z" />
+                                <path d="M15 13H21V15H15V13Z" />
+                            </svg>
+                        </div>
+                        <h3 data-translate="service3-title">Conseil Juridique Spécialisé</h3>
+                        <p data-translate="service3-desc">
+                            Accompagnement par des experts en droit successoral international et collaboration avec
+                            notaires partenaires.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Stats modifiées avec les 3 blocs demandés -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="200">0</div>
+                        <div class="stat-suffix">+</div>
+                        <p class="stat-label" data-translate="stat2-label">Dossiers traités</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="4">0</div>
+                        <div class="stat-suffix">+</div>
+                        <p class="stat-label" data-translate="stat1-label">Années d'expérience</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="24">0</div>
+                        <div class="stat-suffix">/7</div>
+                        <p class="stat-label" data-translate="stat3-label">Disponible 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- International Presence Section -->
+        <section id="international" class="international-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="international-title">Présence Internationale</h2>
+
+                <div class="flags-container">
+                    <div class="flag-item">
+                        <div class="flag-icon france-flag">
+                            <!-- Drapeau France via Flagpedia -->
+                            <img src="https://flagpedia.net/data/flags/w580/fr.webp" alt="Drapeau France"
+                                loading="lazy">
+                        </div>
+                        <h3 data-translate="france-title">France</h3>
+                    </div>
+
+                    <div class="flag-item">
+                        <div class="flag-icon israel-flag">
+                            <!-- Drapeau Israël via Flagpedia -->
+                            <img src="https://flagpedia.net/data/flags/w580/il.webp" alt="Drapeau Israël"
+                                loading="lazy">
+                        </div>
+                        <h3 data-translate="israel-title">Israël</h3>
+                    </div>
+
+                    <div class="flag-item">
+                        <div class="flag-icon usa-flag">
+                            <img src="https://flagpedia.net/data/flags/w580/us.webp" alt="Drapeau États-Unis"
+                                loading="lazy">
+                        </div>
+                        <h3 data-translate="usa-title">États-Unis</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="faq-title">Questions Fréquentes</h2>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span data-translate="faq1-question">Comment identifiez-vous les héritiers à l'étranger
+                                ?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" />
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <p data-translate="faq1-answer">Nous utilisons des méthodes d'investigation documentées avec
+                                nos correspondants locaux.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span data-translate="faq2-question">Mes données sont-elles confidentielles ?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" />
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <p data-translate="faq2-answer">Toutes les informations sont traitées selon le RGPD et ne
+                                sont jamais partagées sans consentement.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span data-translate="faq3-question">Puis-je envoyer des documents en toute sécurité
+                                ?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" />
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <p data-translate="faq3-answer">Oui, les fichiers sont sécurisés et limités à 10MB chacun,
+                                conformément à notre politique de confidentialité.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="about-title">Excellence & Discrétion</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p data-translate="about-desc">
+                            WizmanHeritage est un cabinet international reconnu pour son expertise en recherche
+                            successorale. Nous servons une clientèle internationale avec la plus haute confidentialité,
+                            utilisant des méthodes d'investigation rigoureuses et respectant les législations de chaque
+                            pays d'intervention.
+                        </p>
+                    </div>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <span data-translate="feature1">Confidentialité absolue</span>
+                        </div>
+                        <div class="feature-item">
+                            <span data-translate="feature2">Expertise internationale</span>
+                        </div>
+                        <div class="feature-item">
+                            <span data-translate="feature3">Résultats garantis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="contact-title">Contact Confidentiel</h2>
+
+                <form class="contact-form" id="contact-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" data-translate="form-name">Nom complet</label>
+                            <input type="text" id="name" name="name" required aria-required="true" autocomplete="name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" data-translate="form-email">Email</label>
+                            <input type="email" id="email" name="email" required aria-required="true"
+                                autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" data-translate="form-phone">Téléphone (optionnel)</label>
+                        <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" data-translate="form-message">Votre demande</label>
+                        <textarea id="message" data-translate="message-placeholder" name="message" rows="5" required aria-required="true"
+                            placeholder="Décrivez votre situation en quelques mots. Toutes les informations resteront strictement confidentielles."></textarea>
+                    </div>
+
+                    <!-- Upload documents -->
+                    <div class="form-group">
+                        <label for="document" data-translate="form-document">Documents (optionnel)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="document" name="document" class="file-input"
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" multiple aria-describedby="file-help">
+                            <div class="file-upload-display" id="file-upload-display" role="button" tabindex="0"
+                                aria-controls="document" aria-label="Ajouter des documents">
+                                <div class="file-upload-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path
+                                            d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                                        <path d="M12,11L8,15H10V19H14V15H16L12,11Z" />
+                                    </svg>
+                                </div>
+                                <div class="file-upload-content">
+                                    <span class="file-upload-text" data-translate="file-upload-text">Cliquer ou déposer
+                                        vos documents ici</span>
+                                    <span class="file-upload-hint" data-translate="file-upload-hint" id="file-help">PDF,
+                                        Word, Images acceptés (max 10MB chacun)</span>
+                                    <div class="file-upload-names" id="file-upload-names"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consent checkbox -->
+                    <div class="form-consent">
+                        <label class="consent-checkbox">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span class="checkmark"></span>
+                            <span data-translate="consent-text">J'accepte que mes données soient traitées conformément à
+                                la politique de confidentialité.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-privacy">
+                        <div class="privacy-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                            </svg>
+                        </div>
+                        <p data-translate="privacy-text">Vos informations sont traitées avec la plus stricte
+                            confidentialité et ne sont jamais partagées avec des tiers.</p>
+                    </div>
+
+                    <button type="submit" class="submit-button" id="submit-btn">
+                        <span data-translate="form-submit">Envoyer ma demande</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>WizmanHeritage</h3>
+                    <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
+                    <div class="footer-contact">
+                        <p data-translate="footer-availability">Disponible 24/7 pour urgences</p>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4 data-translate="footer-legal-title">Mentions Légales</h4>
+                    <p data-translate="footer-design">Conçu par Ruben Wizman</p>
+                    <p data-translate="footer-compliance">Conforme RGPD • Données protégées</p>
+                    <a href="privacy_policy.html" data-translate="privacy-policy">Politique de confidentialité</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <!-- Section modifiée pour aligner avec LinkedIn -->
+                <div class="footer-bottom-content">
+                    <div class="footer-certifications">
+                        <span data-translate="footer-certified">Certifié • Confidentiel • International</span>
+                    </div>
+                    <div class="linkedin-container">
+                        <a href="https://www.linkedin.com/in/ruben-wizman-2b65b9239/?originalSubdomain=fr"
+                            target="_blank" rel="noopener noreferrer" aria-label="LinkedIn professionnel"
+                            class="linkedin-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.74h4.56V24H.22V8.74zm7.34 0h4.37v2.08h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.53c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.9 1.96-2.9 3.99V24H7.56V8.74z" />
+                            </svg>
+                            <span>LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+                <p>&copy; 2024 WizmanHeritage. <span data-translate="footer-rights">Tous droits réservés.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="/script.js"></script>
 </body>
+
 </html>
