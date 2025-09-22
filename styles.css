@@ -93,6 +93,10 @@ body {
   font-weight: var(--font-weight-regular);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* ============================================= */
+  /* CORRECTION FINALE : Supprime le rectangle au clic sur mobile */
+  /* ============================================= */
+  -webkit-tap-highlight-color: transparent;
 }
 
 section {
