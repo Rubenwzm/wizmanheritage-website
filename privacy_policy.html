@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Title/Description par défaut (FR), mises à jour côté JS si présent -->
+  <!-- Title/Description par défaut (FR), mises à jour par script.js si présent -->
   <title data-translate="privacy-page-title">Politique de Confidentialité - WizmanHeritage</title>
   <meta name="description" content="Politique de confidentialité de WizmanHeritage. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles." />
   <meta name="robots" content="index, follow" />
@@ -35,10 +35,10 @@
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="theme-color" content="#ffffff" />
 
-  <!-- CSS -->
+  <!-- CSS global -->
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- Styles page -->
+  <!-- Styles page (on ne modifie pas ton design, on retire juste tout soulignement sur les boutons langue) -->
   <style>
     .privacy-page-body { padding-top: 120px; }
     .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-3xl); }
@@ -82,15 +82,21 @@
     }
     .privacy-container a.back-to-home:active { transform: translateY(-1px); }
 
+    /* >>> Empêche toute apparence de "lien souligné" sur les boutons langue, on ne touche pas le reste du design */
+    .language-switcher .lang-btn {
+      text-decoration: none !important;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .language-switcher .lang-btn:focus { outline: 2px solid #0ea5e9; outline-offset: 2px; }
+
     @media (max-width: 768px) {
       .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
       .privacy-container { padding: var(--spacing-lg); }
       .privacy-container a.back-to-home { padding: 1rem 1.8rem; font-size: 0.95rem; width: 100%; }
       [dir="rtl"] .privacy-container a.back-to-home { font-size: 1rem; }
     }
-
-    /* focus visible pour accessibilité */
-    .lang-btn:focus, .back-to-home:focus, #privacy-logo-link:focus { outline: 2px solid #0ea5e9; outline-offset: 2px; }
   </style>
 </head>
 
@@ -99,7 +105,7 @@
     <div class="nav-container">
       <div class="nav-brand">
         <h1 class="logo-heading">
-          <!-- Défaut FR; sera réécrit plus bas selon ?lang= -->
+          <!-- Valeur par défaut; MAJ par les scripts ci-dessous -->
           <a id="privacy-logo-link" href="/?lang=fr" aria-label="WizmanHeritage - Accueil">
             <span class="sr-only">Wizman Heritage</span>
             <div class="logo-desktop"><img src="/Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo-image-desktop" /></div>
@@ -107,14 +113,11 @@
           </a>
         </h1>
       </div>
-
       <div class="desktop-nav"></div>
-
-      <!-- Sélecteur de langue en LIENS (pas en boutons) -->
-      <div class="language-switcher" aria-label="Changer de langue">
-        <a class="lang-btn" href="?lang=fr" data-lang="fr" aria-label="Français">FR</a>
-        <a class="lang-btn" href="?lang=en" data-lang="en" aria-label="English">EN</a>
-        <a class="lang-btn" href="?lang=he" data-lang="he" aria-label="עברית">HE</a>
+      <div class="language-switcher">
+        <button class="lang-btn" data-lang="fr" type="button" aria-label="Français">FR</button>
+        <button class="lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
+        <button class="lang-btn" data-lang="he" type="button" aria-label="עברית">HE</button>
       </div>
     </div>
   </nav>
@@ -169,7 +172,7 @@
         <p data-translate="privacy-p-contact-1">Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.</p>
 
         <div class="button-container">
-          <!-- Défaut FR; sera réécrit plus bas selon ?lang= -->
+          <!-- Valeur par défaut; MAJ par les scripts ci-dessous -->
           <a id="privacy-back-link" href="/?lang=fr" class="back-to-home" data-translate="privacy-back-to-home">Retour à l'accueil</a>
         </div>
       </div>
@@ -188,7 +191,7 @@
           <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
           <div class="footer-contact">
             <p class="email-container">
-              <!-- Même obfuscation que sur la Home -->
+              <!-- Même obfuscation que la home -->
               <a
                 href="#"
                 class="email-link"
@@ -235,62 +238,69 @@
 
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- script global s'il existe (facultatif) -->
+  <!-- Ton JS global -->
   <script src="/script.js"></script>
 
-  <!-- Mini script local pour PERSISTENCE langue & liens -->
+  <!-- Mini-script local : persistance langue + liens, sans toucher à ton script.js -->
   <script>
     (function () {
-      // 1) Détecte la langue depuis l'URL ou le localStorage
-      const params = new URLSearchParams(window.location.search);
-      let lang = params.get('lang');
-      const valid = { fr:1, en:1, he:1 };
-
-      if (!lang || !valid[lang]) {
+      function getSavedLang() {
         try {
+          const urlLang = new URLSearchParams(window.location.search).get('lang');
+          if (urlLang) return urlLang;
           const saved = localStorage.getItem('wizman_lang');
-          if (saved && valid[saved]) {
-            lang = saved;
-            // Remplace l'URL courante pour y ajouter ?lang=... (sans recharger)
-            params.set('lang', lang);
-            history.replaceState({}, '', window.location.pathname + '?' + params.toString());
-          } else {
-            lang = 'fr';
-          }
-        } catch(e) { lang = 'fr'; }
+          return saved || 'fr';
+        } catch { return 'fr'; }
+      }
+      function setSavedLang(lang) {
+        try { localStorage.setItem('wizman_lang', lang); } catch {}
+      }
+      function setUrlLangParam(lang) {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('lang', lang);
+          history.replaceState({}, '', url.toString());
+        } catch {}
+      }
+      function applyLangToDOM(lang) {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          const active = btn.dataset.lang === lang;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        // MAJ liens (accueil + lien politique)
+        var home = document.getElementById('privacy-logo-link');
+        var back = document.getElementById('privacy-back-link');
+        var policy = document.getElementById('footer-privacy-link');
+        if (home)  home.href  = '/?lang=' + lang;
+        if (back)  back.href  = '/?lang=' + lang;
+        if (policy) policy.href = '/privacy_policy.html?lang=' + lang;
       }
 
-      // 2) Sauvegarde la langue choisie (cliqué via liens EN/FR/HE ou déduite)
-      try { localStorage.setItem('wizman_lang', lang); } catch(e) {}
+      // Initialisation
+      var lang = getSavedLang();
+      setUrlLangParam(lang);   // garde ?lang=…
+      setSavedLang(lang);      // persiste
+      applyLangToDOM(lang);
 
-      // 3) Applique lang/dir HTML immédiatement
-      document.documentElement.lang = lang;
-      document.documentElement.dir  = (lang === 'he') ? 'rtl' : 'ltr';
-
-      // 4) Marque le bouton/lien actif visuellement + aria-pressed
-      document.querySelectorAll('.lang-btn').forEach(a => {
-        const isActive = a.getAttribute('data-lang') === lang;
-        a.classList.toggle('active', isActive);
-        a.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
-
-      // 5) Met à jour tous les liens dépendants de la langue
-      const qs = '?lang=' + lang;
-      const homeLogo = document.getElementById('privacy-logo-link');
-      if (homeLogo) homeLogo.href = '/' + qs;
-
-      const backHome = document.getElementById('privacy-back-link');
-      if (backHome) backHome.href = '/' + qs;
-
-      const footerPrivacy = document.getElementById('footer-privacy-link');
-      if (footerPrivacy) footerPrivacy.href = '/privacy_policy.html' + qs;
-
-      // 6) S'assure que les liens du sélecteur pointent bien vers la même page avec ?lang=xx
-      document.querySelectorAll('.language-switcher .lang-btn').forEach(a => {
-        const targetLang = a.getAttribute('data-lang');
-        a.href = '?lang=' + targetLang;
-        a.addEventListener('click', function () {
-          try { localStorage.setItem('wizman_lang', targetLang); } catch(e) {}
+      // Gestion des clicks (persiste + met à jour sans changer ton design)
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          var chosen = this.dataset.lang;
+          if (!chosen || chosen === lang) return;
+          lang = chosen;
+          setSavedLang(lang);
+          setUrlLangParam(lang);
+          applyLangToDOM(lang);
+          // Optionnel: petit feedback si ton système de toast est présent
+          if (window.wizmanHeritage && window.wizmanHeritage.notificationMessages) {
+            const msg = window.wizmanHeritage.notificationMessages[lang]?.['language-changed'];
+            if (msg && typeof window.wizmanHeritage.showToast === 'function') {
+              window.wizmanHeritage.showToast(msg, 'info');
+            }
+          }
         });
       });
     })();
