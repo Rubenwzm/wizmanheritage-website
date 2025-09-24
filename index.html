@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Important pour iOS plein écran -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <!-- Title/Description optimisés -->
   <title>WizmanHeritage - Expertise en Généalogie Successorale</title>
@@ -40,10 +41,51 @@
   <meta name="msapplication-config" content="/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
 
-  <!-- CSS -->
+  <!-- CSS global -->
   <link rel="stylesheet" href="/styles.css">
 
-  <!-- Google Analytics -->
+  <!-- Correctif CSS minimal pour le blur overlay (couvre 100% écran, y compris encoche iOS) -->
+  <style>
+    /* Overlay menu mobile plein écran + blur */
+    #mobile-menu-overlay {
+      position: fixed;
+      inset: 0;                 /* top/right/bottom/left: 0 */
+      width: 100vw;
+      height: 100vh;
+      /* Sécurité encoche iOS */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+
+      display: none;            /* affiché par JS via .active */
+      align-items: stretch;
+      justify-content: stretch;
+
+      /* Couche visuelle */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(15, 23, 40, 0.35);
+
+      z-index: 9999;            /* au-dessus de tout */
+    }
+    #mobile-menu-overlay.active { display: flex; }
+
+    /* Le popup interne peut rester en position:relative (géré par styles.css) */
+
+    /* Accessibilité focus visible */
+    .js-email:focus,
+    .mobile-nav-link:focus,
+    .nav-link:focus,
+    .lang-btn:focus,
+    .mobile-lang-btn:focus,
+    #mobile-menu-btn:focus {
+      outline: 2px solid #0ea5e9;
+      outline-offset: 2px;
+    }
+  </style>
+
+  <!-- Google Analytics (remplace G-XXXXXXXXXX) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -52,7 +94,7 @@
     gtag('config', 'G-XXXXXXXXXX');
   </script>
 
-  <!-- Schema.org (sans adresse e-mail pour éviter les scrapers) -->
+  <!-- Schema.org (sans email en clair) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -129,9 +171,9 @@
     </div>
   </nav>
 
-  <!-- Menu mobile -->
+  <!-- Menu mobile (overlay plein écran + blur) -->
   <div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true">
-    <div class="mobile-menu-popup" id="mobile-menu-popup">
+    <div class="mobile-menu-popup" id="mobile-menu-popup" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="mobile-menu-content">
         <div class="mobile-nav-links">
           <a href="#home" class="mobile-nav-link" data-translate="home">Accueil</a>
@@ -151,7 +193,7 @@
   </div>
 
   <main>
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="hero-section">
       <div class="hero-content">
         <div class="hero-badge"><span data-translate="hero-badge">Cabinet International • Service Confidentiel</span></div>
@@ -163,7 +205,7 @@
       </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services -->
     <section id="services" class="services-section">
       <div class="container">
         <h2 class="section-title" data-translate="services-title">Services Spécialisés</h2>
@@ -201,7 +243,7 @@
       </div>
     </section>
 
-    <!-- International Presence Section -->
+    <!-- International -->
     <section id="international" class="international-section">
       <div class="container">
         <h2 class="section-title" data-translate="international-title">Présence Internationale</h2>
@@ -222,7 +264,7 @@
       </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- FAQ -->
     <section id="faq" class="faq-section">
       <div class="container">
         <h2 class="section-title" data-translate="faq-title">Questions Fréquentes</h2>
@@ -252,7 +294,7 @@
       </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About -->
     <section id="about" class="about-section">
       <div class="container">
         <h2 class="section-title" data-translate="about-title">Excellence & Discrétion</h2>
@@ -271,7 +313,7 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section id="contact" class="contact-section">
       <div class="container">
         <h2 class="section-title" data-translate="contact-title">Contact Confidentiel</h2>
@@ -337,14 +379,14 @@
           <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
           <div class="footer-contact">
             <p class="email-container">
-              <!-- Lien e-mail obfusqué et INTERCEPTÉ par le script -->
+              <!-- E-mail obfusqué + affiché en clair via JS -->
               <a href="#" class="js-email"
                  data-email-user="contact"
                  data-email-domain="wizmanheritage"
                  data-email-tld="com"
                  data-email-subject="Contact site WizmanHeritage"
+                 data-email-show="true"
                  aria-label="Envoyer un e-mail">
-                 Nous écrire
               </a>
             </p>
             <p data-translate="footer-availability">Disponible 24/7 pour urgences</p>
@@ -377,6 +419,6 @@
   <!-- Toast container -->
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="/script.js"></script>
+  <script src="/script.js?v=1.0.2"></script>
 </body>
 </html>
