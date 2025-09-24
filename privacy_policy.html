@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Title/Description par défaut (FR), mises à jour par script.js -->
+  <!-- Title/Description par défaut (FR), mises à jour côté JS si présent -->
   <title data-translate="privacy-page-title">Politique de Confidentialité - WizmanHeritage</title>
   <meta name="description" content="Politique de confidentialité de WizmanHeritage. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles." />
   <meta name="robots" content="index, follow" />
@@ -88,6 +88,9 @@
       .privacy-container a.back-to-home { padding: 1rem 1.8rem; font-size: 0.95rem; width: 100%; }
       [dir="rtl"] .privacy-container a.back-to-home { font-size: 1rem; }
     }
+
+    /* focus visible pour accessibilité */
+    .lang-btn:focus, .back-to-home:focus, #privacy-logo-link:focus { outline: 2px solid #0ea5e9; outline-offset: 2px; }
   </style>
 </head>
 
@@ -96,7 +99,7 @@
     <div class="nav-container">
       <div class="nav-brand">
         <h1 class="logo-heading">
-          <!-- Valeur par défaut; script.js le réécrit en /?lang=… -->
+          <!-- Défaut FR; sera réécrit plus bas selon ?lang= -->
           <a id="privacy-logo-link" href="/?lang=fr" aria-label="WizmanHeritage - Accueil">
             <span class="sr-only">Wizman Heritage</span>
             <div class="logo-desktop"><img src="/Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo-image-desktop" /></div>
@@ -104,11 +107,14 @@
           </a>
         </h1>
       </div>
+
       <div class="desktop-nav"></div>
-      <div class="language-switcher">
-        <button class="lang-btn" data-lang="fr" type="button" aria-label="Français">FR</button>
-        <button class="lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
-        <button class="lang-btn" data-lang="he" type="button" aria-label="עברית">HE</button>
+
+      <!-- Sélecteur de langue en LIENS (pas en boutons) -->
+      <div class="language-switcher" aria-label="Changer de langue">
+        <a class="lang-btn" href="?lang=fr" data-lang="fr" aria-label="Français">FR</a>
+        <a class="lang-btn" href="?lang=en" data-lang="en" aria-label="English">EN</a>
+        <a class="lang-btn" href="?lang=he" data-lang="he" aria-label="עברית">HE</a>
       </div>
     </div>
   </nav>
@@ -163,7 +169,7 @@
         <p data-translate="privacy-p-contact-1">Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.</p>
 
         <div class="button-container">
-          <!-- Valeur par défaut; script.js le réécrit en /?lang=… -->
+          <!-- Défaut FR; sera réécrit plus bas selon ?lang= -->
           <a id="privacy-back-link" href="/?lang=fr" class="back-to-home" data-translate="privacy-back-to-home">Retour à l'accueil</a>
         </div>
       </div>
@@ -182,7 +188,7 @@
           <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
           <div class="footer-contact">
             <p class="email-container">
-              <!-- Obfuscation identique à la home -->
+              <!-- Même obfuscation que sur la Home -->
               <a
                 href="#"
                 class="email-link"
@@ -228,6 +234,66 @@
   </footer>
 
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- script global s'il existe (facultatif) -->
   <script src="/script.js"></script>
+
+  <!-- Mini script local pour PERSISTENCE langue & liens -->
+  <script>
+    (function () {
+      // 1) Détecte la langue depuis l'URL ou le localStorage
+      const params = new URLSearchParams(window.location.search);
+      let lang = params.get('lang');
+      const valid = { fr:1, en:1, he:1 };
+
+      if (!lang || !valid[lang]) {
+        try {
+          const saved = localStorage.getItem('wizman_lang');
+          if (saved && valid[saved]) {
+            lang = saved;
+            // Remplace l'URL courante pour y ajouter ?lang=... (sans recharger)
+            params.set('lang', lang);
+            history.replaceState({}, '', window.location.pathname + '?' + params.toString());
+          } else {
+            lang = 'fr';
+          }
+        } catch(e) { lang = 'fr'; }
+      }
+
+      // 2) Sauvegarde la langue choisie (cliqué via liens EN/FR/HE ou déduite)
+      try { localStorage.setItem('wizman_lang', lang); } catch(e) {}
+
+      // 3) Applique lang/dir HTML immédiatement
+      document.documentElement.lang = lang;
+      document.documentElement.dir  = (lang === 'he') ? 'rtl' : 'ltr';
+
+      // 4) Marque le bouton/lien actif visuellement + aria-pressed
+      document.querySelectorAll('.lang-btn').forEach(a => {
+        const isActive = a.getAttribute('data-lang') === lang;
+        a.classList.toggle('active', isActive);
+        a.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      // 5) Met à jour tous les liens dépendants de la langue
+      const qs = '?lang=' + lang;
+      const homeLogo = document.getElementById('privacy-logo-link');
+      if (homeLogo) homeLogo.href = '/' + qs;
+
+      const backHome = document.getElementById('privacy-back-link');
+      if (backHome) backHome.href = '/' + qs;
+
+      const footerPrivacy = document.getElementById('footer-privacy-link');
+      if (footerPrivacy) footerPrivacy.href = '/privacy_policy.html' + qs;
+
+      // 6) S'assure que les liens du sélecteur pointent bien vers la même page avec ?lang=xx
+      document.querySelectorAll('.language-switcher .lang-btn').forEach(a => {
+        const targetLang = a.getAttribute('data-lang');
+        a.href = '?lang=' + targetLang;
+        a.addEventListener('click', function () {
+          try { localStorage.setItem('wizman_lang', targetLang); } catch(e) {}
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
