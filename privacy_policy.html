@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Title/Description par défaut (FR), mises à jour par script.js si présent -->
   <title data-translate="privacy-page-title">Politique de Confidentialité - WizmanHeritage</title>
   <meta name="description" content="Politique de confidentialité de WizmanHeritage. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles." />
   <meta name="robots" content="index, follow" />
+
   <!-- SEO International -->
   <link rel="canonical" href="https://wizmanheritage.com/privacy_policy.html" />
   <link rel="alternate" hreflang="fr" href="https://wizmanheritage.com/privacy_policy.html?lang=fr" />
   <link rel="alternate" hreflang="en" href="https://wizmanheritage.com/privacy_policy.html?lang=en" />
   <link rel="alternate" hreflang="he" href="https://wizmanheritage.com/privacy_policy.html?lang=he" />
   <link rel="alternate" hreflang="x-default" href="https://wizmanheritage.com/privacy_policy.html?lang=fr" />
+
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wizmanheritage.com/privacy_policy.html" />
@@ -22,6 +25,7 @@
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:locale:alternate" content="en_US" />
   <meta property="og:locale:alternate" content="he_IL" />
+
   <!-- Favicon & App -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -30,8 +34,10 @@
   <link rel="shortcut icon" href="/favicon.ico" />
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="theme-color" content="#ffffff" />
+
   <!-- CSS global -->
   <link rel="stylesheet" href="/styles.css" />
+
   <!-- Styles page -->
   <style>
     .privacy-page-body { padding-top: 120px; }
@@ -75,7 +81,21 @@
       color: var(--text-light);
     }
     .privacy-container a.back-to-home:active { transform: translateY(-1px); }
+
+    /* Boutons langue : pas de soulignement */
+    .language-switcher .lang-btn {
+      text-decoration: none !important;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
     .language-switcher .lang-btn:focus { outline: 2px solid #0ea5e9; outline-offset: 2px; }
+
+    /* Footer : email + “Disponible…” sur 2 lignes collées (sans espace vertical) */
+    .footer-contact .email-container { margin: 0; line-height: 1.2; }
+    .footer-contact .email-container a { display: inline-block; margin: 0; }
+    .footer-contact .email-container br { line-height: 0; }
+    .footer-contact p { margin: 0; } /* neutralise marges par défaut */
 
     @media (max-width: 768px) {
       .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
@@ -113,6 +133,7 @@
         <h1 data-translate="privacy-main-header">Politique de Confidentialité</h1>
         <p><strong data-translate="privacy-last-updated-label">Dernière mise à jour :</strong> <span data-translate="privacy-date">18 septembre 2025</span></p>
         <p data-translate="privacy-intro">WizmanHeritage s'engage à protéger vos données personnelles. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, et protégeons les informations que vous nous fournissez via notre site web, conformément au Règlement Général sur la Protection des Données (RGPD).</p>
+
         <h2 data-translate="privacy-h2-collection">1. Collecte des Données Personnelles</h2>
         <p data-translate="privacy-p-collection-1">Nous collectons des informations lorsque vous utilisez notre formulaire de contact ou interagissez avec notre site. Les données collectées peuvent inclure :</p>
         <ul>
@@ -123,6 +144,7 @@
           <li data-translate="privacy-li-collection-docs">Documents : Fichiers que vous téléchargez volontairement pour appuyer votre demande.</li>
           <li data-translate="privacy-li-collection-nav">Données de navigation : Telles que les cookies nécessaires au bon fonctionnement du site.</li>
         </ul>
+
         <h2 data-translate="privacy-h2-usage">2. Utilisation de Vos Données</h2>
         <p data-translate="privacy-p-usage-1">Vos données sont utilisées exclusivement pour :</p>
         <ul>
@@ -131,10 +153,13 @@
           <li data-translate="privacy-li-usage-legal">Respecter nos obligations légales et réglementaires.</li>
         </ul>
         <p data-translate="privacy-p-usage-2">Nous ne partageons jamais vos données avec des tiers à des fins marketing. Vos informations ne sont transmises qu'avec votre consentement explicite ou si la loi l'exige.</p>
+
         <h2 data-translate="privacy-h2-security">3. Sécurité des Données</h2>
         <p data-translate="privacy-p-security-1">Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données contre tout accès, modification, divulgation ou destruction non autorisés. Les transferts de fichiers sont sécurisés et l'accès à vos informations est strictement limité.</p>
+
         <h2 data-translate="privacy-h2-retention">4. Conservation des Données</h2>
         <p data-translate="privacy-p-retention-1">Nous conservons vos données personnelles uniquement le temps nécessaire à la réalisation des finalités pour lesquelles elles ont été collectées, ou pour nous conformer à nos obligations légales.</p>
+
         <h2 data-translate="privacy-h2-rights">5. Vos Droits</h2>
         <p data-translate="privacy-p-rights-1">Conformément au RGPD, vous disposez des droits suivants concernant vos données personnelles :</p>
         <ul>
@@ -144,10 +169,13 @@
           <li data-translate="privacy-li-rights-limit">Droit à la limitation du traitement : Vous pouvez demander à ce que nous limitions l'utilisation de vos données.</li>
         </ul>
         <p data-translate="privacy-p-rights-2">Pour exercer ces droits, veuillez nous contacter en utilisant le formulaire de contact de notre site.</p>
+
         <h2 data-translate="privacy-h2-cookies">6. Cookies</h2>
         <p data-translate="privacy-p-cookies-1">Notre site utilise des cookies essentiels à son fonctionnement. Un bandeau de consentement vous permet d'accepter ou de refuser leur utilisation lors de votre première visite.</p>
+
         <h2 data-translate="privacy-h2-contact">7. Contact</h2>
         <p data-translate="privacy-p-contact-1">Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.</p>
+
         <div class="button-container">
           <a id="privacy-back-link" href="/?lang=fr" class="back-to-home" data-translate="privacy-back-to-home">Retour à l'accueil</a>
         </div>
@@ -162,19 +190,29 @@
           <h3>WizmanHeritage</h3>
           <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
         </div>
+
         <div class="footer-section">
           <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
-          <!-- ============================================= -->
-          <!-- CORRECTION FINALE POUR L'HOMOGÉNÉITÉ -->
-          <!-- ============================================= -->
           <div class="footer-contact">
-            <p>
-              <a href="#" class="email-link">contact<span style="display:none;">-nospam-</span>@<span style="display:none;">-nospam-</span>wizmanheritage.com</a>
-              <br />
+            <p class="email-container">
+              <!-- Email en clair sur 2 lignes serrées -->
+              <a
+                href="#"
+                class="js-email"
+                data-email-user="contact"
+                data-email-domain="wizmanheritage"
+                data-email-tld="com"
+                data-email-show="true"
+                data-email-mask="false"
+                data-email-subject="Contact site WizmanHeritage"
+                aria-label="Envoyer un e-mail"
+                rel="nofollow noopener noreferrer"
+              >contact@wizmanheritage.com</a><br />
               <span data-translate="footer-availability">Disponible 24/7 pour urgences</span>
             </p>
           </div>
         </div>
+
         <div class="footer-section">
           <h4 data-translate="footer-legal-title">Mentions Légales</h4>
           <p>
@@ -203,8 +241,97 @@
   </footer>
 
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- JS global -->
   <script src="/script.js"></script>
-  
-  <!-- Le script local n'est plus nécessaire car le script global gère tout -->
+
+  <!-- Mini-script local : persistance langue + liens, SANS doublon -->
+  <script>
+    (function () {
+      function getSavedLang() {
+        try {
+          const urlLang = new URLSearchParams(window.location.search).get('lang');
+          if (urlLang) return urlLang;
+          const saved = localStorage.getItem('wizman_lang');
+          return saved || 'fr';
+        } catch { return 'fr'; }
+      }
+      function setSavedLang(lang) {
+        try { localStorage.setItem('wizman_lang', lang); } catch {}
+      }
+      function setUrlLangParam(lang) {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('lang', lang);
+          history.replaceState({}, '', url.toString());
+        } catch {}
+      }
+      function applyLangToDOM(lang) {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          const active = btn.dataset.lang === lang;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        var home = document.getElementById('privacy-logo-link');
+        var back = document.getElementById('privacy-back-link');
+        var policy = document.getElementById('footer-privacy-link');
+        if (home)  home.href  = '/?lang=' + lang;
+        if (back)  back.href  = '/?lang=' + lang;
+        if (policy) policy.href = '/privacy_policy.html?lang=' + lang;
+      }
+
+      var lang = getSavedLang();
+      setUrlLangParam(lang);
+      setSavedLang(lang);
+      applyLangToDOM(lang);
+
+      if (!window.wizmanHeritage) {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
+            var chosen = this.dataset.lang;
+            if (!chosen || chosen === lang) return;
+            lang = chosen;
+            setSavedLang(lang);
+            setUrlLangParam(lang);
+            applyLangToDOM(lang);
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- Mini-script local : obfuscation e-mail (génère le mailto sans modifier le texte visible) -->
+  <script>
+    (function () {
+      var emails = document.querySelectorAll('.js-email');
+      if (!emails.length) return;
+
+      function buildEmail(a) {
+        var user = a.dataset.emailUser;
+        var domain = a.dataset.emailDomain;
+        var tld = a.dataset.emailTld;
+        if (!user || !domain || !tld) return null;
+        return user + '@' + domain + '.' + tld;
+      }
+
+      emails.forEach(function (a) {
+        var email = buildEmail(a);
+        if (!email) return;
+
+        var subject = a.dataset.emailSubject ? ('?subject=' + encodeURIComponent(a.dataset.emailSubject)) : '';
+        var injected = false;
+        function ensureHref() {
+          if (injected) return;
+          a.setAttribute('href', 'mailto:' + email + subject);
+          injected = true;
+        }
+        a.addEventListener('mouseenter', ensureHref, { passive: true });
+        a.addEventListener('focus', ensureHref, { passive: true });
+        a.addEventListener('click', ensureHref);
+      });
+    })();
+  </script>
 </body>
 </html>
