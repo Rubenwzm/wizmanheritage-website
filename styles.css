@@ -1933,3 +1933,60 @@ a:focus {
 .privacy-header {
     display: none;
 }
+
+/* ===================================================================== */
+/* =============  BLOCS D’ANIMATIONS MENU MOBILE (AJOUT)  ============== */
+/* ===================================================================== */
+
+/* 1) Panneau du menu : fondu + glissement doux */
+@keyframes menuPanelIn {
+  from { transform: translateY(-12px) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0)     scale(1);    opacity: 1; }
+}
+
+/* 2) Liens : effet “vague” + petit pop (grossit, puis revient) */
+@keyframes linkWaveIn {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.98); }
+  60%  {            transform: translateY(-2px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* État initial (pas de flash avant ouverture) */
+.mobile-menu-popup { opacity: 0; }
+.mobile-nav-link   { opacity: 0; transform: translateY(6px) scale(0.98); }
+.mobile-lang-btn   { opacity: 0; transform: translateY(6px) scale(0.98); }
+
+/* Ouverture : on joue les animations */
+.mobile-menu-overlay.active .mobile-menu-popup {
+  animation: menuPanelIn 420ms cubic-bezier(.2,.7,.3,1) forwards;
+}
+
+/* Liens du menu – vague (stagger 60ms) */
+.mobile-menu-overlay.active .mobile-nav-link {
+  animation: linkWaveIn 360ms cubic-bezier(.2,.7,.3,1) forwards;
+}
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(1) { animation-delay: 60ms; }
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(2) { animation-delay: 120ms; }
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(3) { animation-delay: 180ms; }
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(4) { animation-delay: 240ms; }
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(5) { animation-delay: 300ms; }
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(6) { animation-delay: 360ms; }
+
+/* Boutons langue après les liens (départ plus tard pour un rendu propre) */
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn {
+  animation: linkWaveIn 340ms cubic-bezier(.2,.7,.3,1) forwards;
+}
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(1) { animation-delay: 420ms; }
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(2) { animation-delay: 480ms; }
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(3) { animation-delay: 540ms; }
+
+/* Accessibilité : si l’utilisateur réduit les animations, on coupe proprement */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-popup,
+  .mobile-nav-link,
+  .mobile-lang-btn {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
