@@ -40,6 +40,7 @@ class WizmanHeritage {
     this.updateLanguage(this.currentLanguage);
     this.setupEventListeners();
     
+    // Condition pour n'exécuter certaines fonctions que sur la page d'accueil
     if (document.getElementById('contact-form')) {
         this.setupIntersectionObservers();
         this.setupFileUpload();
