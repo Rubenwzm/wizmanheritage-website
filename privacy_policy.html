@@ -38,7 +38,7 @@
   <!-- CSS global -->
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- Styles page (on ne modifie pas ton design, on retire juste tout soulignement sur les boutons langue) -->
+  <!-- Styles page (on garde ton design, on évite juste l’underline sur les boutons langue) -->
   <style>
     .privacy-page-body { padding-top: 120px; }
     .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-3xl); }
@@ -82,7 +82,7 @@
     }
     .privacy-container a.back-to-home:active { transform: translateY(-1px); }
 
-    /* >>> Empêche toute apparence de "lien souligné" sur les boutons langue, on ne touche pas le reste du design */
+    /* Empêche l’underline sur les boutons langue sans changer ton style de boutons */
     .language-switcher .lang-btn {
       text-decoration: none !important;
       border: none;
@@ -241,7 +241,7 @@
   <!-- Ton JS global -->
   <script src="/script.js"></script>
 
-  <!-- Mini-script local : persistance langue + liens, sans toucher à ton script.js -->
+  <!-- Mini-script local : persistance langue + liens, SANS doublon de toast -->
   <script>
     (function () {
       function getSavedLang() {
@@ -270,7 +270,6 @@
           btn.classList.toggle('active', active);
           btn.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
-        // MAJ liens (accueil + lien politique)
         var home = document.getElementById('privacy-logo-link');
         var back = document.getElementById('privacy-back-link');
         var policy = document.getElementById('footer-privacy-link');
@@ -279,30 +278,27 @@
         if (policy) policy.href = '/privacy_policy.html?lang=' + lang;
       }
 
-      // Initialisation
+      // Initialisation (on aligne l’URL + DOM sur la langue sauvegardée)
       var lang = getSavedLang();
-      setUrlLangParam(lang);   // garde ?lang=…
-      setSavedLang(lang);      // persiste
+      setUrlLangParam(lang);
+      setSavedLang(lang);
       applyLangToDOM(lang);
 
-      // Gestion des clicks (persiste + met à jour sans changer ton design)
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-          var chosen = this.dataset.lang;
-          if (!chosen || chosen === lang) return;
-          lang = chosen;
-          setSavedLang(lang);
-          setUrlLangParam(lang);
-          applyLangToDOM(lang);
-          // Optionnel: petit feedback si ton système de toast est présent
-          if (window.wizmanHeritage && window.wizmanHeritage.notificationMessages) {
-            const msg = window.wizmanHeritage.notificationMessages[lang]?.['language-changed'];
-            if (msg && typeof window.wizmanHeritage.showToast === 'function') {
-              window.wizmanHeritage.showToast(msg, 'info');
-            }
-          }
+      // IMPORTANT : si ton script global est chargé, on NE rajoute PAS de listeners locaux
+      // -> évite la double exécution + double toast
+      if (!window.wizmanHeritage) {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
+            var chosen = this.dataset.lang;
+            if (!chosen || chosen === lang) return;
+            lang = chosen;
+            setSavedLang(lang);
+            setUrlLangParam(lang);
+            applyLangToDOM(lang);
+            // (pas de toast ici, pour éviter les doublons)
+          });
         });
-      });
+      }
     })();
   </script>
 </body>
