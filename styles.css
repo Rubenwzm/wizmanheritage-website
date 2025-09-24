@@ -459,12 +459,15 @@ section {
   visibility: visible;
 }
 
+/* ===== POPUP DU MENU MOBILE ===== */
 .mobile-menu-popup {
   position: absolute;
   top: calc(var(--spacing-md) + 70px);
   left: var(--spacing-md);
   right: var(--spacing-md);
-  background: var(--glass-bg-strong);
+  /* DEMANDE 1 : fond #F3F0E7 (sand-beige) */
+  background: #F3F0E7 !important;
+  /* on garde la sensation glass grâce au cadre + ombre, mais sans altérer la couleur plein */
   backdrop-filter: var(--glass-backdrop-strong);
   -webkit-backdrop-filter: var(--glass-backdrop-strong);
   border: 1px solid var(--glass-border);
@@ -484,6 +487,7 @@ section {
   padding: var(--spacing-lg);
 }
 
+/* ===== LIENS DU MENU MOBILE ===== */
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
@@ -500,10 +504,12 @@ section {
   backdrop-filter: var(--glass-backdrop);
   -webkit-backdrop-filter: var(--glass-backdrop);
   border: 1px solid var(--glass-border);
-  transition: all var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
   text-align: center;
   font-weight: var(--font-weight-medium);
   box-shadow: inset 0 1px 0 var(--glass-highlight);
+  /* DEMANDE 2 : visibles immédiatement (pas d’opacité 0) */
+  will-change: transform;
 }
 
 .mobile-nav-link:hover {
@@ -513,6 +519,7 @@ section {
   box-shadow: 0 8px 24px rgba(75, 83, 32, 0.25);
 }
 
+/* ===== SWITCHER LANGUE MOBILE ===== */
 .mobile-language-switcher {
   display: flex;
   gap: var(--spacing-xs);
@@ -533,10 +540,12 @@ section {
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all var(--transition);
+  transition: transform var(--transition), background var(--transition), color var(--transition), box-shadow var(--transition);
   font-size: 0.9rem;
   font-weight: var(--font-weight-medium);
   flex: 1;
+  /* DEMANDE 2 : visibles immédiatement */
+  will-change: transform;
 }
 
 .mobile-lang-btn.active {
@@ -549,6 +558,37 @@ section {
   background: var(--glass-bg-accent);
   color: var(--primary-sage);
 }
+
+/* ===== ANIMATIONS “LIQUID GLASS” AU MOMENT DE L’OUVERTURE ===== */
+/* on fait jouer l’animation seulement quand l’overlay devient .active */
+@keyframes navLinkPop {
+  0%   { transform: translateY(6px) scale(0.98); }
+  60%  { transform: translateY(-2px) scale(1.03); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes langPop {
+  0%   { transform: translateY(4px) scale(0.98); }
+  60%  { transform: translateY(-1px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* “Vague” par décalage : 60ms entre chaque item */
+.mobile-menu-overlay.active .mobile-nav-link {
+  animation: navLinkPop 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.mobile-menu-overlay.active .mobile-nav-links .mobile-nav-link:nth-child(1) { animation-delay: 0ms; }
+.mobile-menu-overlay.active .mobile-nav-links .mobile-nav-link:nth-child(2) { animation-delay: 60ms; }
+.mobile-menu-overlay.active .mobile-nav-links .mobile-nav-link:nth-child(3) { animation-delay: 120ms; }
+.mobile-menu-overlay.active .mobile-nav-links .mobile-nav-link:nth-child(4) { animation-delay: 180ms; }
+.mobile-menu-overlay.active .mobile-nav-links .mobile-nav-link:nth-child(5) { animation-delay: 240ms; }
+.mobile-menu-overlay.active .mobile-nav-links .mobile-nav-link:nth-child(6) { animation-delay: 300ms; }
+
+.mobile-menu-overlay.active .mobile-lang-btn {
+  animation: langPop 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(1) { animation-delay: 120ms; }
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(2) { animation-delay: 180ms; }
+.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(3) { animation-delay: 240ms; }
 
 /* ===== HERO SECTION ===== */
 .hero-section {
@@ -1916,6 +1956,7 @@ a:focus {
   }
 }
 
+/* ===== CONTRASTE ===== */
 @media (prefers-contrast: high) {
   :root {
     --glass-bg: rgba(255, 255, 255, 0.95);
@@ -1932,61 +1973,4 @@ a:focus {
 /* On cache l'ancien header fixe de la page de confidentialité */
 .privacy-header {
     display: none;
-}
-
-/* ===================================================================== */
-/* =============  BLOCS D’ANIMATIONS MENU MOBILE (AJOUT)  ============== */
-/* ===================================================================== */
-
-/* 1) Panneau du menu : fondu + glissement doux */
-@keyframes menuPanelIn {
-  from { transform: translateY(-12px) scale(0.98); opacity: 0; }
-  to   { transform: translateY(0)     scale(1);    opacity: 1; }
-}
-
-/* 2) Liens : effet “vague” + petit pop (grossit, puis revient) */
-@keyframes linkWaveIn {
-  0%   { opacity: 0; transform: translateY(8px) scale(0.98); }
-  60%  {            transform: translateY(-2px) scale(1.02); }
-  100% { opacity: 1; transform: translateY(0)   scale(1); }
-}
-
-/* État initial (pas de flash avant ouverture) */
-.mobile-menu-popup { opacity: 0; }
-.mobile-nav-link   { opacity: 0; transform: translateY(6px) scale(0.98); }
-.mobile-lang-btn   { opacity: 0; transform: translateY(6px) scale(0.98); }
-
-/* Ouverture : on joue les animations */
-.mobile-menu-overlay.active .mobile-menu-popup {
-  animation: menuPanelIn 420ms cubic-bezier(.2,.7,.3,1) forwards;
-}
-
-/* Liens du menu – vague (stagger 60ms) */
-.mobile-menu-overlay.active .mobile-nav-link {
-  animation: linkWaveIn 360ms cubic-bezier(.2,.7,.3,1) forwards;
-}
-.mobile-menu-overlay.active .mobile-nav-link:nth-child(1) { animation-delay: 60ms; }
-.mobile-menu-overlay.active .mobile-nav-link:nth-child(2) { animation-delay: 120ms; }
-.mobile-menu-overlay.active .mobile-nav-link:nth-child(3) { animation-delay: 180ms; }
-.mobile-menu-overlay.active .mobile-nav-link:nth-child(4) { animation-delay: 240ms; }
-.mobile-menu-overlay.active .mobile-nav-link:nth-child(5) { animation-delay: 300ms; }
-.mobile-menu-overlay.active .mobile-nav-link:nth-child(6) { animation-delay: 360ms; }
-
-/* Boutons langue après les liens (départ plus tard pour un rendu propre) */
-.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn {
-  animation: linkWaveIn 340ms cubic-bezier(.2,.7,.3,1) forwards;
-}
-.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(1) { animation-delay: 420ms; }
-.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(2) { animation-delay: 480ms; }
-.mobile-menu-overlay.active .mobile-language-switcher .mobile-lang-btn:nth-child(3) { animation-delay: 540ms; }
-
-/* Accessibilité : si l’utilisateur réduit les animations, on coupe proprement */
-@media (prefers-reduced-motion: reduce) {
-  .mobile-menu-popup,
-  .mobile-nav-link,
-  .mobile-lang-btn {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
 }
