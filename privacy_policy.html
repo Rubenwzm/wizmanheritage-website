@@ -38,7 +38,7 @@
   <!-- CSS global -->
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- Styles page -->
+  <!-- Styles page (petits ajustements de confort) -->
   <style>
     .privacy-page-body { padding-top: 120px; }
     .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-3xl); }
@@ -70,43 +70,21 @@
       box-shadow: 0 8px 24px rgba(75, 83, 32, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
       text-decoration: none; text-align: center; position: relative; overflow: hidden;
     }
-    .privacy-container a.back-to-home::before {
-      content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.15);
-      opacity: 0; transition: opacity var(--transition);
-    }
-    .privacy-container a.back-to-home:hover::before { opacity: 1; }
-    .privacy-container a.back-to-home:hover {
-      background: var(--primary-sage-dark); transform: translateY(-3px);
-      box-shadow: 0 16px 40px rgba(75, 83, 32, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      color: var(--text-light);
-    }
-    .privacy-container a.back-to-home:active { transform: translateY(-1px); }
+    .privacy-container a.back-to-home::before { content:''; position:absolute; inset:0; background:rgba(255,255,255,0.15); opacity:0; transition:opacity var(--transition); }
+    .privacy-container a.back-to-home:hover::before { opacity:1; }
+    .privacy-container a.back-to-home:hover { background: var(--primary-sage-dark); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(75, 83, 32, 0.4), inset 0 1px 0 rgba(255,255,255,0.3); }
 
     /* Boutons langue : pas de soulignement */
-    .language-switcher .lang-btn {
-      text-decoration: none !important;
-      border: none;
-      background: none;
-      cursor: pointer;
-    }
+    .language-switcher .lang-btn { text-decoration: none !important; border: none; background: none; cursor: pointer; }
     .language-switcher .lang-btn:focus { outline: 2px solid #0ea5e9; outline-offset: 2px; }
 
-    /* Footer : email + “Disponible…” sur 2 lignes collées (sans espace vertical) */
-    .footer-contact .email-container { margin: 0; line-height: 1.2; }
-    .footer-contact .email-container a { display: inline-block; margin: 0; }
-    .footer-contact .email-container br { line-height: 0; }
-    .footer-contact p { margin: 0; } /* neutralise marges par défaut */
-
-    @media (max-width: 768px) {
-      .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
-      .privacy-container { padding: var(--spacing-lg); }
-      .privacy-container a.back-to-home { padding: 1rem 1.8rem; font-size: 0.95rem; width: 100%; }
-      [dir="rtl"] .privacy-container a.back-to-home { font-size: 1rem; }
-    }
+    /* Footer : même rendu que la home (2 lignes, br, marge par défaut) */
+    .footer-contact .email-container { margin: 0; }
   </style>
 </head>
 
 <body class="privacy-page-body">
+  <!-- Navigation flottante (même header que la home) -->
   <nav class="floating-nav" id="floating-nav">
     <div class="nav-container">
       <div class="nav-brand">
@@ -183,6 +161,7 @@
     </section>
   </main>
 
+  <!-- FOOTER (identique à la home, avec obfuscation e-mail) -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -195,7 +174,6 @@
           <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
           <div class="footer-contact">
             <p class="email-container">
-              <!-- Email en clair sur 2 lignes serrées -->
               <a
                 href="#"
                 class="js-email"
@@ -245,7 +223,7 @@
   <!-- JS global -->
   <script src="/script.js"></script>
 
-  <!-- Mini-script local : persistance langue + liens, SANS doublon -->
+  <!-- Mini-script langue : persistance + MAJ des liens -->
   <script>
     (function () {
       function getSavedLang() {
@@ -256,9 +234,7 @@
           return saved || 'fr';
         } catch { return 'fr'; }
       }
-      function setSavedLang(lang) {
-        try { localStorage.setItem('wizman_lang', lang); } catch {}
-      }
+      function setSavedLang(lang) { try { localStorage.setItem('wizman_lang', lang); } catch {} }
       function setUrlLangParam(lang) {
         try {
           const url = new URL(window.location.href);
@@ -302,7 +278,7 @@
     })();
   </script>
 
-  <!-- Mini-script local : obfuscation e-mail (génère le mailto sans modifier le texte visible) -->
+  <!-- Mini-script obfuscation e-mail : mailto injecté à l'interaction -->
   <script>
     (function () {
       var emails = document.querySelectorAll('.js-email');
@@ -319,7 +295,6 @@
       emails.forEach(function (a) {
         var email = buildEmail(a);
         if (!email) return;
-
         var subject = a.dataset.emailSubject ? ('?subject=' + encodeURIComponent(a.dataset.emailSubject)) : '';
         var injected = false;
         function ensureHref() {
@@ -328,7 +303,7 @@
           injected = true;
         }
         a.addEventListener('mouseenter', ensureHref, { passive: true });
-        a.addEventListener('focus', ensureHref, { passive: true });
+        a.addEventListener('focus', ensureHref,   { passive: true });
         a.addEventListener('click', ensureHref);
       });
     })();
