@@ -72,7 +72,7 @@
     }
     [dir="rtl"] .button-container { justify-content: center; }
 
-    .privacy-container a.back-to-home {
+    a.back-to-home {
       display: inline-block; 
       width: auto;
       background: var(--primary-sage); color: var(--text-light);
@@ -81,17 +81,17 @@
       box-shadow: 0 8px 24px rgba(75, 83, 32, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
       text-decoration: none; text-align: center; position: relative; overflow: hidden;
     }
-    .privacy-container a.back-to-home::before {
+    a.back-to-home::before {
       content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.15);
       opacity: 0; transition: opacity var(--transition);
     }
-    .privacy-container a.back-to-home:hover::before { opacity: 1; }
-    .privacy-container a.back-to-home:hover {
+    a.back-to-home:hover::before { opacity: 1; }
+    a.back-to-home:hover {
       background: var(--primary-sage-dark); transform: translateY(-3px);
       box-shadow: 0 16px 40px rgba(75, 83, 32, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
       color: var(--text-light);
     }
-    .privacy-container a.back-to-home:active { transform: translateY(-1px); }
+    a.back-to-home:active { transform: translateY(-1px); }
 
     /* Boutons langue : pas de soulignement */
     .language-switcher .lang-btn {
@@ -105,9 +105,8 @@
     @media (max-width: 768px) {
       .privacy-content-section { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
       .privacy-container { padding: var(--spacing-lg); }
-      /* On NE met plus width:100% au bouton pour conserver le centrage visuel */
-      .privacy-container a.back-to-home { padding: 1rem 1.8rem; font-size: 0.95rem; }
-      [dir="rtl"] .privacy-container a.back-to-home { font-size: 1rem; }
+      a.back-to-home { padding: 1rem 1.8rem; font-size: 0.95rem; }
+      [dir="rtl"] a.back-to-home { font-size: 1rem; }
     }
   </style>
 </head>
@@ -116,13 +115,13 @@
   <nav class="floating-nav" id="floating-nav">
     <div class="nav-container">
       <div class="nav-brand">
-        <h1 class="logo-heading">
+        <div class="logo-heading"> <!-- Correction sémantique: h1 remplacé par div -->
           <a id="privacy-logo-link" href="/?lang=fr" aria-label="WizmanHeritage - Accueil">
             <span class="sr-only">Wizman Heritage</span>
             <div class="logo-desktop"><img src="/Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo-image-desktop" /></div>
             <div class="logo-mobile"><img src="/Icon_WizmanHeritage.svg" alt="Icône WizmanHeritage" class="logo-image-mobile" /></div>
           </a>
-        </h1>
+        </div>
       </div>
       <div class="desktop-nav"></div>
       <div class="language-switcher">
@@ -189,155 +188,61 @@
     </section>
   </main>
 
+  <!-- === FOOTER DE LA PAGE D'ACCUEIL INTÉGRÉ ICI === -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>WizmanHeritage</h3>
-          <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>WizmanHeritage</h3>
+                <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
+            </div>
+            <div class="footer-section">
+                <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
+                <div class="footer-contact">
+                    <p>
+                        <a href="#" class="js-email" data-email-user="contact" data-email-domain="wizmanheritage" data-email-tld="com" data-email-show="true">contact@wizmanheritage.com</a>
+                        <br>
+                        <span data-translate="footer-availability">Disponible 24/7 pour urgences</span>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4 data-translate="footer-legal-title">Mentions Légales</h4>
+                <p>
+                    <span data-translate="footer-design">Conçu par Ruben Wizman</span><br>
+                    <span data-translate="footer-compliance">Conforme RGPD • Données protégées</span><br>
+                    <a id="footer-privacy-link" href="/privacy_policy.html" data-translate="privacy-policy">Politique de confidentialité</a>
+                </p>
+            </div>
         </div>
-
-        <div class="footer-section">
-          <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
-          <div class="footer-contact">
-            <p class="email-container">
-              <!-- Email visible, obfuscation pour le href (généré au survol/clic) -->
-              <a
-                href="#"
-                class="js-email"
-                data-email-user="contact"
-                data-email-domain="wizmanheritage"
-                data-email-tld="com"
-                data-email-show="true"
-                data-email-mask="false"
-                data-email-subject="Contact site WizmanHeritage"
-                aria-label="Envoyer un e-mail"
-                rel="nofollow noopener noreferrer"
-              >contact@wizmanheritage.com</a><br />
-              <span data-translate="footer-availability">Disponible 24/7 pour urgences</span>
-            </p>
-          </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="footer-certifications">
+                    <span data-translate="footer-certified">Certifié • Confidentiel • International</span>
+                </div>
+                <div class="linkedin-container">
+                    <a href="https://www.linkedin.com/in/ruben-wizman-2b65b9239/?originalSubdomain=fr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn professionnel" class="linkedin-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.74h4.56V24H.22V8.74zm7.34 0h4.37v2.08h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.53c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.9 1.96-2.9 3.99V24H7.56V8.74z" /></svg>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+            <div class="recaptcha-notice" data-translate="recaptcha-notice">
+                <!-- Le contenu sera rempli par le script.js -->
+            </div>
+            <p>&copy; 2024 WizmanHeritage. <span data-translate="footer-rights">Tous droits réservés.</span></p>
         </div>
-
-        <div class="footer-section">
-          <h4 data-translate="footer-legal-title">Mentions Légales</h4>
-          <p>
-            <span data-translate="footer-design">Conçu par Ruben Wizman</span><br />
-            <span data-translate="footer-compliance">Conforme RGPD • Données protégées</span><br />
-            <a id="footer-privacy-link" href="/privacy_policy.html" data-translate="privacy-policy">Politique de confidentialité</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="footer-bottom-content">
-          <div class="footer-certifications">
-            <span data-translate="footer-certified">Certifié • Confidentiel • International</span>
-          </div>
-          <div class="linkedin-container">
-            <a href="https://www.linkedin.com/in/ruben-wizman-2b65b9239/?originalSubdomain=fr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn professionnel" class="linkedin-link">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.74h4.56V24H.22V8.74zm7.34 0h4.37v2.08h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.53c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.9 1.96-2.9 3.99V24H7.56V8.74z"/></svg>
-              <span>LinkedIn</span>
-            </a>
-          </div>
-        </div>
-        <p>&copy; 2024 WizmanHeritage. <span data-translate="footer-rights">Tous droits réservés.</span></p>
-      </div>
     </div>
   </footer>
+  <!-- === FIN DU FOOTER === -->
 
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- JS global -->
+  <!-- JS global qui gère toute l'interactivité -->
   <script src="/script.js"></script>
 
-  <!-- Mini-script local : persistance langue + liens, SANS doublon -->
-  <script>
-    (function () {
-      function getSavedLang() {
-        try {
-          const urlLang = new URLSearchParams(window.location.search).get('lang');
-          if (urlLang) return urlLang;
-          const saved = localStorage.getItem('wizman_lang');
-          return saved || 'fr';
-        } catch { return 'fr'; }
-      }
-      function setSavedLang(lang) {
-        try { localStorage.setItem('wizman_lang', lang); } catch {}
-      }
-      function setUrlLangParam(lang) {
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.set('lang', lang);
-          history.replaceState({}, '', url.toString());
-        } catch {}
-      }
-      function applyLangToDOM(lang) {
-        document.documentElement.lang = lang;
-        document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-          const active = btn.dataset.lang === lang;
-          btn.classList.toggle('active', active);
-          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-        });
-        var home = document.getElementById('privacy-logo-link');
-        var back = document.getElementById('privacy-back-link');
-        var policy = document.getElementById('footer-privacy-link');
-        if (home)  home.href  = '/?lang=' + lang;
-        if (back)  back.href  = '/?lang=' + lang;
-        if (policy) policy.href = '/privacy_policy.html?lang=' + lang;
-      }
+  <!-- Script reCAPTCHA (nécessaire pour la mention légale dans le footer) -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdS8NQrAAAAAHjVHlLqzlsQAVWb5Qly4rdq1Ga8"></script>
 
-      var lang = getSavedLang();
-      setUrlLangParam(lang);
-      setSavedLang(lang);
-      applyLangToDOM(lang);
-
-      if (!window.wizmanHeritage) {
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-          btn.addEventListener('click', function () {
-            var chosen = this.dataset.lang;
-            if (!chosen || chosen === lang) return;
-            lang = chosen;
-            setSavedLang(lang);
-            setUrlLangParam(lang);
-            applyLangToDOM(lang);
-          });
-        });
-      }
-    })();
-  </script>
-
-  <!-- Mini-script local : obfuscation e-mail (génère le mailto sans modifier le texte visible) -->
-  <script>
-    (function () {
-      var emails = document.querySelectorAll('.js-email');
-      if (!emails.length) return;
-
-      function buildEmail(a) {
-        var user = a.dataset.emailUser;
-        var domain = a.dataset.emailDomain;
-        var tld = a.dataset.emailTld;
-        if (!user || !domain || !tld) return null;
-        return user + '@' + domain + '.' + tld;
-      }
-
-      emails.forEach(function (a) {
-        var email = buildEmail(a);
-        if (!email) return;
-
-        var subject = a.dataset.emailSubject ? ('?subject=' + encodeURIComponent(a.dataset.emailSubject)) : '';
-        var injected = false;
-        function ensureHref() {
-          if (injected) return;
-          a.setAttribute('href', 'mailto:' + email + subject);
-          injected = true;
-        }
-        a.addEventListener('mouseenter', ensureHref, { passive: true });
-        a.addEventListener('focus', ensureHref, { passive: true });
-        a.addEventListener('click', ensureHref);
-      });
-    })();
-  </script>
 </body>
 </html>
