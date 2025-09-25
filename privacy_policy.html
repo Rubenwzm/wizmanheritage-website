@@ -64,7 +64,6 @@
     .privacy-container ul { list-style-position: outside; padding-left: 1.5rem; }
     .privacy-container a { color: var(--primary-sage); text-decoration: underline; }
 
-    /* BOUTON CENTRÉ (fix) */
     .button-container {
       margin-top: 3rem;
       display: flex;
@@ -93,7 +92,6 @@
     }
     a.back-to-home:active { transform: translateY(-1px); }
 
-    /* Boutons langue : pas de soulignement */
     .language-switcher .lang-btn {
       text-decoration: none !important;
       border: none;
@@ -115,7 +113,7 @@
   <nav class="floating-nav" id="floating-nav">
     <div class="nav-container">
       <div class="nav-brand">
-        <div class="logo-heading"> <!-- Correction sémantique: h1 remplacé par div -->
+        <div class="logo-heading">
           <a id="privacy-logo-link" href="/?lang=fr" aria-label="WizmanHeritage - Accueil">
             <span class="sr-only">Wizman Heritage</span>
             <div class="logo-desktop"><img src="/Logo_WizmanHeritage.svg" alt="Logo WizmanHeritage" class="logo-image-desktop" /></div>
@@ -188,61 +186,36 @@
     </section>
   </main>
 
-  <!-- === FOOTER DE LA PAGE D'ACCUEIL INTÉGRÉ ICI === -->
   <footer class="footer">
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>WizmanHeritage</h3>
-                <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
-            </div>
-            <div class="footer-section">
-                <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
-                <div class="footer-contact">
-                    <p>
-                        <a href="#" class="js-email" data-email-user="contact" data-email-domain="wizmanheritage" data-email-tld="com" data-email-show="true">contact@wizmanheritage.com</a>
-                        <br>
-                        <span data-translate="footer-availability">Disponible 24/7 pour urgences</span>
-                    </p>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h4 data-translate="footer-legal-title">Mentions Légales</h4>
-                <p>
-                    <span data-translate="footer-design">Conçu par Ruben Wizman</span><br>
-                    <span data-translate="footer-compliance">Conforme RGPD • Données protégées</span><br>
-                    <a id="footer-privacy-link" href="/privacy_policy.html" data-translate="privacy-policy">Politique de confidentialité</a>
-                </p>
-            </div>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>WizmanHeritage</h3>
+          <p data-translate="footer-desc">Cabinet spécialisé en généalogie successorale internationale</p>
         </div>
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <div class="footer-certifications">
-                    <span data-translate="footer-certified">Certifié • Confidentiel • International</span>
-                </div>
-                <div class="linkedin-container">
-                    <a href="https://www.linkedin.com/in/ruben-wizman-2b65b9239/?originalSubdomain=fr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn professionnel" class="linkedin-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.74h4.56V24H.22V8.74zm7.34 0h4.37v2.08h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.53c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.9 1.96-2.9 3.99V24H7.56V8.74z" /></svg>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
-            </div>
-            <div class="recaptcha-notice" data-translate="recaptcha-notice">
-                <!-- Le contenu sera rempli par le script.js -->
-            </div>
-            <p>&copy; 2024 WizmanHeritage. <span data-translate="footer-rights">Tous droits réservés.</span></p>
+        <div class="footer-section">
+          <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
+          <div class="footer-contact">
+            <p>
+                <a href="#" class="js-email" data-email-user="contact" data-email-domain="wizmanheritage" data-email-tld="com" data-email-show="true">contact@wizmanheritage.com</a>
+                <br />
+                <span data-translate="footer-availability">Disponible 24/7 pour urgences</span>
+            </p>
+          </div>
         </div>
-    </div>
-  </footer>
-  <!-- === FIN DU FOOTER === -->
-
-  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- JS global qui gère toute l'interactivité -->
-  <script src="/script.js"></script>
-
-  <!-- Script reCAPTCHA (nécessaire pour la mention légale dans le footer) -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LdS8NQrAAAAAHjVHlLqzlsQAVWb5Qly4rdq1Ga8"></script>
-
-</body>
-</html>
+        <div class="footer-section">
+          <h4 data-translate="footer-legal-title">Mentions Légales</h4>
+          <p>
+            <span data-translate="footer-design">Conçu par Ruben Wizman</span><br />
+            <span data-translate="footer-compliance">Conforme RGPD • Données protégées</span><br />
+            <a id="footer-privacy-link" href="/privacy_policy.html" data-translate="privacy-policy">Politique de confidentialité</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-content">
+          <div class="footer-certifications">
+            <span data-translate="footer-certified">Certifié • Confidentiel • International</span>
+          </div>
+          <div class="linkedin-container">
+            <a href="https://www.linkedin.com/in/ruben-wizman-2b65b9239/?originalSubdomain=fr" targ
