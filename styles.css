@@ -1938,31 +1938,20 @@ a:focus {
 /* PERSONNALISATION DU BADGE reCAPTCHA */
 /* ================================== */
 
-/* On cache le badge par défaut pour éviter qu'il n'apparaisse une fraction de seconde à sa mauvaise place */
-.grecaptcha-badge {
-    visibility: hidden;
+/* On cache le badge flottant de manière définitive */
+.grecaptcha-badge { 
+    display: none !important; 
 }
 
-/* On le réaffiche une fois qu'il est bien positionné */
-.grecaptcha-badge.grecaptcha-badge-visible {
-    visibility: visible !important;
-    position: absolute !important; /* On force sa position à être "absolue" */
-    left: 20px !important;         /* On le place à 20px du bord gauche */
-    bottom: 15px !important;        /* On le place à 15px du bas */
-    right: auto !important;         /* On annule sa position à droite */
-    box-shadow: none !important;    /* On peut enlever l'ombre si on veut */
+/* On ajoute un peu de style pour le texte de remplacement dans le footer */
+.recaptcha-notice {
+    font-size: 11px;
+    color: #8a8a8a; /* Un gris discret */
+    text-align: center;
+    margin-top: 15px;
 }
 
-/* On transforme le conteneur du bas du footer en "aimant" pour le badge */
-.footer-bottom {
-    position: relative;
-    /* On ajoute un peu d'espace en bas pour que le badge ne soit pas collé au bord sur mobile */
-    padding-bottom: 50px; 
-}
-
-/* Sur les écrans plus larges (ordinateurs), on peut réduire l'espace ajouté */
-@media (min-width: 768px) {
-    .footer-bottom {
-        padding-bottom: 20px;
-    }
+.recaptcha-notice a {
+    color: #6B6358;
+    text-decoration: underline;
 }
