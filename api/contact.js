@@ -1,15 +1,90 @@
-// api/contact.js — VERSION FINALE
+/**
+ * /api/contact.js — VERSION FINALE (CommonJS)
+ * - Garde TON style d’email (createStyledEmail + confirmationContent FR/EN/HE)
+ * - Ajoute SÉCURITÉ: reCAPTCHA v3 (avant parsing), origin check, Busboy + limites, whitelist MIME
+ * - Anti-spam: rate-limit (10 req / 10 min / IP)
+ * - Confidentialité: destinataires cachés en BCC (To visible = 1er SENDGRID_TO, BCC = SENDGRID_BCC)
+ * - Auto-répondeur client en FR/EN/HE (selon champ `lang`, défaut FR)
+ *
+ * ENV (Vercel → Project → Settings → Environment Variables)
+ *  - SENDGRID_API_KEY (secret)
+ *  - SENDGRID_FROM (ex. contact@wizmanheritage.com)
+ *  - SENDGRID_TO (ex. contact@wizmanheritage.com)  ← visible
+ *  - SENDGRID_BCC (ex. rubenwzm@gmail.com,autre@...) ← caché(s)
+ *  - RECAPTCHA_SECRET_KEY (secret)
+ *  - ALLOWED_ORIGINS (optionnel, liste CSV, ex. https://www.wizmanheritage.com,https://wizmanheritage.com)
+ */
 
-import sgMail from '@sendgrid/mail';
-import Busboy from 'busboy';
-import fs from 'fs/promises';
-import path from 'path';
+const sgMail = require('@sendgrid/mail');
+const Busboy = require('busboy');
+const fs = require('fs').promises;
+const path = require('path');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
-// -----------------------------
-// Email templating (CID inline)
-// -----------------------------
+// ---------- Helpers sécurité ----------
+function json(res, status, payload) {
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.end(JSON.stringify(payload));
+}
+
+const ALLOWED_MIME = new Set([
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'image/jpeg',
+  'image/png'
+]);
+
+const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB/fichier
+const MAX_FILES = 5;
+const MAX_TOTAL_BYTES = 20 * 1024 * 1024; // 20 MB total
+const MAX_FIELD_SIZE = 1 * 1024 * 1024; // 1 MB/champ
+
+// Soft rate-limit (meilleure que rien ; pour du béton => KV/Redis)
+const BUCKET = new Map();
+function checkRateLimit(req) {
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'anon';
+  const windowKey = `${ip}:${Math.floor(Date.now() / (10 * 60 * 1000))}`; // 10 min
+  const count = (BUCKET.get(windowKey) ?? 0) + 1;
+  BUCKET.set(windowKey, count);
+  return count <= 10;
+}
+
+function isAllowedOrigin(req) {
+  const origin = req.headers['origin'] || req.headers['Origin'];
+  const host = req.headers['host'] || req.headers['Host'];
+  const allowed = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+
+  const hostOk = typeof host === 'string' && (
+    host.endsWith('wizmanheritage.com') || host.endsWith('vercel.app') || host.endsWith('localhost:3000')
+  );
+  const originOk = !origin || origin === 'null' || allowed.length === 0 || allowed.includes(origin);
+
+  return hostOk && originOk;
+}
+
+async function verifyRecaptcha(token) {
+  if (!token || !process.env.RECAPTCHA_SECRET_KEY) return false;
+  const params = new URLSearchParams();
+  params.append('secret', process.env.RECAPTCHA_SECRET_KEY);
+  params.append('response', token);
+
+  try {
+    const r = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params
+    });
+    const json = await r.json();
+    return !!(json && json.success && (json.score ?? 0) >= 0.5);
+  } catch {
+    return false;
+  }
+}
+
+// ---------- Templating (TA mise en page conservée) ----------
 function createStyledEmail(content) {
   const { title, preheader, body_content, footer_text } = content;
   const sandBeige = '#F3F0E7';
@@ -52,9 +127,6 @@ function createStyledEmail(content) {
   </html>`;
 }
 
-// -----------------------------
-// Contenu d’auto-réponse
-// -----------------------------
 const confirmationContent = {
   fr: {
     title: 'Confirmation de votre demande | WizmanHeritage',
@@ -91,192 +163,244 @@ const confirmationContent = {
   },
 };
 
-// -----------------------------
-// Handler Vercel
-// -----------------------------
-export default async function handler(req, res) {
+// ---------- Handler ----------
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
-    return res.status(405).send('Method Not Allowed');
+    res.setHeader('Allow', 'POST');
+    return json(res, 405, { message: 'Method Not Allowed' });
   }
 
+  if (!checkRateLimit(req)) {
+    return json(res, 429, { code: 'too_many_requests', message: 'Too Many Requests' });
+  }
+
+  if (!isAllowedOrigin(req)) {
+    return json(res, 403, { code: 'forbidden', message: 'Forbidden' });
+  }
+
+  // Vérif CAPTCHA AVANT parsing
+  const captchaToken = req.headers['x-recaptcha-token'];
+  const captchaOk = await verifyRecaptcha(captchaToken);
+  if (!captchaOk) {
+    return json(res, 400, { code: 'captcha_failed', message: 'Captcha failed' });
+  }
+
+  // Garde-fou sur Content-Length
+  const contentLength = parseInt(req.headers['content-length'] || '0', 10);
+  if (Number.isFinite(contentLength) && contentLength > MAX_TOTAL_BYTES) {
+    return json(res, 413, { code: 'payload_too_large', message: 'Payload Too Large' });
+  }
+
+  // Bufferiser le corps brut (comme dans ta version)
+  const rawBody = await new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', (c) => chunks.push(c));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+
+  // Parse multipart via Busboy avec limites + whitelist MIME
+  const parseMultipartForm = (headers, bodyBuffer) =>
+    new Promise((resolve, reject) => {
+      const fields = {};
+      const files = [];
+      let totalBytes = 0;
+
+      const bb = Busboy({
+        headers,
+        limits: { fileSize: MAX_FILE_BYTES, files: MAX_FILES, fieldSize: MAX_FIELD_SIZE }
+      });
+
+      bb.on('file', (fieldname, file, info = {}) => {
+        const { filename, mimeType } = info;
+        if (!filename) {
+          file.resume();
+          return;
+        }
+        if (!ALLOWED_MIME.has(mimeType || '')) {
+          file.resume();
+          return reject(Object.assign(new Error('Invalid file type'), { code: 'invalid_file_type' }));
+        }
+
+        const chunks = [];
+        let bytes = 0;
+
+        file.on('data', (chunk) => {
+          bytes += chunk.length;
+          totalBytes += chunk.length;
+          if (bytes > MAX_FILE_BYTES || totalBytes > MAX_TOTAL_BYTES) {
+            return reject(Object.assign(new Error('Payload Too Large'), { code: 'payload_too_large' }));
+          }
+          chunks.push(chunk);
+        });
+
+        file.on('limit', () => reject(Object.assign(new Error('File too large'), { code: 'payload_too_large' })));
+
+        file.on('end', () => {
+          const buff = Buffer.concat(chunks);
+          files.push({
+            content: buff,
+            filename,
+            type: 'application/octet-stream', // compat Outlook
+            disposition: 'attachment',
+            _originalMime: mimeType
+          });
+        });
+      });
+
+      bb.on('field', (name, val) => {
+        if (Buffer.byteLength(val, 'utf8') > MAX_FIELD_SIZE) {
+          return reject(Object.assign(new Error('Field too large'), { code: 'field_too_large' }));
+        }
+        fields[name] = val;
+      });
+
+      bb.on('error', reject);
+      bb.on('close', () => resolve({ fields, files }));
+      bb.end(bodyBuffer);
+    });
+
+  let fields, clientFiles;
   try {
-    // 1) Lecture du logo en local et préparation en "inline"
+    ({ fields, files: clientFiles } = await parseMultipartForm(req.headers, rawBody));
+  } catch (e) {
+    const code = e.code || 'server_error';
+    const status = code === 'payload_too_large' ? 413 : code === 'invalid_file_type' ? 400 : 400;
+    return json(res, status, { code, message: e.message });
+  }
+
+  const name = (fields.name || '').toString();
+  const email = (fields.email || '').toString();
+  const phone = (fields.phone || '').toString();
+  const message = (fields.message || '').toString();
+  const consentOk = String(fields.consent || fields.rgpd || '').toLowerCase() === 'on';
+  const lang = (fields.lang || 'fr').toString().toLowerCase();
+
+  if (!name || !email || !message || !consentOk) {
+    return json(res, 400, { code: 'missing_required', message: 'Missing required fields or consent' });
+  }
+  if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,}$/i.test(email)) {
+    return json(res, 400, { code: 'invalid_email', message: 'Invalid email format' });
+  }
+
+  // Logo inline (CID)
+  let logoAttachment = null;
+  try {
     const logoPath = path.join(process.cwd(), 'Logo_WizmanHeritage.png');
     const logoBuffer = await fs.readFile(logoPath);
-    const logoBase64 = logoBuffer.toString('base64');
-
-    // ⚠️ Clé attendue par SendGrid: content_id (snake_case), PAS contentId.
-    const logoAttachment = {
-      content: logoBase64,
+    logoAttachment = {
+      content: logoBuffer.toString('base64'),
       filename: 'Logo_WizmanHeritage.png',
       type: 'image/png',
       disposition: 'inline',
-      content_id: 'logo', // <- correction critique
+      content_id: 'logo' // clé correcte pour SendGrid
     };
-
-    // 2) Bufferiser le body brut (indispensable en serverless)
-    const rawBody = await new Promise((resolve, reject) => {
-      const chunks = [];
-      req.on('data', (c) => chunks.push(c));
-      req.on('end', () => resolve(Buffer.concat(chunks)));
-      req.on('error', reject);
-    });
-
-    // 3) Parse multipart via Busboy (gestion fichiers vides incluse)
-    const parseMultipartForm = (headers, bodyBuffer) =>
-      new Promise((resolve, reject) => {
-        const fields = {};
-        const files = [];
-        const bb = Busboy({ headers });
-
-        bb.on('file', (fieldname, file, info) => {
-          const { filename, mimeType } = info || {};
-          // Si le champ fichier est vide, on doit *consommer* le flux puis ignorer.
-          if (!filename) {
-            file.resume();
-            return;
-          }
-          const chunks = [];
-          file.on('data', (chunk) => chunks.push(chunk));
-          file.on('end', () => {
-            files.push({
-              content: Buffer.concat(chunks),
-              filename,
-              // Forçage du type pour compat max (Outlook)
-              type: 'application/octet-stream',
-              disposition: 'attachment',
-              _originalMime: mimeType,
-            });
-          });
-        });
-
-        bb.on('field', (name, val) => {
-          fields[name] = val;
-        });
-
-        bb.on('close', () => resolve({ fields, files }));
-        bb.on('error', reject);
-
-        // Important: injecter le buffer brut
-        bb.end(bodyBuffer);
-      });
-
-    const { fields, files: clientFiles } = await parseMultipartForm(
-      req.headers,
-      rawBody
-    );
-
-    const { name, email, phone, message, lang = 'fr' } = fields;
-
-    // 4) Validation basique
-    if (!name || !email || !message || fields.consent !== 'on') {
-      return res
-        .status(400)
-        .json({ message: 'Missing required fields or consent' });
-    }
-    if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,}$/i.test(email)) {
-      return res.status(400).json({ message: 'Invalid email format' });
-    }
-
-    // 5) Contexte de soumission
-    const submissionDate = new Date().toLocaleString(
-      lang === 'he' ? 'he-IL' : `${lang}-FR`,
-      { timeZone: 'Europe/Paris' }
-    );
-    const xff = (req.headers['x-forwarded-for'] || '').toString();
-    const ipAddress = xff.split(',')[0] || 'Non disponible';
-
-    // 6) Feuille d’engagement (HTML)
-    const engagementSheetHtml = `
-      <hr style="border:none;border-top:1px solid #E6E2DB;margin:30px 0;">
-      <div style="padding:20px;border:1px solid #4B5320;border-radius:8px;background-color:#FAFAF8;">
-        <h2 style="margin-top:0;color:#4B5320;font-size:18px;text-align:center;">
-          Fiche d'Engagement & de Consentement
-        </h2>
-        <p style="font-size:12px;text-align:center;margin-bottom:20px;">Générée le : ${submissionDate}</p>
-        <p><strong>Client :</strong> ${name}</p>
-        <p><strong>Email :</strong> ${email}</p>
-        <p><strong>Adresse IP de Soumission :</strong> ${ipAddress}</p>
-        <p><strong>Statut du Consentement :</strong> <span style="color:green;font-weight:bold;">✔ ACCEPTÉ</span></p>
-        <p style="font-size:12px;">
-          Le client a coché la case de consentement, acceptant ainsi le traitement de ses données personnelles et des fichiers joints, conformément à la politique de confidentialité.
-        </p>
-        <p><strong>Documents Partagés :</strong></p>
-        <p style="font-weight:bold;">
-          ${clientFiles.length > 0 ? clientFiles.map((f) => f.filename).join(', ') : 'Aucun document partagé.'}
-        </p>
-      </div>
-    `;
-
-    // 7) Formatage des pièces jointes client → SendGrid
-    //    (type *forcé* à application/octet-stream pour Outlook)
-    const formattedClientFiles = clientFiles.map((f) => ({
-      content: f.content.toString('base64'),
-      filename: f.filename,
-      type: 'application/octet-stream',
-      disposition: 'attachment',
-    }));
-
-    // 8) Notification interne (multi-destinataires)
-    const notificationBody = `
-      <h1 style="color:#4B5320;font-size:22px;">Nouvelle demande de ${name}</h1>
-      <p>Vous avez reçu une nouvelle demande de contact.</p>
-      <div style="background-color:#F8F6F3;padding:15px;border-radius:8px;">
-        <p><strong>Client :</strong> ${name} (<a href="mailto:${email}">${email}</a>)</p>
-        <p><strong>Téléphone :</strong> ${phone || 'Non fourni'}</p>
-        <p><strong>Message :</strong><br>${String(message).replace(/\n/g, '<br>')}</p>
-      </div>
-      ${engagementSheetHtml}
-    `;
-
-    const notificationMsg = {
-      to: ['contact@wizmanheritage.com', 'rubenwzm@gmail.com'],
-      from: 'noreply@wizmanheritage.com',
-      subject: `WizmanHeritage | Nouvelle demande de ${name} | Consentement inclus`,
-      html: createStyledEmail({
-        title: `Nouvelle demande de ${name}`,
-        preheader: String(message).slice(0, 50),
-        body_content: notificationBody,
-        footer_text: 'Email envoyé depuis wizmanheritage.com',
-      }),
-      // Ajout *systématique* du logo inline + éventuels fichiers client
-      attachments: [...formattedClientFiles, logoAttachment],
-    };
-
-    // 9) Auto-répondeur client
-    const clientContent = confirmationContent[lang] || confirmationContent.fr;
-    const confirmationBody = `
-      <h1 style="color:#4B5320;font-size:22px;">
-        ${clientContent.greeting.replace('{name}', name)}
-      </h1>
-      <p style="font-size:16px;line-height:1.6;">${clientContent.main_text}</p>
-      <br>
-      <p style="font-size:16px;line-height:1.6;">
-        ${clientContent.closing}<br><strong>${clientContent.team_name}</strong>
-      </p>
-    `;
-
-    const autoresponderMsg = {
-      to: email,
-      from: 'contact@wizmanheritage.com',
-      subject: clientContent.title,
-      html: createStyledEmail({
-        title: clientContent.title,
-        preheader: clientContent.preheader,
-        body_content: confirmationBody,
-        footer_text: clientContent.footer_text,
-      }),
-      attachments: [logoAttachment],
-    };
-
-    // 10) Envoi concurrent
-    await Promise.all([sgMail.send(notificationMsg), sgMail.send(autoresponderMsg)]);
-
-    return res.status(200).json({ message: 'Success' });
-  } catch (error) {
-    // Log SendGrid verbose si dispo
-    const details = error?.response?.body ?? error;
-    console.error('Error in form handler:', details);
-    return res.status(500).json({ message: 'Error processing your request' });
+  } catch {
+    // Pas bloquant si le logo est absent
   }
-}
+
+  // Pièces jointes client (base64)
+  const formattedClientFiles = (clientFiles || []).map((f) => ({
+    content: f.content.toString('base64'),
+    filename: f.filename,
+    type: 'application/octet-stream',
+    disposition: 'attachment'
+  }));
+
+  // Métadonnées soumission
+  const submissionDate = new Date().toLocaleString(
+    lang === 'he' ? 'he-IL' : (lang === 'en' ? 'en-GB' : 'fr-FR'),
+    { timeZone: 'Europe/Paris' }
+  );
+  const xff = (req.headers['x-forwarded-for'] || '').toString();
+  const ipAddress = xff.split(',')[0] || 'Non disponible';
+
+  const engagementSheetHtml = `
+    <hr style="border:none;border-top:1px solid #E6E2DB;margin:30px 0;">
+    <div style="padding:20px;border:1px solid #4B5320;border-radius:8px;background-color:#FAFAF8;">
+      <h2 style="margin-top:0;color:#4B5320;font-size:18px;text-align:center;">
+        Fiche d'Engagement & de Consentement
+      </h2>
+      <p style="font-size:12px;text-align:center;margin-bottom:20px;">Générée le : ${submissionDate}</p>
+      <p><strong>Client :</strong> ${name}</p>
+      <p><strong>Email :</strong> ${email}</p>
+      <p><strong>Adresse IP de Soumission :</strong> ${ipAddress}</p>
+      <p><strong>Statut du Consentement :</strong> <span style="color:green;font-weight:bold;">✔ ACCEPTÉ</span></p>
+      <p style="font-size:12px;">
+        Le client a coché la case de consentement, acceptant ainsi le traitement de ses données personnelles et des fichiers joints, conformément à la politique de confidentialité.
+      </p>
+      <p><strong>Documents Partagés :</strong></p>
+      <p style="font-weight:bold;">
+        ${(clientFiles && clientFiles.length) ? clientFiles.map((f) => f.filename).join(', ') : 'Aucun document partagé.'}
+      </p>
+    </div>
+  `;
+
+  // ---------- Notification interne (To visible + BCC cachés) ----------
+  const toFirst = String(process.env.SENDGRID_TO || '').split(',').map(s => s.trim()).filter(Boolean)[0];
+  const bccList = String(process.env.SENDGRID_BCC || '').split(',').map(s => s.trim()).filter(Boolean);
+  const from = process.env.SENDGRID_FROM;
+
+  if (!toFirst || !from || !process.env.SENDGRID_API_KEY) {
+    return json(res, 500, { code: 'server_error', message: 'Email not configured (TO/FROM/API)' });
+  }
+
+  const notificationBody = `
+    <h1 style="color:#4B5320;font-size:22px;">Nouvelle demande de ${name}</h1>
+    <p>Vous avez reçu une nouvelle demande de contact.</p>
+    <div style="background-color:#F8F6F3;padding:15px;border-radius:8px;">
+      <p><strong>Client :</strong> ${name} (<a href="mailto:${email}">${email}</a>)</p>
+      <p><strong>Téléphone :</strong> ${phone || 'Non fourni'}</p>
+      <p><strong>Message :</strong><br>${String(message).replace(/\n/g, '<br>')}</p>
+    </div>
+    ${engagementSheetHtml}
+  `;
+
+  const notificationMsg = {
+    to: toFirst,                               // visible
+    bcc: bccList.length ? bccList : undefined, // cachés
+    from,
+    subject: `WizmanHeritage | Nouvelle demande de ${name} | Consentement inclus`,
+    html: createStyledEmail({
+      title: `Nouvelle demande de ${name}`,
+      preheader: String(message).slice(0, 50),
+      body_content: notificationBody,
+      footer_text: 'Email envoyé depuis wizmanheritage.com'
+    }),
+    attachments: [...formattedClientFiles, ...(logoAttachment ? [logoAttachment] : [])]
+  };
+
+  // ---------- Auto-répondeur client ----------
+  const clientContent = confirmationContent[lang] || confirmationContent.fr;
+  const confirmationBody = `
+    <h1 style="color:#4B5320;font-size:22px;">
+      ${clientContent.greeting.replace('{name}', name)}
+    </h1>
+    <p style="font-size:16px;line-height:1.6;">${clientContent.main_text}</p>
+    <br>
+    <p style="font-size:16px;line-height:1.6;">
+      ${clientContent.closing}<br><strong>${clientContent.team_name}</strong>
+    </p>
+  `;
+
+  const autoresponderMsg = {
+    to: email,
+    from,
+    subject: clientContent.title,
+    html: createStyledEmail({
+      title: clientContent.title,
+      preheader: clientContent.preheader,
+      body_content: confirmationBody,
+      footer_text: clientContent.footer_text
+    }),
+    attachments: logoAttachment ? [logoAttachment] : undefined
+  };
+
+  try {
+    await Promise.all([sgMail.send(notificationMsg), sgMail.send(autoresponderMsg)]);
+    return json(res, 200, { ok: true });
+  } catch (error) {
+    console.error('SendGrid error:', error?.response?.body || error);
+    return json(res, 502, { code: 'send_failed', message: 'Email send failed' });
+  }
+};
