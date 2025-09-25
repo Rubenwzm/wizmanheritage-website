@@ -7,9 +7,9 @@ class WizmanHeritage {
     this.cookieConsent = null;
 
     this.notificationMessages = {
-      fr: { 'form-success': 'Votre demande a été transmise avec succès', 'form-error': 'Erreur lors de l’envoi de votre demande', 'form-sending': 'Transmission en cours...', 'language-changed': 'Français', 'email-missing': 'Veuillez saisir votre adresse email', 'name-missing': 'Veuillez indiquer votre nom complet', 'message-missing': 'Veuillez préciser votre demande', 'consent-missing': 'Veuillez accepter les conditions de confidentialité', 'file-selected': 'Document(s) sélectionné(s)', 'file-removed': 'Document supprimé', 'file-limit': 'Maximum 5 documents autorisés', 'file-size': 'Fichier trop volumineux (max 10MB)', 'file-type': 'Type de fichier non autorisé', 'cookies-accepted': 'Cookies acceptés', 'cookies-declined': 'Cookies refusés' },
-      en: { 'form-success': 'Your request has been submitted successfully', 'form-error': 'Error sending your request', 'form-sending': 'Submitting...', 'language-changed': 'English', 'email-missing': 'Please enter your email address', 'name-missing': 'Please enter your full name', 'message-missing': 'Please specify your request', 'consent-missing': 'Please accept the privacy policy', 'file-selected': 'Document(s) selected', 'file-removed': 'Document removed', 'file-limit': 'Maximum 5 documents allowed', 'file-size': 'File too large (max 10MB)', 'file-type': 'File type not allowed', 'cookies-accepted': 'Cookies accepted', 'cookies-declined': 'Cookies declined' },
-      he: { 'form-success': 'הבקשה שלך נשלחה בהצלחה', 'form-error': 'שגיאה בשליחת הבקשה', 'form-sending': 'שולח...', 'language-changed': 'עברית', 'email-missing': 'אנא הזן את כתובת האימייל שלך', 'name-missing': 'אנא הזן את שמך המלא', 'message-missing': 'אנא פרט את בקשתך', 'consent-missing': 'אנא אשר את מדיניות הפרטיות', 'file-selected': 'מסמך/ים נבחר/ו', 'file-removed': 'מסמך הוסר', 'file-limit': 'מקסימום 5 מסמכים מותרים', 'file-size': 'קובץ גדול מדי (מקס 10MB)', 'file-type': 'סוג קובץ לא מורשה', 'cookies-accepted': 'עוגיות התקבלו', 'cookies-declined': 'עוגיות נדחו' }
+      fr: { 'form-success': 'Votre demande a été transmise avec succès', 'form-error': 'Erreur lors de l’envoi de votre demande', 'form-sending': 'Transmission en cours...', 'language-changed': 'Français', 'email-missing': 'Veuillez saisir votre adresse email', 'name-missing': 'Veuillez indiquer votre nom complet', 'message-missing': 'Veuillez préciser votre demande', 'consent-missing': 'Veuillez accepter les conditions de confidentialité', 'file-selected': 'Document(s) sélectionné(s)', 'file-removed': 'Document supprimé', 'file-limit': 'Maximum 5 documents autorisés', 'file-size': 'Fichier trop volumineux (max 4MB)', 'file-type': 'Type de fichier non autorisé', 'cookies-accepted': 'Cookies acceptés', 'cookies-declined': 'Cookies refusés' },
+      en: { 'form-success': 'Your request has been submitted successfully', 'form-error': 'Error sending your request', 'form-sending': 'Submitting...', 'language-changed': 'English', 'email-missing': 'Please enter your email address', 'name-missing': 'Please enter your full name', 'message-missing': 'Please specify your request', 'consent-missing': 'Please accept the privacy policy', 'file-selected': 'Document(s) selected', 'file-removed': 'Document removed', 'file-limit': 'Maximum 5 documents allowed', 'file-size': 'File too large (max 4MB)', 'file-type': 'File type not allowed', 'cookies-accepted': 'Cookies accepted', 'cookies-declined': 'Cookies declined' },
+      he: { 'form-success': 'הבקשה שלך נשלחה בהצלחה', 'form-error': 'שגיאה בשליחת הבקשה', 'form-sending': 'שולח...', 'language-changed': 'עברית', 'email-missing': 'אנא הזן את כתובת האימייל שלך', 'name-missing': 'אנא הזן את שמך המלא', 'message-missing': 'אנא פרט את בקשתך', 'consent-missing': 'אנא אשר את מדיניות הפרטיות', 'file-selected': 'מסמך/ים נבחר/ו', 'file-removed': 'מסמך הוסר', 'file-limit': 'מקסימום 5 מסמכים מותרים', 'file-size': 'קובץ גדול מדי (מקס 4MB)', 'file-type': 'סוג קובץ לא מורשה', 'cookies-accepted': 'עוגיות התקבלו', 'cookies-declined': 'עוגיות נדחו' }
     };
 
     this.translations = {
@@ -39,7 +39,7 @@ class WizmanHeritage {
         'faq2-question': 'Mes données sont-elles confidentielles ?',
         'faq2-answer': 'Toutes les informations sont traitées selon le RGPD et ne sont jamais partagées sans consentement.',
         'faq3-question': 'Puis-je envoyer des documents en toute sécurité ?',
-        'faq3-answer': 'Oui, les fichiers sont sécurisés et limités à 10MB chacun, conformément à notre politique de confidentialité.',
+        'faq3-answer': 'Oui, les fichiers sont sécurisés et limités à 4MB chacun, conformément à notre politique de confidentialité.',
         'about-title': 'Excellence & Discrétion',
         'about-desc': 'WizmanHeritage est un cabinet international reconnu pour son expertise en recherche successorale. Nous servons une clientèle internationale avec la plus haute confidentialité, utilisant des méthodes d’investigation rigoureuses et respectant les législations de chaque pays d’intervention.',
         'feature1': 'Confidentialité absolue',
@@ -53,7 +53,7 @@ class WizmanHeritage {
         'message-placeholder': 'Décrivez votre situation en quelques mots. Toutes les informations resteront strictement confidentielles.',
         'form-document': 'Documents (optionnel)',
         'file-upload-text': 'Cliquer ou déposer vos documents ici',
-        'file-upload-hint': 'PDF, Word, Images acceptés (max 10MB chacun)',
+        'file-upload-hint': 'PDF, Word, Images acceptés (max 4MB chacun)',
         'consent-text': 'J’accepte que mes données soient traitées conformément à la politique de confidentialité.',
         'privacy-text': 'Vos informations sont traitées avec la plus stricte confidentialité et ne sont jamais partagées avec des tiers.',
         'form-submit': 'Envoyer ma demande',
@@ -132,7 +132,7 @@ class WizmanHeritage {
         'faq2-question': 'Are my data confidential?',
         'faq2-answer': 'All information is processed under GDPR and never shared without consent.',
         'faq3-question': 'Can I upload files securely?',
-        'faq3-answer': 'Yes, files are secured and limited to 10MB each, according to our privacy policy.',
+        'faq3-answer': 'Yes, files are secured and limited to 4MB each, according to our privacy policy.',
         'about-title': 'Excellence & Discretion',
         'about-desc': 'WizmanHeritage is an international firm renowned for heir research. We serve an international clientele with the utmost confidentiality, using rigorous methods and complying with the laws of each country of operation.',
         'feature1': 'Absolute confidentiality',
@@ -146,7 +146,7 @@ class WizmanHeritage {
         'message-placeholder': 'Describe your situation in a few words. All information will remain strictly confidential.',
         'form-document': 'Documents (optional)',
         'file-upload-text': 'Click or drop your documents here',
-        'file-upload-hint': 'PDF, Word, Images accepted (max 10MB each)',
+        'file-upload-hint': 'PDF, Word, Images accepted (max 4MB each)',
         'consent-text': 'I consent to my data being processed according to the privacy policy.',
         'privacy-text': 'Your information is handled with strict confidentiality and never shared with third parties.',
         'form-submit': 'Send my request',
@@ -225,7 +225,7 @@ class WizmanHeritage {
         'faq2-question': 'האם הנתונים שלי חסויים?',
         'faq2-answer': 'כל המידע מטופל בהתאם ל-GDPR ואינו משותף ללא הסכמה.',
         'faq3-question': 'האם ניתן לשלוח קבצים בצורה מאובטחת?',
-        'faq3-answer': 'כן, הקבצים מאובטחים ומוגבלים ל-10MB כל אחד בהתאם למדיניות הפרטיות שלנו.',
+        'faq3-answer': 'כן, הקבצים מאובטחים ומוגבלים ל-4MB כל אחד בהתאם למדיניות הפרטיות שלנו.',
         'about-title': 'מצוינות ודיסקרטיות',
         'about-desc': 'WizmanHeritage הוא משרד בינלאומי בעל מומחיות בחקר יורשים. אנו משרתים לקוחות בכל העולם בסודיות מלאה, בשיטות מחקר קפדניות ובהתאם לדיני כל מדינה.',
         'feature1': 'סודיות מוחלטת',
@@ -239,7 +239,7 @@ class WizmanHeritage {
         'message-placeholder': 'תאר/י את מצבך בכמה מילים. כל המידע יישאר חסוי לחלוטין.',
         'form-document': 'מסמכים (לא חובה)',
         'file-upload-text': 'לחץ או גרור מסמכים לכאן',
-        'file-upload-hint': 'PDF, Word, תמונות (מקס 10MB כל אחד)',
+        'file-upload-hint': 'PDF, Word, תמונות (מקס 4MB כל אחד)',
         'consent-text': 'אני מסכים/ה שהנתונים שלי יעובדו בהתאם למדיניות הפרטיות.',
         'privacy-text': 'המידע שלך נשמר בסודיות מוחלטת ואינו נמסר לצדדים שלישיים.',
         'form-submit': 'שלח את הבקשה',
@@ -632,14 +632,16 @@ class WizmanHeritage {
   // ================== UPLOAD ==================
   addFiles(files) {
     const maxFiles = 5;
-    const maxSize = 10 * 1024 * 1024;
-    // ===== CORRECTION APPLIQUÉE ICI =====
+    const maxSize = 4 * 1024 * 1024; // 4MB to match Vercel's limit
     const allowedTypes = [ 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp', 'image/heic', 'image/heif' ];
     const newFiles = [];
     for (const file of files) {
       if (this.selectedFiles.length + newFiles.length >= maxFiles) { this.showToast(this.notificationMessages[this.currentLanguage]['file-limit'], 'warning'); break; }
       if (!allowedTypes.includes(file.type)) { this.showToast(this.notificationMessages[this.currentLanguage]['file-type'], 'error'); continue; }
-      if (file.size > maxSize) { this.showToast(this.notificationMessages[this.currentLanguage]['file-size'], 'error'); continue; }
+      if (file.size > maxSize) { 
+        this.showToast(this.notificationMessages[this.currentLanguage]['file-size'], 'error'); 
+        continue; 
+      }
       if (file.name.length > 255 || /[<>:"/\\|?*]/.test(file.name)) { this.showToast('Nom de fichier invalide', 'error'); continue; }
       newFiles.push(file);
     }
