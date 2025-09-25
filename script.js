@@ -1,3 +1,4 @@
+
 class WizmanHeritage {
   constructor() {
     this.currentLanguage = 'fr';
