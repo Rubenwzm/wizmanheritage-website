@@ -12,7 +12,6 @@ class WizmanHeritage {
       he: { 'form-success': 'הבקשה שלך נשלחה בהצלחה', 'form-error': 'שגיאה בשליחת הבקשה', 'form-sending': 'שולח...', 'language-changed': 'עברית', 'email-missing': 'אנא הזן את כתובת האימייל שלך', 'name-missing': 'אנא הזן את שמך המלא', 'message-missing': 'אנא פרט את בקשתך', 'consent-missing': 'אנא אשר את מדיניות הפרטיות', 'file-selected': 'מסמך/ים נבחר/ו', 'file-removed': 'מסמך הוסר', 'file-limit': 'מקסימום 5 מסמכים מותרים', 'file-size': 'קובץ גדול מדי (מקס 10MB)', 'file-type': 'סוג קובץ לא מורשה', 'cookies-accepted': 'עוגיות התקבלו', 'cookies-declined': 'עוגיות נדחו' }
     };
 
-    // === TES TRADUCTIONS (collées depuis ton message) ===
     this.translations = {
       fr: { /* --- FR --- */ 
         home: 'Accueil', services: 'Services', international: 'International', faq: 'FAQ', about: 'À propos', contact: 'Contact',
@@ -383,18 +382,13 @@ class WizmanHeritage {
     if (!this.translations[lang] || lang === this.currentLanguage) return;
     this.currentLanguage = lang;
     this.saveLanguage(lang);
-    this.setUrlLangParam(lang);         // garde ?lang= dans l’URL sans recharger
-    this.updateLanguageDOM();           // dir + boutons actifs
-    this.updateLanguage(lang);          // remplit tous les data-translate
-    this.updateSEOTags();               // <title> + meta + og
-    // Met à jour liens dépendants de la langue
+    this.setUrlLangParam(lang);
+    this.updateLanguageDOM();
+    this.updateLanguage(lang);
+    this.updateSEOTags();
     const privacyLink = document.getElementById('footer-privacy-link');
     if (privacyLink) privacyLink.href = `/privacy_policy.html?lang=${this.currentLanguage}`;
-
-    // Ferme le menu mobile si ouvert
     this.closeMenu();
-
-    // Optionnel : feedback
     const msg = this.notificationMessages[this.currentLanguage]?.['language-changed'];
     if (msg) this.showToast(msg, 'info');
   }
@@ -444,7 +438,6 @@ class WizmanHeritage {
 
   // ================== EVENTS ==================
   setupEventListeners() {
-    // Switch langue (desktop + mobile)
     document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
       btn.addEventListener('click', () => this.setLanguage(btn.dataset.lang));
     });
@@ -479,7 +472,6 @@ class WizmanHeritage {
       if (privacyLink) privacyLink.href = `/privacy_policy.html?lang=${this.currentLanguage}`;
     }
 
-    // Page de confidentialité (liens retour localisés)
     if (document.querySelector('.privacy-page-body')) {
       const logoLink = document.getElementById('privacy-logo-link');
       if (logoLink) logoLink.href = `/?lang=${this.currentLanguage}`;
@@ -510,7 +502,6 @@ class WizmanHeritage {
       const t = el.getAttribute('data-email-tld');
       if (u && d) return t ? `${u}@${d}.${t}` : `${u}@${d}`;
 
-      // fallback legacy: nettoie -nospam- et variantes
       let txt = (el.textContent || '');
       txt = txt.replace(/-?nospam-?/gi, '')
                .replace(/\s+/g, '')
@@ -642,7 +633,8 @@ class WizmanHeritage {
   addFiles(files) {
     const maxFiles = 5;
     const maxSize = 10 * 1024 * 1024;
-    const allowedTypes = [ 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg' ];
+    // ===== CORRECTION APPLIQUÉE ICI =====
+    const allowedTypes = [ 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp', 'image/heic', 'image/heif' ];
     const newFiles = [];
     for (const file of files) {
       if (this.selectedFiles.length + newFiles.length >= maxFiles) { this.showToast(this.notificationMessages[this.currentLanguage]['file-limit'], 'warning'); break; }
