@@ -69,42 +69,7 @@ class WizmanHeritage {
         'cookie-text': 'Nous utilisons des cookies nécessaires au fonctionnement du site.',
         'cookie-accept': 'Accepter',
         'cookie-decline': 'Refuser',
-        'privacy-page-title': 'Politique de Confidentialité - WizmanHeritage',
-        'privacy-description': 'Politique de confidentialité de WizmanHeritage. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles.',
-        'privacy-main-header': 'Politique de Confidentialité',
-        'privacy-last-updated-label': 'Dernière mise à jour :',
-        'privacy-date': '18 septembre 2025',
-        'privacy-intro': 'WizmanHeritage s’engage à protéger vos données personnelles. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, et protégeons les informations que vous nous fournissez via notre site web, conformément au Règlement Général sur la Protection des Données (RGPD).',
-        'privacy-h2-collection': '1. Collecte des Données Personnelles',
-        'privacy-p-collection-1': 'Nous collectons des informations lorsque vous utilisez notre formulaire de contact ou interagissez avec notre site. Les données collectées peuvent inclure :',
-        'privacy-li-collection-name': 'Nom complet : Pour vous identifier.',
-        'privacy-li-collection-email': 'Adresse email : Pour communiquer avec vous.',
-        'privacy-li-collection-phone': 'Numéro de téléphone (optionnel) : Pour un contact direct si nécessaire.',
-        'privacy-li-collection-message': 'Message : Toute information que vous fournissez concernant votre demande.',
-        'privacy-li-collection-docs': 'Documents : Fichiers que vous téléchargez volontairement pour appuyer votre demande.',
-        'privacy-li-collection-nav': 'Données de navigation : Telles que les cookies nécessaires au bon fonctionnement du site.',
-        'privacy-h2-usage': '2. Utilisation de Vos Données',
-        'privacy-p-usage-1': 'Vos données sont utilisées exclusivement pour :',
-        'privacy-li-usage-reply': 'Répondre à vos demandes de consultation et fournir nos services de généalogie successorale.',
-        'privacy-li-usage-manage': 'Gérer et sécuriser notre site web.',
-        'privacy-li-usage-legal': 'Respecter nos obligations légales et réglementaires.',
-        'privacy-p-usage-2': 'Nous ne partageons jamais vos données avec des tiers à des fins marketing. Vos informations ne sont transmises qu’avec votre consentement explicite ou si la loi l’exige.',
-        'privacy-h2-security': '3. Sécurité des Données',
-        'privacy-p-security-1': 'Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos données contre tout accès, modification, divulgation ou destruction non autorisés. Les transferts de fichiers sont sécurisés et l’accès à vos informations est strictement limité.',
-        'privacy-h2-retention': '4. Conservation des Données',
-        'privacy-p-retention-1': 'Nous conservons vos données personnelles uniquement le temps nécessaire à la réalisation des finalités pour lesquelles elles ont été collectées, ou pour nous conformer à nos obligations légales.',
-        'privacy-h2-rights': '5. Vos Droits',
-        'privacy-p-rights-1': 'Conformément au RGPD, vous disposez des droits suivants concernant vos données personnelles :',
-        'privacy-li-rights-access': 'Droit d’accès : Vous pouvez demander une copie des données que nous détenons sur vous.',
-        'privacy-li-rights-rectify': 'Droit de rectification : Vous pouvez demander la correction de données inexactes.',
-        'privacy-li-rights-erase': 'Droit à l’effacement : Vous pouvez demander la suppression de vos données.',
-        'privacy-li-rights-limit': 'Droit à la limitation du traitement : Vous pouvez demander à ce que nous limitions l’utilisation de vos données.',
-        'privacy-p-rights-2': 'Pour exercer ces droits, veuillez nous contacter en utilisant le formulaire de contact de notre site.',
-        'privacy-h2-cookies': '6. Cookies',
-        'privacy-p-cookies-1': 'Notre site utilise des cookies essentiels à son fonctionnement. Un bandeau de consentement vous permet d’accepter ou de refuser leur utilisation lors de votre première visite.',
-        'privacy-h2-contact': '7. Contact',
-        'privacy-p-contact-1': 'Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de contact sur notre site principal.',
-        'privacy-back-to-home': 'Retour à l’accueil'
+        'recaptcha-notice': `Ce site est protégé par reCAPTCHA et la <a href="https://policies.google.com/privacy" target="_blank">Politique de Confidentialité</a> et les <a href="https://policies.google.com/terms" target="_blank">Conditions d'Utilisation</a> de Google s'appliquent.`
       },
       en: { /* --- EN --- */
         home: 'Home', services: 'Services', international: 'International', faq: 'FAQ', about: 'About', contact: 'Contact',
@@ -162,42 +127,7 @@ class WizmanHeritage {
         'cookie-text': 'We use cookies necessary for the website to function.',
         'cookie-accept': 'Accept',
         'cookie-decline': 'Decline',
-        'privacy-page-title': 'Privacy Policy - WizmanHeritage',
-        'privacy-description': 'WizmanHeritage privacy policy. Learn how we collect, use, and protect your personal data.',
-        'privacy-main-header': 'Privacy Policy',
-        'privacy-last-updated-label': 'Last updated:',
-        'privacy-date': 'September 18, 2025',
-        'privacy-intro': 'WizmanHeritage is committed to protecting your personal data. This Privacy Policy describes how we collect, use, and protect the information you provide via our website, in accordance with the General Data Protection Regulation (GDPR).',
-        'privacy-h2-collection': '1. Personal Data Collection',
-        'privacy-p-collection-1': 'We collect information when you use our contact form or interact with our site. The data collected may include:',
-        'privacy-li-collection-name': 'Full name: To identify you.',
-        'privacy-li-collection-email': 'Email address: To communicate with you.',
-        'privacy-li-collection-phone': 'Phone number (optional): For direct contact if necessary.',
-        'privacy-li-collection-message': 'Message: Any information you provide regarding your request.',
-        'privacy-li-collection-docs': 'Documents: Files you voluntarily upload to support your request.',
-        'privacy-li-collection-nav': 'Browsing data: Such as cookies necessary for the site to function properly.',
-        'privacy-h2-usage': '2. Use of Your Data',
-        'privacy-p-usage-1': 'Your data is used exclusively to:',
-        'privacy-li-usage-reply': 'Respond to your consultation requests and provide our probate genealogy services.',
-        'privacy-li-usage-manage': 'Manage and secure our website.',
-        'privacy-li-usage-legal': 'Comply with our legal and regulatory obligations.',
-        'privacy-p-usage-2': 'We never share your data with third parties for marketing purposes. Your information is only shared with your explicit consent or if required by law.',
-        'privacy-h2-security': '3. Data Security',
-        'privacy-p-security-1': 'We implement technical and organizational security measures to protect your data from unauthorized access, modification, disclosure, or destruction. File transfers are secured, and access to your information is strictly limited.',
-        'privacy-h2-retention': '4. Data Retention',
-        'privacy-p-retention-1': 'We retain your personal data only for the time necessary to fulfill the purposes for which it was collected, or to comply with our legal obligations.',
-        'privacy-h2-rights': '5. Your Rights',
-        'privacy-p-rights-1': 'In accordance with the GDPR, you have the following rights regarding your personal data:',
-        'privacy-li-rights-access': 'Right of access: You can request a copy of the data we hold about you.',
-        'privacy-li-rights-rectify': 'Right to rectification: You can request the correction of inaccurate data.',
-        'privacy-li-rights-erase': 'Right to erasure: You can request the deletion of your data.',
-        'privacy-li-rights-limit': 'Right to restriction of processing: You can ask us to limit the use of your data.',
-        'privacy-p-rights-2': 'To exercise these rights, please contact us using our website\'s contact form.',
-        'privacy-h2-cookies': '6. Cookies',
-        'privacy-p-cookies-1': 'Our site uses cookies that are essential for its operation. A consent banner allows you to accept or decline their use during your first visit.',
-        'privacy-h2-contact': '7. Contact',
-        'privacy-p-contact-1': 'If you have any questions about this privacy policy, please contact us via the contact form on our main site.',
-        'privacy-back-to-home': 'Back to Home'
+        'recaptcha-notice': `This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.`
       },
       he: { /* --- HE --- */
         home: 'דף הבית', services: 'שירותים', international: 'בינלאומי', faq: 'שאלות נפוצות', about: 'אודות', contact: 'יצירת קשר',
@@ -255,42 +185,7 @@ class WizmanHeritage {
         'cookie-text': 'אנו משתמשים בעוגיות הנדרשות להפעלת האתר.',
         'cookie-accept': 'קבל',
         'cookie-decline': 'סרב',
-        'privacy-page-title': 'מדיניות פרטיות - WizmanHeritage',
-        'privacy-description': 'מדיניות הפרטיות של WizmanHeritage. למדו כיצד אנו אוספים, משתמשים ומגנים על הנתונים האישיים שלכם.',
-        'privacy-main-header': 'מדיניות פרטיות',
-        'privacy-last-updated-label': 'עדכון אחרון:',
-        'privacy-date': '18 בספטמבר 2025',
-        'privacy-intro': 'WizmanHeritage מחויבת להגנה על המידע האישי שלך. מדיניות פרטיות זו מפרטת כיצד אנו אוספים, משתמשים ומגנים על המידע הנמסר על ידך באתר האינטרנט שלנו, בהתאם לתקנה הכללית להגנה על מידע (GDPR).',
-        'privacy-h2-collection': '1. איסוף מידע אישי',
-        'privacy-p-collection-1': 'אנו אוספים מידע בעת שימושך בטופס יצירת הקשר באתר. המידע הנאסף עשוי לכלול:',
-        'privacy-li-collection-name': 'שם מלא: לצורך זיהוי.',
-        'privacy-li-collection-email': 'כתובת דוא"ל: לצורך יצירת קשר.',
-        'privacy-li-collection-phone': 'מספר טלפון (אופציונלי): ליצירת קשר ישיר במידת הצורך.',
-        'privacy-li-collection-message': 'הודעה: כל מידע הנמסר על ידך בנוגע לבקשתך.',
-        'privacy-li-collection-docs': 'מסמכים: קבצים המועלים על ידך באופן וולונטרי לתמיכה בבקשתך.',
-        'privacy-li-collection-nav': 'נתוני גלישה: כגון קובצי Cookie החיוניים לתפקוד האתר.',
-        'privacy-h2-usage': '2. שימוש במידע',
-        'privacy-p-usage-1': 'המידע שלך משמש אותנו אך ורק למטרות הבאות:',
-        'privacy-li-usage-reply': 'מתן מענה לפניותיך ואספקת שירותי הגנאלוגיה שלנו.',
-        'privacy-li-usage-manage': 'ניהול ואבטחת אתר האינטרנט.',
-        'privacy-li-usage-legal': 'עמידה בדרישות משפטיות ורגולטוריות.',
-        'privacy-p-usage-2': 'איננו חולקים את המידע שלך עם צדדים שלישיים למטרות שיווקיות. המידע יועבר רק בכפוף להסכמתך המפורשת או כנדרש על פי חוק.',
-        'privacy-h2-security': '3. אבטחת מידע',
-        'privacy-p-security-1': 'אנו נוקטים באמצעי אבטחה טכניים וארגוניים כדי להגן על המידע שלך מפני גישה, שינוי, חשיפה או השמדה בלתי מורשים. העברת קבצים מאובטחת והגישה למידע מוגבלת באופן מחמיר.',
-        'privacy-h2-retention': '4. שמירת מידע',
-        'privacy-p-retention-1': 'המידע האישי שלך יישמר למשך הזמן הדרוש להשגת המטרות שלשמן נאסף, או כפי שנדרש לעמידה בהתחייבויותינו המשפטיות.',
-        'privacy-h2-rights': '5. זכויותיך',
-        'privacy-p-rights-1': 'בהתאם ל-GDPR, עומדות לך הזכויות הבאות בנוגע למידע האישי שלך:',
-        'privacy-li-rights-access': 'זכות עיון: הזכות לבקש עותק של המידע שאנו מחזיקים אודותיך.',
-        'privacy-li-rights-rectify': 'זכות לתיקון: הזכות לבקש תיקון מידע שאינו מדויק.',
-        'privacy-li-rights-erase': 'זכות למחיקה: הזכות לבקש את מחיקת המידע שלך.',
-        'privacy-li-rights-limit': 'זכות להגבלת עיבוד: הזכות לבקש שנגביל את השימוש במידע שלך.',
-        'privacy-p-rights-2': 'למימוש זכויותיך, ניתן ליצור עמנו קשר באמצעות טופס יצירת הקשר באתר.',
-        'privacy-h2-cookies': '6. קובצי Cookie',
-        'privacy-p-cookies-1': 'האתר משתמש בקובצי Cookie החיוניים לתפעולו. באפשרותך לקבל או לדחות את השימוש בהם באמצעות הודעת ההסכמה המופיעה בכניסה לאתר.',
-        'privacy-h2-contact': '7. יצירת קשר',
-        'privacy-p-contact-1': 'בכל שאלה הנוגעת למדיניות פרטיות זו, יש ליצור קשר באמצעות טופס יצירת הקשר באתר הראשי.',
-        'privacy-back-to-home': 'חזרה לדף הבית'
+        'recaptcha-notice': `אתר זה מוגן על ידי reCAPTCHA וחלים עליו <a href="https://policies.google.com/privacy" target="_blank">מדיניות הפרטיות</a> ו<a href="https://policies.google.com/terms" target="_blank">תנאי השירות</a> של Google.`
       }
     };
 
@@ -430,8 +325,13 @@ class WizmanHeritage {
       const key = node.getAttribute('data-translate');
       const val = dict[key];
       if (typeof val === 'string') {
-        if (key === 'message-placeholder') node.placeholder = val;
-        else node.textContent = val;
+        if (key === 'message-placeholder') {
+            node.placeholder = val;
+        } else if (key === 'recaptcha-notice') {
+            node.innerHTML = val;
+        } else {
+            node.textContent = val;
+        }
       }
     });
   }
@@ -708,7 +608,6 @@ class WizmanHeritage {
         return;
     }
     
-    // Votre clé du site est insérée ici
     const recaptchaSiteKey = '6LdS8NQrAAAAAHjVHlLqzlsQAVWb5Qly4rdq1Ga8';
     
     grecaptcha.execute(recaptchaSiteKey, { action: 'submit' }).then(async (token) => {
@@ -740,7 +639,7 @@ class WizmanHeritage {
             payload.append('message', message);
             payload.append('consent', consent);
             payload.append('lang', this.currentLanguage);
-            payload.append('recaptchaToken', token); // Ajout du token au payload
+            payload.append('recaptchaToken', token);
             this.selectedFiles.forEach(file => payload.append('document', file, file.name));
 
             const response = await fetch('/api/contact', { method: 'POST', body: payload });
