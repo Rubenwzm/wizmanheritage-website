@@ -1,4 +1,3 @@
-
 // api/contact.js — VERSION FINALE
 
 import sgMail from '@sendgrid/mail';
