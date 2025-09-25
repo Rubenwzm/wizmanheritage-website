@@ -281,7 +281,6 @@
             <div class="container">
                 <h2 class="section-title" data-translate="contact-title">Contact Confidentiel</h2>
                 <form class="contact-form" id="contact-form" novalidate>
-                    <!-- CHAMP CACHÉ POUR reCAPTCHA -->
                     <input type="hidden" id="recaptcha-token" name="recaptcha-token">
                     
                     <div class="form-row">
@@ -305,7 +304,7 @@
                     <div class="form-group">
                         <label for="document" data-translate="form-document">Documents (optionnel)</label>
                         <div class="file-upload-wrapper">
-                            <input type="file" id="document" name="document" class="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" multiple aria-describedby="file-help">
+                            <input type="file" id="document" name="document" class="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.heic,.heif" multiple aria-describedby="file-help">
                             <div class="file-upload-display" id="file-upload-display" role="button" tabindex="0" aria-controls="document" aria-label="Ajouter des documents">
                                 <div class="file-upload-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" /><path d="M12,11L8,15H10V19H14V15H16L12,11Z" /></svg></div>
                                 <div class="file-upload-content">
@@ -372,6 +371,12 @@
                         </a>
                     </div>
                 </div>
+                
+                <!-- TEXTE OBLIGATOIRE POUR reCAPTCHA -->
+                <div class="recaptcha-notice" data-translate="recaptcha-notice">
+                    <!-- Le contenu sera rempli par le script.js -->
+                </div>
+
                 <p>&copy; 2024 WizmanHeritage. <span data-translate="footer-rights">Tous droits réservés.</span></p>
             </div>
         </div>
