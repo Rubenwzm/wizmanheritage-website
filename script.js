@@ -7,9 +7,9 @@ class WizmanHeritage {
     this.cookieConsent = null;
 
     this.notificationMessages = {
-      fr: { 'form-success': 'Votre demande a été transmise avec succès', 'form-error': 'Erreur lors de l’envoi de votre demande', 'form-sending': 'Transmission en cours...', 'language-changed': 'Français', 'email-missing': 'Veuillez saisir votre adresse email', 'name-missing': 'Veuillez indiquer votre nom complet', 'message-missing': 'Veuillez préciser votre demande', 'consent-missing': 'Veuillez accepter les conditions de confidentialité', 'file-selected': 'Document(s) sélectionné(s)', 'file-removed': 'Document supprimé', 'file-limit': 'Maximum 5 documents autorisés', 'file-size': 'Fichier trop volumineux (max 4MB)', 'file-type': 'Type de fichier non autorisé', 'cookies-accepted': 'Cookies acceptés', 'cookies-declined': 'Cookies refusés' },
-      en: { 'form-success': 'Your request has been submitted successfully', 'form-error': 'Error sending your request', 'form-sending': 'Submitting...', 'language-changed': 'English', 'email-missing': 'Please enter your email address', 'name-missing': 'Please enter your full name', 'message-missing': 'Please specify your request', 'consent-missing': 'Please accept the privacy policy', 'file-selected': 'Document(s) selected', 'file-removed': 'Document removed', 'file-limit': 'Maximum 5 documents allowed', 'file-size': 'File too large (max 4MB)', 'file-type': 'File type not allowed', 'cookies-accepted': 'Cookies accepted', 'cookies-declined': 'Cookies declined' },
-      he: { 'form-success': 'הבקשה שלך נשלחה בהצלחה', 'form-error': 'שגיאה בשליחת הבקשה', 'form-sending': 'שולח...', 'language-changed': 'עברית', 'email-missing': 'אנא הזן את כתובת האימייל שלך', 'name-missing': 'אנא הזן את שמך המלא', 'message-missing': 'אנא פרט את בקשתך', 'consent-missing': 'אנא אשר את מדיניות הפרטיות', 'file-selected': 'מסמך/ים נבחר/ו', 'file-removed': 'מסמך הוסר', 'file-limit': 'מקסימום 5 מסמכים מותרים', 'file-size': 'קובץ גדול מדי (מקס 4MB)', 'file-type': 'סוג קובץ לא מורשה', 'cookies-accepted': 'עוגיות התקבלו', 'cookies-declined': 'עוגיות נדחו' }
+      fr: { 'form-success': 'Votre demande a été transmise avec succès', 'form-error': 'Erreur lors de l’envoi de votre demande', 'form-sending': 'Transmission en cours...', 'language-changed': 'Français', 'email-missing': 'Veuillez saisir votre adresse email', 'name-missing': 'Veuillez indiquer votre nom complet', 'message-missing': 'Veuillez préciser votre demande', 'consent-missing': 'Veuillez accepter les conditions de confidentialité', 'file-selected': 'Document(s) sélectionné(s)', 'file-removed': 'Document supprimé', 'file-limit': 'Maximum 5 documents autorisés', 'file-size': 'Fichier trop volumineux (max 4MB)', 'file-type': 'Type de fichier non autorisé', 'cookies-accepted': 'Cookies acceptés', 'cookies-declined': 'Cookies refusés', 'recaptcha-error': 'Échec de la vérification de sécurité. Veuillez réessayer.' },
+      en: { 'form-success': 'Your request has been submitted successfully', 'form-error': 'Error sending your request', 'form-sending': 'Submitting...', 'language-changed': 'English', 'email-missing': 'Please enter your email address', 'name-missing': 'Please enter your full name', 'message-missing': 'Please specify your request', 'consent-missing': 'Please accept the privacy policy', 'file-selected': 'Document(s) selected', 'file-removed': 'Document removed', 'file-limit': 'Maximum 5 documents allowed', 'file-size': 'File too large (max 4MB)', 'file-type': 'File type not allowed', 'cookies-accepted': 'Cookies accepted', 'cookies-declined': 'Cookies declined', 'recaptcha-error': 'Security verification failed. Please try again.' },
+      he: { 'form-success': 'הבקשה שלך נשלחה בהצלחה', 'form-error': 'שגיאה בשליחת הבקשה', 'form-sending': 'שולח...', 'language-changed': 'עברית', 'email-missing': 'אנא הזן את כתובת האימייל שלך', 'name-missing': 'אנא הזן את שמך המלא', 'message-missing': 'אנא פרט את בקשתך', 'consent-missing': 'אנא אשר את מדיניות הפרטיות', 'file-selected': 'מסמך/ים נבחר/ו', 'file-removed': 'מסמך הוסר', 'file-limit': 'מקסימום 5 מסמכים מותרים', 'file-size': 'קובץ גדול מדי (מקס 4MB)', 'file-type': 'סוג קובץ לא מורשה', 'cookies-accepted': 'עוגיות התקבלו', 'cookies-declined': 'עוגיות נדחו', 'recaptcha-error': 'אימות האבטחה נכשל. אנא נסה שוב.' }
     };
 
     this.translations = {
@@ -701,45 +701,70 @@ class WizmanHeritage {
   async handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const formData = new FormData(form);
-    const name = this.sanitizeInput(formData.get('name')?.toString().trim() || '');
-    const email = this.sanitizeInput(formData.get('email')?.toString().trim() || '');
-    const phone = this.sanitizeInput(formData.get('phone')?.toString().trim() || '');
-    const message = this.sanitizeInput(formData.get('message')?.toString().trim() || '');
-    const consent = formData.get('consent');
-
-    if (!name || name.length < 2 || name.length > 100) { this.showToast(this.notificationMessages[this.currentLanguage]['name-missing'], 'error'); return; }
-    if (!email || !this.isValidEmail(email)) { this.showToast(this.notificationMessages[this.currentLanguage]['email-missing'], 'error'); return; }
-    if (!message || message.length < 10 || message.length > 2000) { this.showToast(this.notificationMessages[this.currentLanguage]['message-missing'], 'error'); return; }
-    if (!consent) { this.showToast(this.notificationMessages[this.currentLanguage]['consent-missing'], 'error'); return; }
-    if (phone && (phone.length > 20 || !/^[\d\s\-+()]+$/.test(phone))) { this.showToast('Numéro de téléphone invalide', 'error'); return; }
-
-    this.showToast(this.notificationMessages[this.currentLanguage]['form-sending'], 'info');
-
-    try {
-      const payload = new FormData();
-      payload.append('name', name);
-      payload.append('email', email);
-      payload.append('phone', phone);
-      payload.append('message', message);
-      payload.append('consent', consent);
-      payload.append('lang', this.currentLanguage);
-      this.selectedFiles.forEach(file => payload.append('document', file, file.name));
-
-      const response = await fetch('/api/contact', { method: 'POST', body: payload });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(`Server error: ${response.status} - ${errorData.message || response.statusText}`);
-      }
-
-      this.showToast(this.notificationMessages[this.currentLanguage]['form-success'], 'success');
-      form.reset();
-      this.selectedFiles = [];
-      this.renderFileNames();
-    } catch (error) {
-      console.error('Form submission error:', error);
-      this.showToast(this.notificationMessages[this.currentLanguage]['form-error'], 'error');
+    
+    if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute === 'undefined') {
+        this.showToast(this.notificationMessages[this.currentLanguage]['recaptcha-error'], 'error');
+        console.error("reCAPTCHA script not loaded.");
+        return;
     }
+    
+    // Votre clé du site est insérée ici
+    const recaptchaSiteKey = '6LdS8NQrAAAAAHjVHlLqzlsQAVWb5Qly4rdq1Ga8';
+    
+    grecaptcha.execute(recaptchaSiteKey, { action: 'submit' }).then(async (token) => {
+        const recaptchaTokenInput = document.getElementById('recaptcha-token');
+        if (recaptchaTokenInput) {
+            recaptchaTokenInput.value = token;
+        }
+
+        const formData = new FormData(form);
+        const name = this.sanitizeInput(formData.get('name')?.toString().trim() || '');
+        const email = this.sanitizeInput(formData.get('email')?.toString().trim() || '');
+        const phone = this.sanitizeInput(formData.get('phone')?.toString().trim() || '');
+        const message = this.sanitizeInput(formData.get('message')?.toString().trim() || '');
+        const consent = formData.get('consent');
+
+        if (!name || name.length < 2 || name.length > 100) { this.showToast(this.notificationMessages[this.currentLanguage]['name-missing'], 'error'); return; }
+        if (!email || !this.isValidEmail(email)) { this.showToast(this.notificationMessages[this.currentLanguage]['email-missing'], 'error'); return; }
+        if (!message || message.length < 10 || message.length > 2000) { this.showToast(this.notificationMessages[this.currentLanguage]['message-missing'], 'error'); return; }
+        if (!consent) { this.showToast(this.notificationMessages[this.currentLanguage]['consent-missing'], 'error'); return; }
+        if (phone && (phone.length > 20 || !/^[\d\s\-+()]+$/.test(phone))) { this.showToast('Numéro de téléphone invalide', 'error'); return; }
+
+        this.showToast(this.notificationMessages[this.currentLanguage]['form-sending'], 'info');
+
+        try {
+            const payload = new FormData();
+            payload.append('name', name);
+            payload.append('email', email);
+            payload.append('phone', phone);
+            payload.append('message', message);
+            payload.append('consent', consent);
+            payload.append('lang', this.currentLanguage);
+            payload.append('recaptchaToken', token); // Ajout du token au payload
+            this.selectedFiles.forEach(file => payload.append('document', file, file.name));
+
+            const response = await fetch('/api/contact', { method: 'POST', body: payload });
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                if (response.status === 403 && errorData.message === 'reCAPTCHA verification failed') {
+                    throw new Error('recaptcha-error');
+                }
+                throw new Error(`Server error: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+
+            this.showToast(this.notificationMessages[this.currentLanguage]['form-success'], 'success');
+            form.reset();
+            this.selectedFiles = [];
+            this.renderFileNames();
+        } catch (error) {
+            console.error('Form submission error:', error);
+            const errorMessageKey = error.message === 'recaptcha-error' ? 'recaptcha-error' : 'form-error';
+            this.showToast(this.notificationMessages[this.currentLanguage][errorMessageKey], 'error');
+        }
+    }).catch((error) => {
+        console.error("reCAPTCHA execution error:", error);
+        this.showToast(this.notificationMessages[this.currentLanguage]['recaptcha-error'], 'error');
+    });
   }
 
   // ================== TOAST ==================
