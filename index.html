@@ -97,7 +97,6 @@
     <nav class="floating-nav" id="floating-nav">
         <div class="nav-container">
             <div class="nav-brand">
-                <!-- H1 remplacé par un div pour éviter la duplication de H1 -->
                 <div class="logo-heading">
                     <a href="/" aria-label="WizmanHeritage - Accueil">
                         <span class="sr-only">Wizman Heritage</span>
@@ -252,7 +251,7 @@
                             <span data-translate="faq3-question">Puis-je envoyer des documents en toute sécurité ?</span>
                             <div class="faq-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" /></svg></div>
                         </button>
-                        <div class="faq-answer"><p data-translate="faq3-answer">Oui, les fichiers sont sécurisés et limités à 10MB chacun, conformément à notre politique de confidentialité.</p></div>
+                        <div class="faq-answer"><p data-translate="faq3-answer">Oui, les fichiers sont sécurisés et limités à 4MB chacun, conformément à notre politique de confidentialité.</p></div>
                     </div>
                 </div>
             </div>
@@ -282,6 +281,9 @@
             <div class="container">
                 <h2 class="section-title" data-translate="contact-title">Contact Confidentiel</h2>
                 <form class="contact-form" id="contact-form" novalidate>
+                    <!-- CHAMP CACHÉ POUR reCAPTCHA -->
+                    <input type="hidden" id="recaptcha-token" name="recaptcha-token">
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name" data-translate="form-name">Nom complet</label>
@@ -308,7 +310,7 @@
                                 <div class="file-upload-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" /><path d="M12,11L8,15H10V19H14V15H16L12,11Z" /></svg></div>
                                 <div class="file-upload-content">
                                     <span class="file-upload-text" data-translate="file-upload-text">Cliquer ou déposer vos documents ici</span>
-                                    <span class="file-upload-hint" data-translate="file-upload-hint" id="file-help">PDF, Word, Images acceptés (max 10MB chacun)</span>
+                                    <span class="file-upload-hint" data-translate="file-upload-hint" id="file-help">PDF, Word, Images acceptés (max 4MB chacun)</span>
                                     <div class="file-upload-names" id="file-upload-names"></div>
                                 </div>
                             </div>
@@ -342,9 +344,8 @@
                 <div class="footer-section">
                     <h4 data-translate="footer-contact-title">Contact Professionnel</h4>
                     <div class="footer-contact">
-                        <!-- LA CORRECTION EST ICI -->
                         <p>
-                            <a href="mailto:contact@wizmanheritage.com">contact@wizmanheritage.com</a>
+                            <a href="#" class="js-email" data-email-user="contact" data-email-domain="wizmanheritage" data-email-tld="com" data-email-show="true">contact@wizmanheritage.com</a>
                             <br>
                             <span data-translate="footer-availability">Disponible 24/7 pour urgences</span>
                         </p>
@@ -352,7 +353,6 @@
                 </div>
                 <div class="footer-section">
                     <h4 data-translate="footer-legal-title">Mentions Légales</h4>
-                    <!-- CORRECTION DE COHÉRENCE ICI AUSSI -->
                     <p>
                         <span data-translate="footer-design">Conçu par Ruben Wizman</span><br>
                         <span data-translate="footer-compliance">Conforme RGPD • Données protégées</span><br>
@@ -381,5 +381,9 @@
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
     <script src="/script.js"></script>
+    
+    <!-- SCRIPT GOOGLE reCAPTCHA (AVEC VOTRE CLÉ) -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdS8NQrAAAAAHjVHlLqzlsQAVWb5Qly4rdq1Ga8"></script>
+
 </body>
 </html>
