@@ -1,4 +1,4 @@
-// api/contact.js — VERSION FINALE
+// api/contact.js — VERSION FINALE AVEC reCAPTCHA
 
 import sgMail from '@sendgrid/mail';
 import Busboy from 'busboy';
@@ -6,6 +6,26 @@ import fs from 'fs/promises';
 import path from 'path';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+
+// Fonction de vérification reCAPTCHA
+async function verifyRecaptcha(token) {
+  if (!RECAPTCHA_SECRET_KEY) {
+    console.error("La clé secrète reCAPTCHA n'est pas définie dans les variables d'environnement.");
+    return false;
+  }
+  const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `secret=${RECAPTCHA_SECRET_KEY}&response=${token}`,
+  });
+  const data = await response.json();
+  // reCAPTCHA v3 renvoie un score. 0.5 est un seuil commun.
+  return data.success && data.score >= 0.5;
+}
+
 
 // -----------------------------
 // Email templating (CID inline)
@@ -100,21 +120,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1) Lecture du logo en local et préparation en "inline"
-    const logoPath = path.join(process.cwd(), 'Logo_WizmanHeritage.png');
-    const logoBuffer = await fs.readFile(logoPath);
-    const logoBase64 = logoBuffer.toString('base64');
-
-    // ⚠️ Clé attendue par SendGrid: content_id (snake_case), PAS contentId.
-    const logoAttachment = {
-      content: logoBase64,
-      filename: 'Logo_WizmanHeritage.png',
-      type: 'image/png',
-      disposition: 'inline',
-      content_id: 'logo', // <- correction critique
-    };
-
-    // 2) Bufferiser le body brut (indispensable en serverless)
     const rawBody = await new Promise((resolve, reject) => {
       const chunks = [];
       req.on('data', (c) => chunks.push(c));
@@ -122,7 +127,6 @@ export default async function handler(req, res) {
       req.on('error', reject);
     });
 
-    // 3) Parse multipart via Busboy (gestion fichiers vides incluse)
     const parseMultipartForm = (headers, bodyBuffer) =>
       new Promise((resolve, reject) => {
         const fields = {};
@@ -131,7 +135,6 @@ export default async function handler(req, res) {
 
         bb.on('file', (fieldname, file, info) => {
           const { filename, mimeType } = info || {};
-          // Si le champ fichier est vide, on doit *consommer* le flux puis ignorer.
           if (!filename) {
             file.resume();
             return;
@@ -142,7 +145,6 @@ export default async function handler(req, res) {
             files.push({
               content: Buffer.concat(chunks),
               filename,
-              // Forçage du type pour compat max (Outlook)
               type: 'application/octet-stream',
               disposition: 'attachment',
               _originalMime: mimeType,
@@ -156,8 +158,6 @@ export default async function handler(req, res) {
 
         bb.on('close', () => resolve({ fields, files }));
         bb.on('error', reject);
-
-        // Important: injecter le buffer brut
         bb.end(bodyBuffer);
       });
 
@@ -165,10 +165,21 @@ export default async function handler(req, res) {
       req.headers,
       rawBody
     );
+    
+    // --- VÉRIFICATION reCAPTCHA ---
+    const recaptchaToken = fields.recaptchaToken;
+    if (!recaptchaToken) {
+        return res.status(400).json({ message: 'reCAPTCHA token missing' });
+    }
+    const isHuman = await verifyRecaptcha(recaptchaToken);
+    if (!isHuman) {
+        return res.status(403).json({ message: 'reCAPTCHA verification failed' });
+    }
+    // --- FIN DE LA VÉRIFICATION ---
 
     const { name, email, phone, message, lang = 'fr' } = fields;
 
-    // 4) Validation basique
+    // Validation basique
     if (!name || !email || !message || fields.consent !== 'on') {
       return res
         .status(400)
@@ -178,7 +189,19 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'Invalid email format' });
     }
 
-    // 5) Contexte de soumission
+    // Lecture du logo en local
+    const logoPath = path.join(process.cwd(), 'Logo_WizmanHeritage.png');
+    const logoBuffer = await fs.readFile(logoPath);
+    const logoBase64 = logoBuffer.toString('base64');
+    const logoAttachment = {
+      content: logoBase64,
+      filename: 'Logo_WizmanHeritage.png',
+      type: 'image/png',
+      disposition: 'inline',
+      content_id: 'logo',
+    };
+
+    // Contexte de soumission
     const submissionDate = new Date().toLocaleString(
       lang === 'he' ? 'he-IL' : `${lang}-FR`,
       { timeZone: 'Europe/Paris' }
@@ -186,7 +209,7 @@ export default async function handler(req, res) {
     const xff = (req.headers['x-forwarded-for'] || '').toString();
     const ipAddress = xff.split(',')[0] || 'Non disponible';
 
-    // 6) Feuille d’engagement (HTML)
+    // Feuille d’engagement (HTML)
     const engagementSheetHtml = `
       <hr style="border:none;border-top:1px solid #E6E2DB;margin:30px 0;">
       <div style="padding:20px;border:1px solid #4B5320;border-radius:8px;background-color:#FAFAF8;">
@@ -208,8 +231,7 @@ export default async function handler(req, res) {
       </div>
     `;
 
-    // 7) Formatage des pièces jointes client → SendGrid
-    //    (type *forcé* à application/octet-stream pour Outlook)
+    // Formatage des pièces jointes client → SendGrid
     const formattedClientFiles = clientFiles.map((f) => ({
       content: f.content.toString('base64'),
       filename: f.filename,
@@ -217,7 +239,7 @@ export default async function handler(req, res) {
       disposition: 'attachment',
     }));
 
-    // 8) Notification interne (multi-destinataires)
+    // Notification interne (multi-destinataires)
     const notificationBody = `
       <h1 style="color:#4B5320;font-size:22px;">Nouvelle demande de ${name}</h1>
       <p>Vous avez reçu une nouvelle demande de contact.</p>
@@ -239,11 +261,10 @@ export default async function handler(req, res) {
         body_content: notificationBody,
         footer_text: 'Email envoyé depuis wizmanheritage.com',
       }),
-      // Ajout *systématique* du logo inline + éventuels fichiers client
       attachments: [...formattedClientFiles, logoAttachment],
     };
 
-    // 9) Auto-répondeur client
+    // Auto-répondeur client
     const clientContent = confirmationContent[lang] || confirmationContent.fr;
     const confirmationBody = `
       <h1 style="color:#4B5320;font-size:22px;">
@@ -269,12 +290,11 @@ export default async function handler(req, res) {
       attachments: [logoAttachment],
     };
 
-    // 10) Envoi concurrent
+    // Envoi concurrent
     await Promise.all([sgMail.send(notificationMsg), sgMail.send(autoresponderMsg)]);
 
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
-    // Log SendGrid verbose si dispo
     const details = error?.response?.body ?? error;
     console.error('Error in form handler:', details);
     return res.status(500).json({ message: 'Error processing your request' });
