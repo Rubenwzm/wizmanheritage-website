@@ -26,8 +26,8 @@ class WizmanHeritage {
         'service2-desc': 'Constitution de dossiers juridiques complets avec preuves documentaires authentifiées et certifiées.',
         'service3-title': 'Conseil Juridique Spécialisé',
         'service3-desc': 'Accompagnement par des experts en droit successoral international et collaboration avec notaires partenaires.',
-        'stat1-label': "100% Confidentialité Garantie",
-        'stat2-label': "3+ Langues de Travail (FR•EN•HE)",
+        'stat1-label': "Langues de Travail (FR•EN•HE)",
+        'stat2-label': "Dossiers Internationaux",
         'stat3-label': 'Disponible 24/7',
         'international-title': 'Présence Internationale pour vos Successions',
         'france-title': 'France',
@@ -120,8 +120,8 @@ class WizmanHeritage {
         'service2-desc': 'Compilation of complete legal files with authenticated and certified documentary evidence.',
         'service3-title': 'Specialized Legal Counsel',
         'service3-desc': 'Support by experts in international inheritance law and collaboration with partner notaries.',
-        'stat1-label': "100% Confidentiality Guaranteed",
-        'stat2-label': "3+ Working Languages (EN•FR•HE)",
+        'stat1-label': "Working Languages (EN•FR•HE)",
+        'stat2-label': "100% International Cases",
         'stat3-label': 'Available 24/7',
         'international-title': 'International Presence for your Estates',
         'france-title': 'France',
@@ -163,42 +163,6 @@ class WizmanHeritage {
         'cookie-text': 'We use cookies necessary for the website to function.',
         'cookie-accept': 'Accept',
         'cookie-decline': 'Decline',
-        'privacy-page-title': 'Privacy Policy - WizmanHeritage',
-        'privacy-description': 'WizmanHeritage privacy policy. Learn how we collect, use, and protect your personal data.',
-        'privacy-main-header': 'Privacy Policy',
-        'privacy-last-updated-label': 'Last updated:',
-        'privacy-date': 'September 18, 2025',
-        'privacy-intro': 'WizmanHeritage is committed to protecting your personal data. This Privacy Policy describes how we collect, use, and protect the information you provide via our website, in accordance with the General Data Protection Regulation (GDPR).',
-        'privacy-h2-collection': '1. Personal Data Collection',
-        'privacy-p-collection-1': 'We collect information when you use our contact form or interact with our site. The data collected may include:',
-        'privacy-li-collection-name': 'Full name: To identify you.',
-        'privacy-li-collection-email': 'Email address: To communicate with you.',
-        'privacy-li-collection-phone': 'Phone number (optional): For direct contact if necessary.',
-        'privacy-li-collection-message': 'Message: Any information you provide regarding your request.',
-        'privacy-li-collection-docs': 'Documents: Files you voluntarily upload to support your request.',
-        'privacy-li-collection-nav': 'Browsing data: Such as cookies necessary for the site to function properly.',
-        'privacy-h2-usage': '2. Use of Your Data',
-        'privacy-p-usage-1': 'Your data is used exclusively to:',
-        'privacy-li-usage-reply': 'Respond to your consultation requests and provide our probate genealogy services.',
-        'privacy-li-usage-manage': 'Manage and secure our website.',
-        'privacy-li-usage-legal': 'Comply with our legal and regulatory obligations.',
-        'privacy-p-usage-2': 'We never share your data with third parties for marketing purposes. Your information is only shared with your explicit consent or if required by law.',
-        'privacy-h2-security': '3. Data Security',
-        'privacy-p-security-1': 'We implement technical and organizational security measures to protect your data from unauthorized access, modification, disclosure, or destruction. File transfers are secured, and access to your information is strictly limited.',
-        'privacy-h2-retention': '4. Data Retention',
-        'privacy-p-retention-1': 'We retain your personal data only for the time necessary to fulfill the purposes for which it was collected, or to comply with our legal obligations.',
-        'privacy-h2-rights': '5. Your Rights',
-        'privacy-p-rights-1': 'In accordance with the GDPR, you have the following rights regarding your personal data:',
-        'privacy-li-rights-access': 'Right of access: You can request a copy of the data we hold about you.',
-        'privacy-li-rights-rectify': 'Right to rectification: You can request the correction of inaccurate data.',
-        'privacy-li-rights-erase': 'Right to erasure: You can request the deletion of your data.',
-        'privacy-li-rights-limit': 'Right to restriction of processing: You can ask us to limit the use of your data.',
-        'privacy-p-rights-2': 'To exercise these rights, please contact us using our website\'s contact form.',
-        'privacy-h2-cookies': '6. Cookies',
-        'privacy-p-cookies-1': 'Our site uses cookies that are essential for its operation. A consent banner allows you to accept or decline their use during your first visit.',
-        'privacy-h2-contact': '7. Contact',
-        'privacy-p-contact-1': 'If you have any questions about this privacy policy, please contact us via the contact form on our main site.',
-        'privacy-back-to-home': 'Back to Home',
         'recaptcha-notice': `This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.`
       },
       he: { /* --- HE --- */
@@ -214,8 +178,8 @@ class WizmanHeritage {
         'service2-desc': 'הכנת תיקי מסמכים משפטיים מלאים עם ראיות מאומתות ומאושרות.',
         'service3-title': 'ייעוץ משפטי מומחה',
         'service3-desc': 'ליווי ע״י מומחים בדיני ירושה בינלאומיים ושיתוף פעולה עם נוטריונים.',
-        'stat1-label': '100% סודיות מובטחת',
-        'stat2-label': '+3 שפות עבודה (HE•EN•FR)',
+        'stat1-label': '+3 שפות עבודה (HE•EN•FR)',
+        'stat2-label': '100% תיקים בינלאומיים',
         'stat3-label': 'זמינות 24/7',
         'international-title': 'נוכחות בינלאומית לירושות שלכם',
         'france-title': 'צרפת',
@@ -257,46 +221,9 @@ class WizmanHeritage {
         'cookie-text': 'אנו משתמשים בעוגיות הנדרשות להפעלת האתר.',
         'cookie-accept': 'קבל',
         'cookie-decline': 'סרב',
-        'privacy-page-title': 'מדיניות פרטיות - WizmanHeritage',
-        'privacy-description': 'מדיניות הפרטיות של WizmanHeritage. למדו כיצד אנו אוספים, משתמשים ומגנים על הנתונים האישיים שלכם.',
-        'privacy-main-header': 'מדיניות פרטיות',
-        'privacy-last-updated-label': 'עדכון אחרון:',
-        'privacy-date': '18 בספטמבר 2025',
-        'privacy-intro': 'WizmanHeritage מחויבת להגנה על המידע האישי שלך. מדיניות פרטיות זו מפרטת כיצד אנו אוספים, משתמשים ומגנים על המידע הנמסר על ידך באתר האינטרנט שלנו, בהתאם לתקנה הכללית להגנה על מידע (GDPR).',
-        'privacy-h2-collection': '1. איסוף מידע אישי',
-        'privacy-p-collection-1': 'אנו אוספים מידע בעת שימושך בטופס יצירת הקשר באתר. המידע הנאסף עשוי לכלול:',
-        'privacy-li-collection-name': 'שם מלא: לצורך זיהוי.',
-        'privacy-li-collection-email': 'כתובת דוא"ל: לצורך יצירת קשר.',
-        'privacy-li-collection-phone': 'מספר טלפון (אופציונלי): ליצירת קשר ישיר במידת הצורך.',
-        'privacy-li-collection-message': 'הודעה: כל מידע הנמסר על ידך בנוגע לבקשתך.',
-        'privacy-li-collection-docs': 'מסמכים: קבצים המועלים על ידך באופן וולונטרי לתמיכה בבקשתך.',
-        'privacy-li-collection-nav': 'נתוני גלישה: כגון קובצי Cookie החיוניים לתפקוד האתר.',
-        'privacy-h2-usage': '2. שימוש במידע',
-        'privacy-p-usage-1': 'המידע שלך משמש אותנו אך ורק למטרות הבאות:',
-        'privacy-li-usage-reply': 'מתן מענה לפניותיך ואספקת שירותי הגנאלוגיה שלנו.',
-        'privacy-li-usage-manage': 'ניהול ואבטחת אתר האינטרנט.',
-        'privacy-li-usage-legal': 'עמידה בדרישות משפטיות ורגולטוריות.',
-        'privacy-p-usage-2': 'איננו חולקים את המידע שלך עם צדדים שלישיים למטרות שיווקיות. המידע יועבר רק בכפוף להסכמתך המפורשת או כנדרש על פי חוק.',
-        'privacy-h2-security': '3. אבטחת מידע',
-        'privacy-p-security-1': 'אנו נוקטים באמצעי אבטחה טכניים וארגוניים כדי להגן על המידע שלך מפני גישה, שינוי, חשיפה או השמדה בלתי מורשים. העברת קבצים מאובטחת והגישה למידע מוגבלת באופן מחמיר.',
-        'privacy-h2-retention': '4. שמירת מידע',
-        'privacy-p-retention-1': 'המידע האישי שלך יישמר למשך הזמן הדרוש להשגת המטרות שלשמן נאסף, או כפי שנדרש לעמידה בהתחייבויותינו המשפטיות.',
-        'privacy-h2-rights': '5. זכויותיך',
-        'privacy-p-rights-1': 'בהתאם ל-GDPR, עומדות לך הזכויות הבאות בנוגע למידע האישי שלך:',
-        'privacy-li-rights-access': 'זכות עיון: הזכות לבקש עותק של המידע שאנו מחזיקים אודותיך.',
-        'privacy-li-rights-rectify': 'זכות לתיקון: הזכות לבקש תיקון מידע שאינו מדויק.',
-        'privacy-li-rights-erase': 'זכות למחיקה: הזכות לבקש את מחיקת המידע שלך.',
-        'privacy-li-rights-limit': 'זכות להגבלת עיבוד: הזכות לבקש שנגביל את השימוש במידע שלך.',
-        'privacy-p-rights-2': 'למימוש זכויותיך, ניתן ליצור עמנו קשר באמצעות טופס יצירת הקשר באתר.',
-        'privacy-h2-cookies': '6. קובצי Cookie',
-        'privacy-p-cookies-1': 'האתר משתמש בקובצי Cookie החיוניים לתפעולו. באפשרותך לקבל או לדחות את השימוש בהם באמצעות הודעת ההסכמה המופיעה בכניסה לאתר.',
-        'privacy-h2-contact': '7. יצירת קשר',
-        'privacy-p-contact-1': 'בכל שאלה הנוגעת למדיניות פרטיות זו, יש ליצור קשר באמצעות טופס יצירת הקשר באתר הראשי.',
-        'privacy-back-to-home': 'חזרה לדף הבית',
         'recaptcha-notice': `אתר זה מוגן על ידי reCAPTCHA וחלים עליו <a href="https://policies.google.com/privacy" target="_blank">מדיניות הפרטיות</a> ו<a href="https://policies.google.com/terms" target="_blank">תנאי השירות</a> של Google.`
       }
     };
-
     this.init();
   }
 
@@ -360,14 +287,10 @@ class WizmanHeritage {
   // ================== LANG & LINKS (NOUVELLE VERSION) ==================
   updateLanguageSensitiveLinks() {
     const lang = this.currentLanguage;
-    // Liens sur la page de confidentialité
     const logoLink = document.getElementById('privacy-logo-link');
     if (logoLink) logoLink.href = `/?lang=${lang}`;
-    
     const backLink = document.getElementById('privacy-back-link');
     if (backLink) backLink.href = `/?lang=${lang}`;
-
-    // Lien de confidentialité dans le footer (toutes les pages)
     const privacyLink = document.getElementById('footer-privacy-link');
     if (privacyLink) privacyLink.href = `/privacy_policy.html?lang=${lang}`;
   }
@@ -391,7 +314,7 @@ class WizmanHeritage {
       this.currentLanguage = 'fr';
     }
     this.updateLanguageDOM();
-    this.updateLanguageSensitiveLinks(); // Mettre à jour les liens au chargement
+    this.updateLanguageSensitiveLinks();
   }
   saveLanguage(lang) {
     try { localStorage.setItem('wizman_lang', lang); } catch (e) { console.warn('Unable to save to localStorage:', e); }
@@ -404,7 +327,7 @@ class WizmanHeritage {
     this.updateLanguageDOM();
     this.updateLanguage(lang);
     this.updateSEOTags();
-    this.updateLanguageSensitiveLinks(); // Mettre à jour les liens au changement de langue
+    this.updateLanguageSensitiveLinks();
     this.closeMenu();
     const msg = this.notificationMessages[this.currentLanguage]?.['language-changed'];
     if (msg) this.showToast(msg, 'info');
@@ -432,9 +355,7 @@ class WizmanHeritage {
 
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      const fallbackHome = 'Cabinet international spécialisé dans la recherche successorale et généalogie. Discrétion et professionnalisme garantis.';
-      const fallbackPriv = 'Politique de confidentialité de WizmanHeritage. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles.';
-      metaDesc.setAttribute('content', isPrivacy ? (dict['privacy-description'] || fallbackPriv) : (dict['hero-description'] || fallbackHome));
+      metaDesc.setAttribute('content', isPrivacy ? (dict['privacy-description'] || 'Politique de confidentialité de WizmanHeritage.') : (dict['hero-description'] || 'Cabinet international spécialisé dans la recherche successorale.'));
     }
     const ogTitle = document.querySelector('meta[property="og:title"]');
     const ogDesc  = document.querySelector('meta[property="og:description"]');
