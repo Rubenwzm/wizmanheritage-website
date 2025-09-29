@@ -26,7 +26,7 @@
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:locale:alternate" content="he_IL">
 
-    <!-- Favicons -->
+    <!-- Favicons (Générés proprement) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -176,8 +176,130 @@
             </div>
         </section>
 
-        <!-- ... (le reste du fichier index.html est identique et correct) ... -->
+        <!-- International Presence Section -->
+        <section id="international" class="international-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="international-title">Présence Internationale pour vos Successions</h2>
+                <div class="flags-container">
+                    <div class="flag-item">
+                        <div class="flag-icon france-flag"><img src="https://flagpedia.net/data/flags/w580/fr.webp" alt="Drapeau France" loading="lazy"></div>
+                        <h3 data-translate="france-title">France</h3>
+                    </div>
+                    <div class="flag-item">
+                        <div class="flag-icon israel-flag"><img src="https://flagpedia.net/data/flags/w580/il.webp" alt="Drapeau Israël" loading="lazy"></div>
+                        <h3 data-translate="israel-title">Israël</h3>
+                    </div>
+                    <div class="flag-item">
+                        <div class="flag-icon usa-flag"><img src="https://flagpedia.net/data/flags/w580/us.webp" alt="Drapeau États-Unis" loading="lazy"></div>
+                        <h3 data-translate="usa-title">États-Unis</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="faq-title">Questions Fréquentes sur la Généalogie Successorale</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span data-translate="faq1-question">Comment identifiez-vous les héritiers à l'étranger ?</span>
+                            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" /></svg></div>
+                        </button>
+                        <div class="faq-answer"><p data-translate="faq1-answer">Nous utilisons des méthodes d'investigation documentées avec nos correspondants locaux.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span data-translate="faq2-question">Mes données sont-elles confidentielles ?</span>
+                            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" /></svg></div>
+                        </button>
+                        <div class="faq-answer"><p data-translate="faq2-answer">Toutes les informations sont traitées selon le RGPD et ne sont jamais partagées sans consentement.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false">
+                            <span data-translate="faq3-question">Puis-je envoyer des documents en toute sécurité ?</span>
+                            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6 1.41-1.42z" /></svg></div>
+                        </button>
+                        <div class="faq-answer"><p data-translate="faq3-answer">Oui, les fichiers sont sécurisés et limités à 4MB chacun, conformément à notre politique de confidentialité.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="about-title">Excellence & Discrétion</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p data-translate="about-desc">
+                            WizmanHeritage est un cabinet international reconnu pour son expertise en recherche successorale. Nous servons une clientèle internationale avec la plus haute confidentialité, utilisant des méthodes d'investigation rigoureuses et respectant les législations de chaque pays d'intervention.
+                        </p>
+                    </div>
+                    <div class="about-features">
+                        <div class="feature-item"><span data-translate="feature1">Confidentialité absolue</span></div>
+                        <div class="feature-item"><span data-translate="feature2">Expertise internationale</span></div>
+                        <div class="feature-item"><span data-translate="feature3">Résultats garantis</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="contact-title">Contact Confidentiel</h2>
+                <form class="contact-form" id="contact-form" novalidate>
+                    <input type="hidden" id="recaptcha-token" name="recaptcha-token">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" data-translate="form-name">Nom complet</label>
+                            <input type="text" id="name" name="name" required aria-required="true" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-translate="form-email">Email</label>
+                            <input type="email" id="email" name="email" required aria-required="true" autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-translate="form-phone">Téléphone (optionnel)</label>
+                        <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-translate="form-message">Votre demande</label>
+                        <textarea id="message" data-translate="message-placeholder" name="message" rows="5" required aria-required="true" placeholder="Décrivez votre situation en quelques mots. Toutes les informations resteront strictement confidentielles."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="document" data-translate="form-document">Documents (optionnel)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="document" name="document" class="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.heic,.heif" multiple aria-describedby="file-help">
+                            <div class="file-upload-display" id="file-upload-display" role="button" tabindex="0" aria-controls="document" aria-label="Ajouter des documents">
+                                <div class="file-upload-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" /><path d="M12,11L8,15H10V19H14V15H16L12,11Z" /></svg></div>
+                                <div class="file-upload-content">
+                                    <span class="file-upload-text" data-translate="file-upload-text">Cliquer ou déposer vos documents ici</span>
+                                    <span class="file-upload-hint" data-translate="file-upload-hint" id="file-help">PDF, Word, Images acceptés (max 4MB chacun)</span>
+                                    <div class="file-upload-names" id="file-upload-names"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-consent">
+                        <label class="consent-checkbox">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span class="checkmark"></span>
+                            <span data-translate="consent-text">J'accepte que mes données soient traitées conformément à la politique de confidentialité.</span>
+                        </label>
+                    </div>
+                    <div class="form-privacy">
+                        <div class="privacy-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" /></svg></div>
+                        <p data-translate="privacy-text">Vos informations sont traitées avec la plus stricte confidentialité et ne sont jamais partagées avec des tiers.</p>
+                    </div>
+                    <button type="submit" class="submit-button" id="submit-btn"><span data-translate="form-submit">Envoyer ma demande</span></button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
