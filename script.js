@@ -26,8 +26,8 @@ class WizmanHeritage {
         'service2-desc': 'Constitution de dossiers juridiques complets avec preuves documentaires authentifiées et certifiées.',
         'service3-title': 'Conseil Juridique Spécialisé',
         'service3-desc': 'Accompagnement par des experts en droit successoral international et collaboration avec notaires partenaires.',
-        'stat1-label': "Confidentialité Garantie",
-        'stat2-label': "Dossiers Internationaux",
+        'stat1-label': "100% Confidentialité Garantie",
+        'stat2-label': "3+ Langues de Travail (FR•EN•HE)",
         'stat3-label': 'Disponible 24/7',
         'international-title': 'Présence Internationale pour vos Successions',
         'france-title': 'France',
@@ -120,8 +120,8 @@ class WizmanHeritage {
         'service2-desc': 'Compilation of complete legal files with authenticated and certified documentary evidence.',
         'service3-title': 'Specialized Legal Counsel',
         'service3-desc': 'Support by experts in international inheritance law and collaboration with partner notaries.',
-        'stat1-label': "Confidentiality Guaranteed",
-        'stat2-label': "International Cases",
+        'stat1-label': "100% Confidentiality Guaranteed",
+        'stat2-label': "3+ Working Languages (EN•FR•HE)",
         'stat3-label': 'Available 24/7',
         'international-title': 'International Presence for your Estates',
         'france-title': 'France',
@@ -214,8 +214,8 @@ class WizmanHeritage {
         'service2-desc': 'הכנת תיקי מסמכים משפטיים מלאים עם ראיות מאומתות ומאושרות.',
         'service3-title': 'ייעוץ משפטי מומחה',
         'service3-desc': 'ליווי ע״י מומחים בדיני ירושה בינלאומיים ושיתוף פעולה עם נוטריונים.',
-        'stat1-label': 'סודיות מובטחת',
-        'stat2-label': 'תיקים בינלאומיים',
+        'stat1-label': '100% סודיות מובטחת',
+        'stat2-label': '+3 שפות עבודה (HE•EN•FR)',
         'stat3-label': 'זמינות 24/7',
         'international-title': 'נוכחות בינלאומית לירושות שלכם',
         'france-title': 'צרפת',
@@ -810,13 +810,3 @@ class WizmanHeritage {
 document.addEventListener('DOMContentLoaded', () => {
   window.wizmanHeritage = new WizmanHeritage();
 });
---- START OF FILE .gitignore ---
-
-# macOS
-.DS_Store
-
-# Node
-node_modules
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
